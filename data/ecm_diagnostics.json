@@ -1,0 +1,512 @@
+[
+    {
+        "commodity": "Beans (kidney red)",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.927732997669071,
+        "arch_test_pvalue": 0.0008494539805760039,
+        "jarque_bera_pvalue": 6.6897545132121505e-121,
+        "durbin_watson_stat": 1.9774269794266621,
+        "skewness": -1.5289094288371754,
+        "kurtosis": 7.587348179501335
+    },
+    {
+        "commodity": "Peas (yellow, split)",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.9952873344697055,
+        "arch_test_pvalue": 0.9999791683202459,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9900988305026177,
+        "skewness": 5.383716394649826,
+        "kurtosis": 57.98835730487769
+    },
+    {
+        "commodity": "Salt",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9702226078430429,
+        "arch_test_pvalue": 0.7673811771520974,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9873214924824707,
+        "skewness": -0.9300649248115791,
+        "kurtosis": 45.882911540028566
+    },
+    {
+        "commodity": "Sugar",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9925509551685907,
+        "arch_test_pvalue": 0.9992948409166423,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9966314204992994,
+        "skewness": -5.976449360766896,
+        "kurtosis": 51.950769111471935
+    },
+    {
+        "commodity": "Wheat flour",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.989216068627962,
+        "arch_test_pvalue": 0.9630915268960881,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.0051490953429734,
+        "skewness": -3.6617385031301857,
+        "kurtosis": 22.706321533501434
+    },
+    {
+        "commodity": "Peas (yellow, split)",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.14587753760760375,
+        "arch_test_pvalue": 0.00019570895618180106,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.0205211097294358,
+        "skewness": 1.5868981336175207,
+        "kurtosis": 67.92078239205705
+    },
+    {
+        "commodity": "Tomatoes",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.6067147939036897,
+        "arch_test_pvalue": 0.99668462993195,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9467061007463913,
+        "skewness": 5.230339632825689,
+        "kurtosis": 34.41680947781574
+    },
+    {
+        "commodity": "Oil (vegetable)",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.8512970568856222,
+        "arch_test_pvalue": 0.4500767852816663,
+        "jarque_bera_pvalue": 1.2600722918568356e-268,
+        "durbin_watson_stat": 2.0146091311941983,
+        "skewness": -2.1503437331857245,
+        "kurtosis": 11.027668834960862
+    },
+    {
+        "commodity": "Fuel (gas)",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9998687491130881,
+        "arch_test_pvalue": 0.9999999806641737,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9988516335737776,
+        "skewness": -6.4871357798315294,
+        "kurtosis": 88.56049552724565
+    },
+    {
+        "commodity": "Eggs",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9343798133312897,
+        "arch_test_pvalue": 0.0004761322754768387,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.010117816513088,
+        "skewness": -1.6063725570535559,
+        "kurtosis": 29.94670121007306
+    },
+    {
+        "commodity": "Tomatoes",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.8280767983390717,
+        "arch_test_pvalue": 0.9953699933308175,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9911887112007864,
+        "skewness": 4.598824871509944,
+        "kurtosis": 48.90102073768125
+    },
+    {
+        "commodity": "Livestock (sheep, two-year-old male)",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.6506381366637625,
+        "arch_test_pvalue": 0.9990204869871536,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9429298160848356,
+        "skewness": 4.161431296548943,
+        "kurtosis": 30.60114486599108
+    },
+    {
+        "commodity": "Fuel (petrol-gasoline)",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9846324809361087,
+        "arch_test_pvalue": 0.9972952762351396,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.016228150338518,
+        "skewness": -4.96132709169103,
+        "kurtosis": 34.871690488688536
+    },
+    {
+        "commodity": "Salt",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.8386850834116172,
+        "arch_test_pvalue": 0.17904241929858267,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.944333895496749,
+        "skewness": 3.4216120321404655,
+        "kurtosis": 30.513413640144993
+    },
+    {
+        "commodity": "Oil (vegetable)",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.7177358144705603,
+        "arch_test_pvalue": 0.25952361055742895,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.0192304712286973,
+        "skewness": -2.3647485575408247,
+        "kurtosis": 16.088521093777455
+    },
+    {
+        "commodity": "Beans (white)",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9942986092095764,
+        "arch_test_pvalue": 0.9999095521556841,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.0073075499430155,
+        "skewness": -5.448119035722297,
+        "kurtosis": 55.21952689246991
+    },
+    {
+        "commodity": "Lentils",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9775777143317604,
+        "arch_test_pvalue": 0.9982671218773951,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.0123554052196764,
+        "skewness": -4.895291319156386,
+        "kurtosis": 34.408764395766774
+    },
+    {
+        "commodity": "Fuel (diesel)",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9495850875043612,
+        "arch_test_pvalue": 0.9965162899171006,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.009942473908945,
+        "skewness": -4.051924541100899,
+        "kurtosis": 36.8129184313251
+    },
+    {
+        "commodity": "Wheat flour",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9968090106636837,
+        "arch_test_pvalue": 0.9868226085998067,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.004233407490417,
+        "skewness": -4.683338369912625,
+        "kurtosis": 41.166242334341284
+    },
+    {
+        "commodity": "Fuel (diesel)",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9862298710997907,
+        "arch_test_pvalue": 0.9860173055755435,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.015574246321355,
+        "skewness": -4.548458095531708,
+        "kurtosis": 29.074913920455643
+    },
+    {
+        "commodity": "Onions",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.31850965352658334,
+        "arch_test_pvalue": 0.9896597272946372,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9009154443761347,
+        "skewness": 3.5461015521414323,
+        "kurtosis": 23.050536607787564
+    },
+    {
+        "commodity": "Fuel (gas)",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9979211706168891,
+        "arch_test_pvalue": 0.9990861687551496,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9971004966016146,
+        "skewness": -3.7297938625153817,
+        "kurtosis": 94.22994706442152
+    },
+    {
+        "commodity": "Beans (white)",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9936410171121437,
+        "arch_test_pvalue": 0.9999782816598975,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.011034712695469,
+        "skewness": -5.575814666491584,
+        "kurtosis": 47.948405402581805
+    },
+    {
+        "commodity": "Rice (imported)",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.01607200691213181,
+        "arch_test_pvalue": 0.9684845090652304,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.0278821932794604,
+        "skewness": 2.6987004169133577,
+        "kurtosis": 18.365873818405284
+    },
+    {
+        "commodity": "Sugar",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.7659940084413166,
+        "arch_test_pvalue": 0.2148249762526752,
+        "jarque_bera_pvalue": 1.4186027267697678e-213,
+        "durbin_watson_stat": 2.0003422623682545,
+        "skewness": -1.746736343896294,
+        "kurtosis": 9.451995619341329
+    },
+    {
+        "commodity": "Wheat",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.990374896149047,
+        "arch_test_pvalue": 0.9995671450048259,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.009692839816478,
+        "skewness": -4.806913734913569,
+        "kurtosis": 37.87184076502922
+    },
+    {
+        "commodity": "Fuel (gas)",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.9649381101915921,
+        "arch_test_pvalue": 0.9016388620038318,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9787015717813592,
+        "skewness": 4.266988029040171,
+        "kurtosis": 63.376664259711944
+    },
+    {
+        "commodity": "Eggs",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.6907005104558099,
+        "arch_test_pvalue": 0.5695157595736907,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.032538243966675,
+        "skewness": 4.919420936053472,
+        "kurtosis": 67.57972233944137
+    },
+    {
+        "commodity": "Beans (kidney red)",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9978551794251359,
+        "arch_test_pvalue": 0.9999385111144274,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.001984055884176,
+        "skewness": -5.555559948571506,
+        "kurtosis": 50.418758146120524
+    },
+    {
+        "commodity": "Livestock (sheep, two-year-old male)",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9489730099800724,
+        "arch_test_pvalue": 0.9406083346898894,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.989820295613923,
+        "skewness": -2.477360670485625,
+        "kurtosis": 23.373385459503687
+    },
+    {
+        "commodity": "Fuel (petrol-gasoline)",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.5983271743244425,
+        "arch_test_pvalue": 0.1351439130121975,
+        "jarque_bera_pvalue": 1.1114980825666735e-201,
+        "durbin_watson_stat": 1.971933231576524,
+        "skewness": 1.0573445845926501,
+        "kurtosis": 9.808266977216652
+    },
+    {
+        "commodity": "Salt",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9849175479356672,
+        "arch_test_pvalue": 0.9448973135211717,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.992180378485744,
+        "skewness": -2.6856096994933254,
+        "kurtosis": 40.84196744055188
+    },
+    {
+        "commodity": "Lentils",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9949626712035045,
+        "arch_test_pvalue": 0.9998422124229018,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.0046753824888124,
+        "skewness": -5.934940599650479,
+        "kurtosis": 58.25004928291786
+    },
+    {
+        "commodity": "Rice (imported)",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9833639256969638,
+        "arch_test_pvalue": 0.018444540108557454,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.987131164296651,
+        "skewness": -2.9768665774318084,
+        "kurtosis": 26.369785932826446
+    },
+    {
+        "commodity": "Beans (kidney red)",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9892554719163817,
+        "arch_test_pvalue": 0.9987546655779393,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9993209461179904,
+        "skewness": -4.3142081639035315,
+        "kurtosis": 29.045418846708692
+    },
+    {
+        "commodity": "Wheat",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.997306260026018,
+        "arch_test_pvalue": 0.9997076538894931,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.0036627715140414,
+        "skewness": -5.887468726262184,
+        "kurtosis": 64.09975939746869
+    },
+    {
+        "commodity": "Peas (yellow, split)",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9928571959529652,
+        "arch_test_pvalue": 0.004011629457842575,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.986710367580484,
+        "skewness": -0.23432857790715977,
+        "kurtosis": 28.277350074919596
+    },
+    {
+        "commodity": "Wheat flour",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.6785556691785859,
+        "arch_test_pvalue": 0.15954392506322193,
+        "jarque_bera_pvalue": 1.2061500166124528e-139,
+        "durbin_watson_stat": 1.9187155433269685,
+        "skewness": -0.3565579934783053,
+        "kurtosis": 8.884397668161213
+    },
+    {
+        "commodity": "Eggs",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9992426236484017,
+        "arch_test_pvalue": 0.00024862077396508144,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9964736888981722,
+        "skewness": -2.182637895841323,
+        "kurtosis": 47.38722110610544
+    },
+    {
+        "commodity": "Fuel (petrol-gasoline)",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9879290290745248,
+        "arch_test_pvalue": 0.999347034762161,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 2.0071817937610863,
+        "skewness": -4.478459085193261,
+        "kurtosis": 46.69043366880442
+    },
+    {
+        "commodity": "Tomatoes",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.20443640899667767,
+        "arch_test_pvalue": 0.6362265890316018,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9398738478301907,
+        "skewness": 1.718094973281369,
+        "kurtosis": 27.560738444367473
+    },
+    {
+        "commodity": "Oil (vegetable)",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.7058535086351669,
+        "arch_test_pvalue": 6.019449129210413e-06,
+        "jarque_bera_pvalue": 2.8022539348402956e-14,
+        "durbin_watson_stat": 1.920470145604218,
+        "skewness": -0.48795137481186246,
+        "kurtosis": 4.573292593033617
+    },
+    {
+        "commodity": "Beans (white)",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.9139245154272615,
+        "arch_test_pvalue": 0.9984903787392444,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9953926157502204,
+        "skewness": -4.3506283116503415,
+        "kurtosis": 32.52158928156828
+    },
+    {
+        "commodity": "Rice (imported)",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.8860876035036119,
+        "arch_test_pvalue": 0.9771717329150079,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9837042961683453,
+        "skewness": -3.5603415537757495,
+        "kurtosis": 21.047450523183134
+    },
+    {
+        "commodity": "Wheat",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.5446767294805823,
+        "arch_test_pvalue": 0.04808138845128865,
+        "jarque_bera_pvalue": 8.97735220816464e-114,
+        "durbin_watson_stat": 1.8928106848279111,
+        "skewness": 0.06641678253218229,
+        "kurtosis": 8.34543348198905
+    },
+    {
+        "commodity": "Sugar",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9779572734120896,
+        "arch_test_pvalue": 0.9894520622768824,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9974089530647967,
+        "skewness": -4.416996181271335,
+        "kurtosis": 27.283770264215924
+    },
+    {
+        "commodity": "Livestock (sheep, two-year-old male)",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9457948821410161,
+        "arch_test_pvalue": 0.3442331413488901,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9783223831925048,
+        "skewness": -0.6139905072088855,
+        "kurtosis": 33.255245856300895
+    },
+    {
+        "commodity": "Onions",
+        "regime": "Unified",
+        "breusch_godfrey_pvalue": 0.9900612817812456,
+        "arch_test_pvalue": 0.9587721374984701,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9893602762682183,
+        "skewness": -1.9017810354814613,
+        "kurtosis": 44.38350664055638
+    },
+    {
+        "commodity": "Lentils",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.9044517579419056,
+        "arch_test_pvalue": 0.7653293362258842,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9877716216462626,
+        "skewness": -2.6031239532064196,
+        "kurtosis": 18.46405975559644
+    },
+    {
+        "commodity": "Fuel (diesel)",
+        "regime": "North",
+        "breusch_godfrey_pvalue": 0.5564490057219131,
+        "arch_test_pvalue": 0.0007271952766484212,
+        "jarque_bera_pvalue": 1.4221725243741541e-57,
+        "durbin_watson_stat": 1.9111755948264493,
+        "skewness": 0.4224376806509811,
+        "kurtosis": 6.705373125503117
+    },
+    {
+        "commodity": "Onions",
+        "regime": "South",
+        "breusch_godfrey_pvalue": 0.9958131211111007,
+        "arch_test_pvalue": 0.9985266596418225,
+        "jarque_bera_pvalue": 0.0,
+        "durbin_watson_stat": 1.9917902299449233,
+        "skewness": -2.4659426123361534,
+        "kurtosis": 31.009910434818572
+    }
+]

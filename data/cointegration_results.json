@@ -1,0 +1,122 @@
+{
+    "('Fuel (gas)', 'South')": {
+        "cointegration_statistic": -19.204411036203815,
+        "p_value": 0.0,
+        "critical_values": [
+            -3.9272934939608626,
+            -3.353250554914016,
+            -3.0563181501825785
+        ],
+        "cointegrated": true,
+        "price_transformation": "diff",
+        "conflict_transformation": "diff"
+    },
+    "('Fuel (diesel)', 'Unified')": {
+        "cointegration_statistic": -7.8404413078683515,
+        "p_value": 7.582297008174016e-11,
+        "critical_values": [
+            -3.910234186322927,
+            -3.3438071152486817,
+            -3.0497757375131647
+        ],
+        "cointegrated": true,
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Fuel (gas)', 'Unified')": {
+        "cointegration_statistic": -5.0119328310026505,
+        "p_value": 0.0001565223185387745,
+        "critical_values": [
+            -3.910199525909264,
+            -3.3437878716198752,
+            -3.049762395813916
+        ],
+        "cointegrated": true,
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Eggs', 'North')": {
+        "cointegration_statistic": -8.941855846676052,
+        "p_value": 1.2255805998082364e-13,
+        "critical_values": [
+            -3.921619099685161,
+            -3.350115565355184,
+            -3.054147283209274
+        ],
+        "cointegrated": true,
+        "price_transformation": "diff",
+        "conflict_transformation": "diff"
+    },
+    "('Livestock (sheep, two-year-old male)', 'South')": {
+        "cointegration_statistic": -5.242015779046885,
+        "p_value": 5.768282466392663e-05,
+        "critical_values": [
+            -3.9273806531239948,
+            -3.353298661189966,
+            -3.0563514539148993
+        ],
+        "cointegrated": true,
+        "price_transformation": "diff",
+        "conflict_transformation": "diff"
+    },
+    "('Lentils', 'Unified')": {
+        "cointegration_statistic": -3.7954716526488967,
+        "p_value": 0.01374542241731455,
+        "critical_values": [
+            -3.910682653829633,
+            -3.3440560855996133,
+            -3.0499483462643293
+        ],
+        "cointegrated": true,
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Peas (yellow, split)', 'South')": {
+        "cointegration_statistic": -19.457182290591348,
+        "p_value": 0.0,
+        "critical_values": [
+            -3.9572875827883784,
+            -3.369722263131177,
+            -3.067707176983487
+        ],
+        "cointegrated": true,
+        "price_transformation": "diff",
+        "conflict_transformation": "diff"
+    },
+    "('Fuel (petrol-gasoline)', 'Unified')": {
+        "cointegration_statistic": -3.2001196050407086,
+        "p_value": 0.06990780206520084,
+        "critical_values": [
+            -3.910199525909264,
+            -3.3437878716198752,
+            -3.049762395813916
+        ],
+        "cointegrated": false,
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Livestock (sheep, two-year-old male)', 'Unified')": {
+        "cointegration_statistic": -4.66078855109347,
+        "p_value": 0.0006584085953106815,
+        "critical_values": [
+            -3.9102168343163677,
+            -3.3437974813600415,
+            -3.049769058297372
+        ],
+        "cointegrated": true,
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Lentils', 'North')": {
+        "cointegration_statistic": -7.4568547796309845,
+        "p_value": 6.747658454176779e-10,
+        "critical_values": [
+            -3.921619099685161,
+            -3.350115565355184,
+            -3.054147283209274
+        ],
+        "cointegrated": true,
+        "price_transformation": "diff",
+        "conflict_transformation": "diff"
+    }
+}

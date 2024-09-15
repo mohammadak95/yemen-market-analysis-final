@@ -1,0 +1,2858 @@
+{
+    "Beans (white)_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.6832572209784917,
+                "spatial_lag_log_price": -0.013835430653589699,
+                "conflict_intensity": 0.0037289100833386856
+            },
+            "Std. Error": {
+                "const": 0.07948246978406705,
+                "spatial_lag_log_price": 0.03087525462854997,
+                "conflict_intensity": 0.007131365749872778
+            },
+            "t-statistic": {
+                "const": 21.177716615392786,
+                "spatial_lag_log_price": -0.4481074187092289,
+                "conflict_intensity": 0.5228886322939205
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.654407971052493,
+                "conflict_intensity": 0.6014482794006013
+            },
+            "Direct": {
+                "const": 1.6832572209784917,
+                "spatial_lag_log_price": -0.013835430653589699,
+                "conflict_intensity": 0.0037289100833386856
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.6832572209784917,
+                "spatial_lag_log_price": -0.013835430653589699,
+                "conflict_intensity": 0.0037289100833386856
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0019839440538488295,
+            "Adj. R-squared": -0.006822079969205586,
+            "Log-likelihood": 167.64400942149663,
+            "AIC": -229.28801884299327,
+            "BIC": -25.734011002203147
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 4.4620606242223514e-10,
+            "Durbin-Watson Statistic": 2.3054389378735647,
+            "Normality Test (p-value)": 0.004410330371236263
+        }
+    },
+    "Beans (kidney red)_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 2.0881918153730887,
+                "spatial_lag_log_price": -0.016591934137536176,
+                "conflict_intensity": 0.0005415393646387995
+            },
+            "Std. Error": {
+                "const": 0.08502165149927306,
+                "spatial_lag_log_price": 0.025706712876775714,
+                "conflict_intensity": 0.007013202203371781
+            },
+            "t-statistic": {
+                "const": 24.560706344206253,
+                "spatial_lag_log_price": -0.6454319623465306,
+                "conflict_intensity": 0.07721713262144933
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.5191309523790419,
+                "conflict_intensity": 0.9385012763393346
+            },
+            "Direct": {
+                "const": 2.0881918153730887,
+                "spatial_lag_log_price": -0.016591934137536176,
+                "conflict_intensity": 0.0005415393646387995
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 2.0881918153730887,
+                "spatial_lag_log_price": -0.016591934137536176,
+                "conflict_intensity": 0.0005415393646387995
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.001363862606199917,
+            "Adj. R-squared": -0.007099155507306776,
+            "Log-likelihood": 171.76858499360654,
+            "AIC": -237.53716998721308,
+            "BIC": -31.86892170797597
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.9475516462681705e-11,
+            "Durbin-Watson Statistic": 2.4736161762490605,
+            "Normality Test (p-value)": 0.041723322207286744
+        }
+    },
+    "Beans (white)_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.9217133481089284,
+                "spatial_lag_log_price": 0.018465923627776375,
+                "conflict_intensity": 0.0010459537652888053
+            },
+            "Std. Error": {
+                "const": 0.12929971548956506,
+                "spatial_lag_log_price": 0.05326943572776983,
+                "conflict_intensity": 0.0102604631020986
+            },
+            "t-statistic": {
+                "const": 7.128502523142163,
+                "spatial_lag_log_price": 0.3466513841472874,
+                "conflict_intensity": 0.10194021019137758
+            },
+            "p-value": {
+                "const": 4.640288153723304e-12,
+                "spatial_lag_log_price": 0.729031950262208,
+                "conflict_intensity": 0.9188542130699107
+            },
+            "Direct": {
+                "const": 0.9217133481089284,
+                "spatial_lag_log_price": 0.018465923627776375,
+                "conflict_intensity": 0.0010459537652888053
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.9217133481089284,
+                "spatial_lag_log_price": 0.018465923627776375,
+                "conflict_intensity": 0.0010459537652888053
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.00032293043508613284,
+            "Adj. R-squared": -0.006225172640666576,
+            "Log-likelihood": -10.83358100571068,
+            "AIC": 131.66716201142137,
+            "BIC": 359.123231020917
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 2.52058737122136e-14,
+            "Durbin-Watson Statistic": 2.158210585723241,
+            "Normality Test (p-value)": 1.707263777089603e-11
+        }
+    },
+    "Beans (white)_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.341873471060678,
+                "spatial_lag_log_price": -0.030215196608484415,
+                "conflict_intensity": 0.007681293421788606
+            },
+            "Std. Error": {
+                "const": 0.11810449596695181,
+                "spatial_lag_log_price": 0.047598028296248505,
+                "conflict_intensity": 0.009737136091806486
+            },
+            "t-statistic": {
+                "const": 11.36174757848476,
+                "spatial_lag_log_price": -0.634799332872069,
+                "conflict_intensity": 0.7888657762781183
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.5257547183729256,
+                "conflict_intensity": 0.4304420967479543
+            },
+            "Direct": {
+                "const": 1.341873471060678,
+                "spatial_lag_log_price": -0.030215196608484415,
+                "conflict_intensity": 0.007681293421788606
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.341873471060678,
+                "spatial_lag_log_price": -0.030215196608484415,
+                "conflict_intensity": 0.007681293421788606
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0014773178705143053,
+            "Adj. R-squared": -0.0022578043818404225,
+            "Log-likelihood": -270.20719639057546,
+            "AIC": 668.4143927811509,
+            "BIC": 968.707752301575
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 3.7474479699819776e-25,
+            "Durbin-Watson Statistic": 1.9999153570914077,
+            "Normality Test (p-value)": 0.00011141321016778027
+        }
+    },
+    "Eggs_South": {
+        "summary": {
+            "Coefficient": {
+                "const": -1.1831178406605725,
+                "spatial_lag_log_price": -0.1914173089245579,
+                "conflict_intensity": -0.005053612522385141
+            },
+            "Std. Error": {
+                "const": 0.09706688966721136,
+                "spatial_lag_log_price": 0.04237475109680889,
+                "conflict_intensity": 0.007754264714409384
+            },
+            "t-statistic": {
+                "const": -12.188686015559258,
+                "spatial_lag_log_price": -4.517249163003885,
+                "conflict_intensity": -0.6517204027087509
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 8.832447937701104e-06,
+                "conflict_intensity": 0.5150508138863601
+            },
+            "Direct": {
+                "const": -1.1831178406605725,
+                "spatial_lag_log_price": -0.1914173089245579,
+                "conflict_intensity": -0.005053612522385141
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": -1.1831178406605725,
+                "spatial_lag_log_price": -0.1914173089245579,
+                "conflict_intensity": -0.005053612522385141
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "***",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.060855823503594864,
+            "Adj. R-squared": 0.05317889563032718,
+            "Log-likelihood": 136.4269382137136,
+            "AIC": -166.85387642742722,
+            "BIC": 40.70483289076685
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 3.1345195422545854e-15,
+            "Durbin-Watson Statistic": 2.1004966061635675,
+            "Normality Test (p-value)": 0.05589125143504526
+        }
+    },
+    "Beans (kidney red)_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.5387737873437966,
+                "spatial_lag_log_price": 0.04257087388517911,
+                "conflict_intensity": -0.003655480653691397
+            },
+            "Std. Error": {
+                "const": 0.1278864434822368,
+                "spatial_lag_log_price": 0.03877039232555901,
+                "conflict_intensity": 0.009204143715471076
+            },
+            "t-statistic": {
+                "const": 12.032344832214601,
+                "spatial_lag_log_price": 1.0980253572805523,
+                "conflict_intensity": -0.3971559730805775
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.2725425396290524,
+                "conflict_intensity": 0.6913643954149666
+            },
+            "Direct": {
+                "const": 1.5387737873437966,
+                "spatial_lag_log_price": 0.04257087388517911,
+                "conflict_intensity": -0.003655480653691397
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.5387737873437966,
+                "spatial_lag_log_price": 0.04257087388517911,
+                "conflict_intensity": -0.003655480653691397
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0018054815272140479,
+            "Adj. R-squared": -0.0018643512612888102,
+            "Log-likelihood": -232.8213111311626,
+            "AIC": 593.6426222623252,
+            "BIC": 895.0381000388563
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 4.269777179198624e-31,
+            "Durbin-Watson Statistic": 2.1821026556030776,
+            "Normality Test (p-value)": 1.266193307663511e-06
+        }
+    },
+    "Eggs_North": {
+        "summary": {
+            "Coefficient": {
+                "const": -1.7025392045556196,
+                "spatial_lag_log_price": -0.03179376598843492,
+                "conflict_intensity": -0.0007998104442659178
+            },
+            "Std. Error": {
+                "const": 0.0668546596947002,
+                "spatial_lag_log_price": 0.026474954202307346,
+                "conflict_intensity": 0.003553544426444332
+            },
+            "t-statistic": {
+                "const": -25.466275833733484,
+                "spatial_lag_log_price": -1.2008997539895283,
+                "conflict_intensity": -0.2250739960682597
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.23048680143638878,
+                "conflict_intensity": 0.8220343955955598
+            },
+            "Direct": {
+                "const": -1.7025392045556196,
+                "spatial_lag_log_price": -0.03179376598843492,
+                "conflict_intensity": -0.0007998104442659178
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": -1.7025392045556196,
+                "spatial_lag_log_price": -0.03179376598843492,
+                "conflict_intensity": -0.0007998104442659178
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0035804849580849396,
+            "Adj. R-squared": -0.0029462804242856855,
+            "Log-likelihood": 479.7836076396869,
+            "AIC": -849.5672152793738,
+            "BIC": -622.1111462698782
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.7998226529582867,
+            "Durbin-Watson Statistic": 2.2653606443592893,
+            "Normality Test (p-value)": 1.695887719466827e-85
+        }
+    },
+    "Fuel (diesel)_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.2162872080234075,
+                "spatial_lag_log_price": -0.05135690694383611,
+                "conflict_intensity": 0.0036558910252739523
+            },
+            "Std. Error": {
+                "const": 0.07760427517386206,
+                "spatial_lag_log_price": 0.04485187817126904,
+                "conflict_intensity": 0.008001345041495987
+            },
+            "t-statistic": {
+                "const": 15.672940766452333,
+                "spatial_lag_log_price": -1.1450335869487407,
+                "conflict_intensity": 0.456909557869838
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.25303517096061423,
+                "conflict_intensity": 0.6480403545412461
+            },
+            "Direct": {
+                "const": 1.2162872080234075,
+                "spatial_lag_log_price": -0.05135690694383611,
+                "conflict_intensity": 0.0036558910252739523
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.2162872080234075,
+                "spatial_lag_log_price": -0.05135690694383611,
+                "conflict_intensity": 0.0036558910252739523
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0041589800095738205,
+            "Adj. R-squared": -0.0038290495625419307,
+            "Log-likelihood": 133.4577452593547,
+            "AIC": -160.91549051870942,
+            "BIC": 47.63390184912873
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.0251555011879811e-18,
+            "Durbin-Watson Statistic": 2.149824578419132,
+            "Normality Test (p-value)": 0.008420325330335005
+        }
+    },
+    "Eggs_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": -1.253783331245652,
+                "spatial_lag_log_price": -0.046550842988965016,
+                "conflict_intensity": -0.0024782920013301565
+            },
+            "Std. Error": {
+                "const": 0.12954399451729665,
+                "spatial_lag_log_price": 0.05576626183776125,
+                "conflict_intensity": 0.0094317457238187
+            },
+            "t-statistic": {
+                "const": -9.678436549046259,
+                "spatial_lag_log_price": -0.834749209556016,
+                "conflict_intensity": -0.2627606886253876
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.4041178361467159,
+                "conflict_intensity": 0.7928053244907833
+            },
+            "Direct": {
+                "const": -1.253783331245652,
+                "spatial_lag_log_price": -0.046550842988965016,
+                "conflict_intensity": -0.0024782920013301565
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": -1.253783331245652,
+                "spatial_lag_log_price": -0.046550842988965016,
+                "conflict_intensity": -0.0024782920013301565
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.001001544655002129,
+            "Adj. R-squared": -0.002613648790154688,
+            "Log-likelihood": -258.40246850133786,
+            "AIC": 644.8049370026757,
+            "BIC": 947.2070901013537
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.0881577282934646e-42,
+            "Durbin-Watson Statistic": 2.164690516807733,
+            "Normality Test (p-value)": 1.9722843028305435e-06
+        }
+    },
+    "Fuel (diesel)_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.8243393811457316,
+                "spatial_lag_log_price": -0.03404227436102495,
+                "conflict_intensity": 0.0016935588851548834
+            },
+            "Std. Error": {
+                "const": 0.06456992514010522,
+                "spatial_lag_log_price": 0.04002122895078168,
+                "conflict_intensity": 0.0073801219807976244
+            },
+            "t-statistic": {
+                "const": 12.766615097618004,
+                "spatial_lag_log_price": -0.8506054225093966,
+                "conflict_intensity": 0.22947573082956657
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.3952512936426926,
+                "conflict_intensity": 0.8185597287343764
+            },
+            "Direct": {
+                "const": 0.8243393811457316,
+                "spatial_lag_log_price": -0.03404227436102495,
+                "conflict_intensity": 0.0016935588851548834
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.8243393811457316,
+                "spatial_lag_log_price": -0.03404227436102495,
+                "conflict_intensity": 0.0016935588851548834
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0009929960429304607,
+            "Adj. R-squared": -0.002600554331015692,
+            "Log-likelihood": -55.8217894394755,
+            "AIC": 239.64357887895102,
+            "BIC": 542.4287373098043
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.12124907071180492,
+            "Durbin-Watson Statistic": 1.7168493916950736,
+            "Normality Test (p-value)": 2.8349953290503685e-30
+        }
+    },
+    "Fuel (diesel)_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.7723824429453575,
+                "spatial_lag_log_price": -0.14085310923512936,
+                "conflict_intensity": -7.509772702990128e-05
+            },
+            "Std. Error": {
+                "const": 0.048929528312092574,
+                "spatial_lag_log_price": 0.030482755840766186,
+                "conflict_intensity": 0.005033972462484723
+            },
+            "t-statistic": {
+                "const": 15.785609826826573,
+                "spatial_lag_log_price": -4.620747217571422,
+                "conflict_intensity": -0.014918183917286216
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 5.142906227773025e-06,
+                "conflict_intensity": 0.988104780846335
+            },
+            "Direct": {
+                "const": 0.7723824429453575,
+                "spatial_lag_log_price": -0.14085310923512936,
+                "conflict_intensity": -7.509772702990128e-05
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.7723824429453575,
+                "spatial_lag_log_price": -0.14085310923512936,
+                "conflict_intensity": -7.509772702990128e-05
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "***",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.05046556564578031,
+            "Adj. R-squared": 0.044218628577660346,
+            "Log-likelihood": 319.4450023348095,
+            "AIC": -528.890004669619,
+            "BIC": -301.6725477480462
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.8517402262365327,
+            "Durbin-Watson Statistic": 2.0838437260456733,
+            "Normality Test (p-value)": 1.669610689000194e-14
+        }
+    },
+    "Fuel (gas)_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 3.9097074354561294,
+                "spatial_lag_log_price": -0.15685225740433406,
+                "conflict_intensity": -0.003950264375217805
+            },
+            "Std. Error": {
+                "const": 0.26604362234587914,
+                "spatial_lag_log_price": 0.04543262531315097,
+                "conflict_intensity": 0.008356453510757682
+            },
+            "t-statistic": {
+                "const": 14.695738243907911,
+                "spatial_lag_log_price": -3.4524145660350265,
+                "conflict_intensity": -0.4727202000385009
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0006288570795758286,
+                "conflict_intensity": 0.6367291366695014
+            },
+            "Direct": {
+                "const": 3.9097074354561294,
+                "spatial_lag_log_price": -0.15685225740433406,
+                "conflict_intensity": -0.003950264375217805
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 3.9097074354561294,
+                "spatial_lag_log_price": -0.15685225740433406,
+                "conflict_intensity": -0.003950264375217805
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "***",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.03736320163558238,
+            "Adj. R-squared": 0.029641516087204667,
+            "Log-likelihood": 111.03520916200416,
+            "AIC": -116.07041832400833,
+            "BIC": 92.47897404382982
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.583784675190872,
+            "Durbin-Watson Statistic": 2.572250955333781,
+            "Normality Test (p-value)": 6.183403051673955e-17
+        }
+    },
+    "Fuel (gas)_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 3.9325941602383914,
+                "spatial_lag_log_price": -0.18030079774729055,
+                "conflict_intensity": -0.0002808510138956886
+            },
+            "Std. Error": {
+                "const": 0.22910022270745167,
+                "spatial_lag_log_price": 0.039626418733746345,
+                "conflict_intensity": 0.00595098080271746
+            },
+            "t-statistic": {
+                "const": 17.16538776682071,
+                "spatial_lag_log_price": -4.550014952366719,
+                "conflict_intensity": -0.04719407156673075
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 6.2224675090316595e-06,
+                "conflict_intensity": 0.9623706796200064
+            },
+            "Direct": {
+                "const": 3.9325941602383914,
+                "spatial_lag_log_price": -0.18030079774729055,
+                "conflict_intensity": -0.0002808510138956886
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 3.9325941602383914,
+                "spatial_lag_log_price": -0.18030079774729055,
+                "conflict_intensity": -0.0002808510138956886
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "***",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.026076549605530852,
+            "Adj. R-squared": 0.02258160899406747,
+            "Log-likelihood": 126.06075446853038,
+            "AIC": -124.12150893706075,
+            "BIC": 178.81621214053024
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.7182359495028352,
+            "Durbin-Watson Statistic": 2.2769032577178576,
+            "Normality Test (p-value)": 2.048178058881271e-19
+        }
+    },
+    "Fuel (gas)_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 4.1425809400396165,
+                "spatial_lag_log_price": -0.23192764967356502,
+                "conflict_intensity": -0.003203643679879862
+            },
+            "Std. Error": {
+                "const": 0.40354714980491907,
+                "spatial_lag_log_price": 0.07047075785895676,
+                "conflict_intensity": 0.008496413940580781
+            },
+            "t-statistic": {
+                "const": 10.265419894657178,
+                "spatial_lag_log_price": -3.291118993466128,
+                "conflict_intensity": -0.3770583333491487
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0010846881151747034,
+                "conflict_intensity": 0.7063262919724824
+            },
+            "Direct": {
+                "const": 4.1425809400396165,
+                "spatial_lag_log_price": -0.23192764967356502,
+                "conflict_intensity": -0.003203643679879862
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 4.1425809400396165,
+                "spatial_lag_log_price": -0.23192764967356502,
+                "conflict_intensity": -0.003203643679879862
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "**",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.025971826712688717,
+            "Adj. R-squared": 0.0195917295077499,
+            "Log-likelihood": 76.7986371415522,
+            "AIC": -43.59727428310441,
+            "BIC": 183.85879472639124
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.9886921378203556,
+            "Durbin-Watson Statistic": 2.327292821401115,
+            "Normality Test (p-value)": 8.191308444499533e-13
+        }
+    },
+    "Fuel (petrol-gasoline)_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.039034608054546,
+                "spatial_lag_log_price": -0.022653273768477634,
+                "conflict_intensity": -0.0006293899531134288
+            },
+            "Std. Error": {
+                "const": 0.06495022622742315,
+                "spatial_lag_log_price": 0.04262081899370455,
+                "conflict_intensity": 0.007854368297207714
+            },
+            "t-statistic": {
+                "const": 15.997397829167946,
+                "spatial_lag_log_price": -0.5315072376207438,
+                "conflict_intensity": -0.08013247269512198
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.5954292968477943,
+                "conflict_intensity": 0.9361810649833036
+            },
+            "Direct": {
+                "const": 1.039034608054546,
+                "spatial_lag_log_price": -0.022653273768477634,
+                "conflict_intensity": -0.0006293899531134288
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.039034608054546,
+                "spatial_lag_log_price": -0.022653273768477634,
+                "conflict_intensity": -0.0006293899531134288
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0009433284654211116,
+            "Adj. R-squared": -0.0070704951030380325,
+            "Log-likelihood": 136.20699897396196,
+            "AIC": -166.41399794792392,
+            "BIC": 42.135394419914235
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.2212966079693777e-16,
+            "Durbin-Watson Statistic": 2.1842654905138708,
+            "Normality Test (p-value)": 0.014885636479860536
+        }
+    },
+    "Fuel (petrol-gasoline)_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.5167584841111775,
+                "spatial_lag_log_price": -0.0023776450768491454,
+                "conflict_intensity": 0.0024064477442095646
+            },
+            "Std. Error": {
+                "const": 0.09973253513421072,
+                "spatial_lag_log_price": 0.06633610985567343,
+                "conflict_intensity": 0.010106216555121112
+            },
+            "t-statistic": {
+                "const": 5.181443381698583,
+                "spatial_lag_log_price": -0.035842395371422225,
+                "conflict_intensity": 0.2381155926240417
+            },
+            "p-value": {
+                "const": 3.468894529401467e-07,
+                "spatial_lag_log_price": 0.9714255573453043,
+                "conflict_intensity": 0.8119109798656434
+            },
+            "Direct": {
+                "const": 0.5167584841111775,
+                "spatial_lag_log_price": -0.0023776450768491454,
+                "conflict_intensity": 0.0024064477442095646
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.5167584841111775,
+                "spatial_lag_log_price": -0.0023776450768491454,
+                "conflict_intensity": 0.0024064477442095646
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.00014412024497179043,
+            "Adj. R-squared": -0.006405154076567721,
+            "Log-likelihood": -3.4898616893840098,
+            "AIC": 116.97972337876801,
+            "BIC": 344.4357923882637
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 2.20902540391208e-19,
+            "Durbin-Watson Statistic": 2.1216906354558227,
+            "Normality Test (p-value)": 1.6362232517880942e-09
+        }
+    },
+    "Lentils_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.7091547608061708,
+                "spatial_lag_log_price": -0.014726548682506321,
+                "conflict_intensity": 0.01067657401897644
+            },
+            "Std. Error": {
+                "const": 0.08610129518587809,
+                "spatial_lag_log_price": 0.03372726526036905,
+                "conflict_intensity": 0.007749425838043527
+            },
+            "t-statistic": {
+                "const": 19.85051162257659,
+                "spatial_lag_log_price": -0.43663631097332495,
+                "conflict_intensity": 1.3777245233528064
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.6626956192215321,
+                "conflict_intensity": 0.16933614608082248
+            },
+            "Direct": {
+                "const": 1.7091547608061708,
+                "spatial_lag_log_price": -0.014726548682506321,
+                "conflict_intensity": 0.01067657401897644
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.7091547608061708,
+                "spatial_lag_log_price": -0.014726548682506321,
+                "conflict_intensity": 0.01067657401897644
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0074175168720962414,
+            "Adj. R-squared": -0.001289347014990616,
+            "Log-likelihood": 133.89408258271294,
+            "AIC": -161.78816516542588,
+            "BIC": 42.07308991263352
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.11108622425594365,
+            "Durbin-Watson Statistic": 2.347163677326696,
+            "Normality Test (p-value)": 2.6370100959464865e-26
+        }
+    },
+    "Lentils_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.3416201119482927,
+                "spatial_lag_log_price": -0.019885135633048327,
+                "conflict_intensity": -0.006368568188578379
+            },
+            "Std. Error": {
+                "const": 0.06110839560695208,
+                "spatial_lag_log_price": 0.02455977025097738,
+                "conflict_intensity": 0.0047693117484045025
+            },
+            "t-statistic": {
+                "const": 21.954759221262574,
+                "spatial_lag_log_price": -0.8096629337262217,
+                "conflict_intensity": -1.3353222696563887
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.41839244786748475,
+                "conflict_intensity": 0.18217873736546975
+            },
+            "Direct": {
+                "const": 1.3416201119482927,
+                "spatial_lag_log_price": -0.019885135633048327,
+                "conflict_intensity": -0.006368568188578379
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.3416201119482927,
+                "spatial_lag_log_price": -0.019885135633048327,
+                "conflict_intensity": -0.006368568188578379
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.003215543811021737,
+            "Adj. R-squared": -0.0005038011747580118,
+            "Log-likelihood": 303.0904397718463,
+            "AIC": -478.18087954369264,
+            "BIC": -177.72890779834256
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.31282175250909583,
+            "Durbin-Watson Statistic": 1.831150641322571,
+            "Normality Test (p-value)": 9.390022309516034e-57
+        }
+    },
+    "Lentils_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.9991938893357081,
+                "spatial_lag_log_price": 0.02329043365487085,
+                "conflict_intensity": 0.0008167819471357203
+            },
+            "Std. Error": {
+                "const": 0.14802899868450717,
+                "spatial_lag_log_price": 0.05543031266051307,
+                "conflict_intensity": 0.01002522035976214
+            },
+            "t-statistic": {
+                "const": 6.749987490392209,
+                "spatial_lag_log_price": 0.4201750366719882,
+                "conflict_intensity": 0.08147271758873331
+            },
+            "p-value": {
+                "const": 5.094125121729576e-11,
+                "spatial_lag_log_price": 0.6745787811552892,
+                "conflict_intensity": 0.9351059721491306
+            },
+            "Direct": {
+                "const": 0.9991938893357081,
+                "spatial_lag_log_price": 0.02329043365487085,
+                "conflict_intensity": 0.0008167819471357203
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.9991938893357081,
+                "spatial_lag_log_price": 0.02329043365487085,
+                "conflict_intensity": 0.0008167819471357203
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0004644469771559745,
+            "Adj. R-squared": -0.0060827291343474865,
+            "Log-likelihood": 1.1896142226016293,
+            "AIC": 107.62077155479675,
+            "BIC": 335.0768405642924
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 3.5179329821549867e-17,
+            "Durbin-Watson Statistic": 2.1639683769259683,
+            "Normality Test (p-value)": 2.172084645186128e-10
+        }
+    },
+    "Livestock (sheep, two-year-old male)_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 5.8969146207051235,
+                "spatial_lag_log_price": 0.006498704663055992,
+                "conflict_intensity": -0.008786293075371073
+            },
+            "Std. Error": {
+                "const": 0.41962561952358185,
+                "spatial_lag_log_price": 0.03782327877727762,
+                "conflict_intensity": 0.007781541335875295
+            },
+            "t-statistic": {
+                "const": 14.052799320022768,
+                "spatial_lag_log_price": 0.171817591524088,
+                "conflict_intensity": -1.1291198871955566
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.8636878696917725,
+                "conflict_intensity": 0.2596799882632781
+            },
+            "Direct": {
+                "const": 5.8969146207051235,
+                "spatial_lag_log_price": 0.006498704663055992,
+                "conflict_intensity": -0.008786293075371073
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 5.8969146207051235,
+                "spatial_lag_log_price": 0.006498704663055992,
+                "conflict_intensity": -0.008786293075371073
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.00395049629507771,
+            "Adj. R-squared": -0.004060625718634858,
+            "Log-likelihood": 135.86347018163426,
+            "AIC": -165.7269403632685,
+            "BIC": 42.682054571476044
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 2.0336564445027508e-22,
+            "Durbin-Watson Statistic": 1.984676603919875,
+            "Normality Test (p-value)": 0.006978316937761105
+        }
+    },
+    "Livestock (sheep, two-year-old male)_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 6.7459467025484745,
+                "spatial_lag_log_price": -0.10794107231989061,
+                "conflict_intensity": 0.0075197382024559676
+            },
+            "Std. Error": {
+                "const": 0.5122376549378421,
+                "spatial_lag_log_price": 0.046101697930091036,
+                "conflict_intensity": 0.009030776580376616
+            },
+            "t-statistic": {
+                "const": 13.169564239409667,
+                "spatial_lag_log_price": -2.3413686950006327,
+                "conflict_intensity": 0.8326790210706738
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.019465358415327927,
+                "conflict_intensity": 0.40528196927193005
+            },
+            "Direct": {
+                "const": 6.7459467025484745,
+                "spatial_lag_log_price": -0.10794107231989061,
+                "conflict_intensity": 0.0075197382024559676
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 6.7459467025484745,
+                "spatial_lag_log_price": -0.10794107231989061,
+                "conflict_intensity": 0.0075197382024559676
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "*",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.008021981550188184,
+            "Adj. R-squared": 0.004457988669530177,
+            "Log-likelihood": -225.19030123950742,
+            "AIC": 578.3806024790149,
+            "BIC": 881.242087692916
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.6860937970448442e-38,
+            "Durbin-Watson Statistic": 2.0849932842719023,
+            "Normality Test (p-value)": 2.6279841466613065e-07
+        }
+    },
+    "Livestock (sheep, two-year-old male)_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 5.531053070823668,
+                "spatial_lag_log_price": -0.032018554742757305,
+                "conflict_intensity": -0.002040878060200038
+            },
+            "Std. Error": {
+                "const": 0.5771756084824224,
+                "spatial_lag_log_price": 0.05191251207475185,
+                "conflict_intensity": 0.010330819972029958
+            },
+            "t-statistic": {
+                "const": 9.582963987973363,
+                "spatial_lag_log_price": -0.6167791436610103,
+                "conflict_intensity": -0.19755237877783044
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.5377244182044474,
+                "conflict_intensity": 0.8434936789520044
+            },
+            "Direct": {
+                "const": 5.531053070823668,
+                "spatial_lag_log_price": -0.032018554742757305,
+                "conflict_intensity": -0.002040878060200038
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 5.531053070823668,
+                "spatial_lag_log_price": -0.032018554742757305,
+                "conflict_intensity": -0.002040878060200038
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.000989812990009109,
+            "Adj. R-squared": -0.0055539218594011786,
+            "Log-likelihood": -12.901474807957738,
+            "AIC": 135.80294961591548,
+            "BIC": 363.2590186254111
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 8.832699564091636e-21,
+            "Durbin-Watson Statistic": 2.12479874934694,
+            "Normality Test (p-value)": 2.977870910921781e-10
+        }
+    },
+    "Oil (vegetable)_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.5656301453420773,
+                "spatial_lag_log_price": 0.04214305724172624,
+                "conflict_intensity": -1.0355488270910322e-05
+            },
+            "Std. Error": {
+                "const": 0.1344606984766482,
+                "spatial_lag_log_price": 0.049091462356509845,
+                "conflict_intensity": 0.008039496238666137
+            },
+            "t-statistic": {
+                "const": 11.643775192897577,
+                "spatial_lag_log_price": 0.8584600095160497,
+                "conflict_intensity": -0.0012880767604698125
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.39126923743124165,
+                "conflict_intensity": 0.9989730515627135
+            },
+            "Direct": {
+                "const": 1.5656301453420773,
+                "spatial_lag_log_price": 0.04214305724172624,
+                "conflict_intensity": -1.0355488270910322e-05
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.5656301453420773,
+                "spatial_lag_log_price": 0.04214305724172624,
+                "conflict_intensity": -1.0355488270910322e-05
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0022829781501300106,
+            "Adj. R-squared": -0.005720099565243331,
+            "Log-likelihood": 125.71893575859751,
+            "AIC": -145.43787151719502,
+            "BIC": 63.11152085064313
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 4.0286768204068826e-20,
+            "Durbin-Watson Statistic": 2.1503320164536195,
+            "Normality Test (p-value)": 0.06012984854424455
+        }
+    },
+    "Oil (vegetable)_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.2405643473107266,
+                "spatial_lag_log_price": 0.018087855607833558,
+                "conflict_intensity": -0.009499117253649216
+            },
+            "Std. Error": {
+                "const": 0.09832331115966635,
+                "spatial_lag_log_price": 0.03796561606191054,
+                "conflict_intensity": 0.0036790714070446106
+            },
+            "t-statistic": {
+                "const": 12.617194566364686,
+                "spatial_lag_log_price": 0.47642729090284447,
+                "conflict_intensity": -2.581933374671799
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.6339039389728014,
+                "conflict_intensity": 0.010006844276791771
+            },
+            "Direct": {
+                "const": 1.2405643473107266,
+                "spatial_lag_log_price": 0.018087855607833558,
+                "conflict_intensity": -0.009499117253649216
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.2405643473107266,
+                "spatial_lag_log_price": 0.018087855607833558,
+                "conflict_intensity": -0.009499117253649216
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": "*"
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.008688072358016496,
+            "Adj. R-squared": 0.0051307329047557415,
+            "Log-likelihood": 529.1306466891381,
+            "AIC": -930.2612933782762,
+            "BIC": -627.3235723006851
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.8797004368646655,
+            "Durbin-Watson Statistic": 1.7912897514268948,
+            "Normality Test (p-value)": 4.210548224183345e-06
+        }
+    },
+    "Oil (vegetable)_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.786595068457197,
+                "spatial_lag_log_price": 0.08999728674687084,
+                "conflict_intensity": -0.008472333990817961
+            },
+            "Std. Error": {
+                "const": 0.09497155987691604,
+                "spatial_lag_log_price": 0.0368000339296094,
+                "conflict_intensity": 0.0035757455699514085
+            },
+            "t-statistic": {
+                "const": 8.282427597026215,
+                "spatial_lag_log_price": 2.4455761893865753,
+                "conflict_intensity": -2.369389495162849
+            },
+            "p-value": {
+                "const": 1.7763568394002505e-15,
+                "spatial_lag_log_price": 0.014883828821118161,
+                "conflict_intensity": 0.01828211324425366
+            },
+            "Direct": {
+                "const": 0.786595068457197,
+                "spatial_lag_log_price": 0.08999728674687084,
+                "conflict_intensity": -0.008472333990817961
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.786595068457197,
+                "spatial_lag_log_price": 0.08999728674687084,
+                "conflict_intensity": -0.008472333990817961
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "*",
+                "conflict_intensity": "*"
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.028322561643104982,
+            "Adj. R-squared": 0.02195786226522145,
+            "Log-likelihood": 476.2499225210097,
+            "AIC": -842.4998450420194,
+            "BIC": -615.0437760325237
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.0034688655857015e-12,
+            "Durbin-Watson Statistic": 1.8948717452896948,
+            "Normality Test (p-value)": 0.07286849100224249
+        }
+    },
+    "Onions_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.9756437663279207,
+                "spatial_lag_log_price": 0.01711057082354927,
+                "conflict_intensity": 0.0009068475228445065
+            },
+            "Std. Error": {
+                "const": 0.060719064776235995,
+                "spatial_lag_log_price": 0.04764143693192251,
+                "conflict_intensity": 0.008079881391958447
+            },
+            "t-statistic": {
+                "const": 16.068161950836974,
+                "spatial_lag_log_price": 0.35915312227042007,
+                "conflict_intensity": 0.11223525183761389
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.719713050856674,
+                "conflict_intensity": 0.9107059543581428
+            },
+            "Direct": {
+                "const": 0.9756437663279207,
+                "spatial_lag_log_price": 0.01711057082354927,
+                "conflict_intensity": 0.0009068475228445065
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.9756437663279207,
+                "spatial_lag_log_price": 0.01711057082354927,
+                "conflict_intensity": 0.0009068475228445065
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0004649036870391088,
+            "Adj. R-squared": -0.007552757513332287,
+            "Log-likelihood": 123.5292667598651,
+            "AIC": -141.0585335197302,
+            "BIC": 67.49085884810796
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 3.6244950553739674e-16,
+            "Durbin-Watson Statistic": 2.148409348559363,
+            "Normality Test (p-value)": 0.0019993203120454656
+        }
+    },
+    "Onions_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.8813569994517588,
+                "spatial_lag_log_price": -0.21818361912881432,
+                "conflict_intensity": 0.008157661426063459
+            },
+            "Std. Error": {
+                "const": 0.08038976366811415,
+                "spatial_lag_log_price": 0.06383681240787022,
+                "conflict_intensity": 0.009499300184581762
+            },
+            "t-statistic": {
+                "const": 10.963547586610717,
+                "spatial_lag_log_price": -3.4178338626117744,
+                "conflict_intensity": 0.8587644634395378
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0006640741883390255,
+                "conflict_intensity": 0.39073531889759794
+            },
+            "Direct": {
+                "const": 0.8813569994517588,
+                "spatial_lag_log_price": -0.21818361912881432,
+                "conflict_intensity": 0.008157661426063459
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.8813569994517588,
+                "spatial_lag_log_price": -0.21818361912881432,
+                "conflict_intensity": 0.008157661426063459
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "***",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.015481655028068309,
+            "Adj. R-squared": 0.011948694459987252,
+            "Log-likelihood": -267.686792754279,
+            "AIC": 663.373585508558,
+            "BIC": 966.3113065861489
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.1318532999212275e-30,
+            "Durbin-Watson Statistic": 1.989462321132029,
+            "Normality Test (p-value)": 1.315540170436716e-07
+        }
+    },
+    "Onions_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.25083490690173016,
+                "spatial_lag_log_price": 0.0038459590011510406,
+                "conflict_intensity": -4.512585718112293e-05
+            },
+            "Std. Error": {
+                "const": 0.0881172760380358,
+                "spatial_lag_log_price": 0.07075310421791647,
+                "conflict_intensity": 0.009897833408707849
+            },
+            "t-statistic": {
+                "const": 2.8466030519765195,
+                "spatial_lag_log_price": 0.054357459558320644,
+                "conflict_intensity": -0.004559165154408682
+            },
+            "p-value": {
+                "const": 0.004641912442017615,
+                "spatial_lag_log_price": 0.9566769774041406,
+                "conflict_intensity": 0.9963645534285985
+            },
+            "Direct": {
+                "const": 0.25083490690173016,
+                "spatial_lag_log_price": 0.0038459590011510406,
+                "conflict_intensity": -4.512585718112293e-05
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.25083490690173016,
+                "spatial_lag_log_price": 0.0038459590011510406,
+                "conflict_intensity": -4.512585718112293e-05
+            },
+            "Significance": {
+                "const": "**",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 7.322302243983891e-06,
+            "Adj. R-squared": -0.006542848075688834,
+            "Log-likelihood": 5.829653144581586,
+            "AIC": 98.34069371083683,
+            "BIC": 325.7967627203325
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.6247703682710576e-16,
+            "Durbin-Watson Statistic": 2.1285760696660128,
+            "Normality Test (p-value)": 1.503574917888048e-08
+        }
+    },
+    "Peas (yellow, split)_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.344165000953006,
+                "spatial_lag_log_price": -0.032226908309297767,
+                "conflict_intensity": -0.00022605446798206605
+            },
+            "Std. Error": {
+                "const": 0.02215656207996527,
+                "spatial_lag_log_price": 0.025243229583548778,
+                "conflict_intensity": 0.004174762752829692
+            },
+            "t-statistic": {
+                "const": 60.66667726255448,
+                "spatial_lag_log_price": -1.2766555167845999,
+                "conflict_intensity": -0.05414785973857898
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.20389949247379224,
+                "conflict_intensity": 0.956896822492445
+            },
+            "Direct": {
+                "const": 1.344165000953006,
+                "spatial_lag_log_price": -0.032226908309297767,
+                "conflict_intensity": -0.00022605446798206605
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.344165000953006,
+                "spatial_lag_log_price": -0.032226908309297767,
+                "conflict_intensity": -0.00022605446798206605
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.01204736627257752,
+            "Adj. R-squared": -0.004327539258816238,
+            "Log-likelihood": 269.67421129221367,
+            "AIC": -439.34842258442734,
+            "BIC": -278.3306313305111
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.19888826758022785,
+            "Durbin-Watson Statistic": 2.275533816776446,
+            "Normality Test (p-value)": 0.00033923610004070264
+        }
+    },
+    "Peas (yellow, split)_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.8341746954403706,
+                "spatial_lag_log_price": -0.14200195120801243,
+                "conflict_intensity": 0.003362128724926778
+            },
+            "Std. Error": {
+                "const": 0.058704886206181896,
+                "spatial_lag_log_price": 0.06306329532184274,
+                "conflict_intensity": 0.012627995608592794
+            },
+            "t-statistic": {
+                "const": 14.209629714817982,
+                "spatial_lag_log_price": -2.2517369332399655,
+                "conflict_intensity": 0.26624405243212135
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.02479402857325641,
+                "conflict_intensity": 0.7901665457240097
+            },
+            "Direct": {
+                "const": 0.8341746954403706,
+                "spatial_lag_log_price": -0.14200195120801243,
+                "conflict_intensity": 0.003362128724926778
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.8341746954403706,
+                "spatial_lag_log_price": -0.14200195120801243,
+                "conflict_intensity": 0.003362128724926778
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "*",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.010673245053967051,
+            "Adj. R-squared": 0.0050838283593566125,
+            "Log-likelihood": -131.40039094474432,
+            "AIC": 382.80078188948863,
+            "BIC": 639.736786703249
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.629887656937236e-16,
+            "Durbin-Watson Statistic": 2.4124378243985753,
+            "Normality Test (p-value)": 9.160948030528045e-09
+        }
+    },
+    "Peas (yellow, split)_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.21356159184958182,
+                "spatial_lag_log_price": -0.09574743974888524,
+                "conflict_intensity": -0.07183437517449802
+            },
+            "Std. Error": {
+                "const": 0.02254292346235888,
+                "spatial_lag_log_price": 0.028743155921858304,
+                "conflict_intensity": 0.011886324484740309
+            },
+            "t-statistic": {
+                "const": 9.473553516968506,
+                "spatial_lag_log_price": -3.3311387242648673,
+                "conflict_intensity": -6.043447263005411
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0009742124797804674,
+                "conflict_intensity": 4.513097007219358e-09
+            },
+            "Direct": {
+                "const": 0.21356159184958182,
+                "spatial_lag_log_price": -0.09574743974888524,
+                "conflict_intensity": -0.07183437517449802
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.21356159184958182,
+                "spatial_lag_log_price": -0.09574743974888524,
+                "conflict_intensity": -0.07183437517449802
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "***",
+                "conflict_intensity": "***"
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.1419705103409702,
+            "Adj. R-squared": 0.13453094829190348,
+            "Log-likelihood": 69.38211628210298,
+            "AIC": -30.76423256420597,
+            "BIC": 177.56415777790082
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.9561122528460205e-06,
+            "Durbin-Watson Statistic": 2.4981957582215824,
+            "Normality Test (p-value)": 0.19374626425047167
+        }
+    },
+    "Rice (imported)_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.8097334020376155,
+                "spatial_lag_log_price": -0.07504780596813317,
+                "conflict_intensity": -0.0021567972525918183
+            },
+            "Std. Error": {
+                "const": 0.06212716402854532,
+                "spatial_lag_log_price": 0.023660662127918668,
+                "conflict_intensity": 0.002921724905534063
+            },
+            "t-statistic": {
+                "const": 29.12950285652995,
+                "spatial_lag_log_price": -3.171838791425015,
+                "conflict_intensity": -0.7381931298551109
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.001658817513381372,
+                "conflict_intensity": 0.4609281622494459
+            },
+            "Direct": {
+                "const": 1.8097334020376155,
+                "spatial_lag_log_price": -0.07504780596813317,
+                "conflict_intensity": -0.0021567972525918183
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.8097334020376155,
+                "spatial_lag_log_price": -0.07504780596813317,
+                "conflict_intensity": -0.0021567972525918183
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "**",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.03404699030659164,
+            "Adj. R-squared": 0.026298704132580397,
+            "Log-likelihood": 509.7407758727992,
+            "AIC": -913.4815517455984,
+            "BIC": -704.9321593777602
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.5795078764205364,
+            "Durbin-Watson Statistic": 2.113350245466492,
+            "Normality Test (p-value)": 2.4147809769785695e-21
+        }
+    },
+    "Rice (imported)_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.9078925231033752,
+                "spatial_lag_log_price": -0.1951208112420978,
+                "conflict_intensity": 0.006742069311156001
+            },
+            "Std. Error": {
+                "const": 0.1752166978924769,
+                "spatial_lag_log_price": 0.06336407492952963,
+                "conflict_intensity": 0.009267195513687423
+            },
+            "t-statistic": {
+                "const": 10.888759724681996,
+                "spatial_lag_log_price": -3.0793602125352804,
+                "conflict_intensity": 0.7275199170232384
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.002147477578370749,
+                "conflict_intensity": 0.4671266733708692
+            },
+            "Direct": {
+                "const": 1.9078925231033752,
+                "spatial_lag_log_price": -0.1951208112420978,
+                "conflict_intensity": 0.006742069311156001
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.9078925231033752,
+                "spatial_lag_log_price": -0.1951208112420978,
+                "conflict_intensity": 0.006742069311156001
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "**",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.01248376739861401,
+            "Adj. R-squared": 0.00894004886057076,
+            "Log-likelihood": -246.55132208439025,
+            "AIC": 621.1026441687804,
+            "BIC": 924.0403652463715
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 3.81419685602921e-49,
+            "Durbin-Watson Statistic": 1.9711098939038638,
+            "Normality Test (p-value)": 2.231396087952111e-06
+        }
+    },
+    "Rice (imported)_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.0507812173950266,
+                "spatial_lag_log_price": 0.018899329883896473,
+                "conflict_intensity": 0.002555269465916302
+            },
+            "Std. Error": {
+                "const": 0.20122447359717496,
+                "spatial_lag_log_price": 0.07294426071318433,
+                "conflict_intensity": 0.010056517647056343
+            },
+            "t-statistic": {
+                "const": 5.221935476390178,
+                "spatial_lag_log_price": 0.25909276067939513,
+                "conflict_intensity": 0.2540908846974736
+            },
+            "p-value": {
+                "const": 2.8277948960209187e-07,
+                "spatial_lag_log_price": 0.7956943399884815,
+                "conflict_intensity": 0.7995533483947486
+            },
+            "Direct": {
+                "const": 1.0507812173950266,
+                "spatial_lag_log_price": 0.018899329883896473,
+                "conflict_intensity": 0.002555269465916302
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.0507812173950266,
+                "spatial_lag_log_price": 0.018899329883896473,
+                "conflict_intensity": 0.002555269465916302
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.00031196403347399926,
+            "Adj. R-squared": -0.006236210874603687,
+            "Log-likelihood": -1.352298462444041,
+            "AIC": 112.70459692488808,
+            "BIC": 340.16066593438376
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.5654736233260022e-21,
+            "Durbin-Watson Statistic": 2.1266791133858742,
+            "Normality Test (p-value)": 7.16106283306364e-10
+        }
+    },
+    "Salt_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.06903547141747529,
+                "spatial_lag_log_price": -0.028481234050281152,
+                "conflict_intensity": 0.0024490865622094553
+            },
+            "Std. Error": {
+                "const": 0.03768275581451006,
+                "spatial_lag_log_price": 0.05087815143987305,
+                "conflict_intensity": 0.008440410507730086
+            },
+            "t-statistic": {
+                "const": 1.8320175880261018,
+                "spatial_lag_log_price": -0.5597930200734552,
+                "conflict_intensity": 0.2901620199593939
+            },
+            "p-value": {
+                "const": 0.06786098856336364,
+                "spatial_lag_log_price": 0.5760050493309059,
+                "conflict_intensity": 0.7718767705343437
+            },
+            "Direct": {
+                "const": 0.06903547141747529,
+                "spatial_lag_log_price": -0.028481234050281152,
+                "conflict_intensity": 0.0024490865622094553
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.06903547141747529,
+                "spatial_lag_log_price": -0.028481234050281152,
+                "conflict_intensity": 0.0024490865622094553
+            },
+            "Significance": {
+                "const": "",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0011144635134999747,
+            "Adj. R-squared": -0.006897987313931875,
+            "Log-likelihood": 107.72680132505586,
+            "AIC": -109.45360265011172,
+            "BIC": 99.09578971772643
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 4.665692934740748e-17,
+            "Durbin-Watson Statistic": 2.112469624273704,
+            "Normality Test (p-value)": 8.038351402397983e-05
+        }
+    },
+    "Salt_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": -0.45511400292787585,
+                "spatial_lag_log_price": -0.19094146129185904,
+                "conflict_intensity": 0.008865269842935947
+            },
+            "Std. Error": {
+                "const": 0.04644100242206715,
+                "spatial_lag_log_price": 0.06393750607972107,
+                "conflict_intensity": 0.009505449712895459
+            },
+            "t-statistic": {
+                "const": -9.799831596908458,
+                "spatial_lag_log_price": -2.9863764322271487,
+                "conflict_intensity": 0.9326512801292274
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0029117631125745724,
+                "conflict_intensity": 0.35128975933994466
+            },
+            "Direct": {
+                "const": -0.45511400292787585,
+                "spatial_lag_log_price": -0.19094146129185904,
+                "conflict_intensity": 0.008865269842935947
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": -0.45511400292787585,
+                "spatial_lag_log_price": -0.19094146129185904,
+                "conflict_intensity": 0.008865269842935947
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "**",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.012156686916144133,
+            "Adj. R-squared": 0.008611794644312054,
+            "Log-likelihood": -267.99534597009097,
+            "AIC": 663.9906919401819,
+            "BIC": 966.928413017773
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 2.1842756391482663e-42,
+            "Durbin-Watson Statistic": 1.9555675107193151,
+            "Normality Test (p-value)": 2.1728373363355946e-06
+        }
+    },
+    "Salt_North": {
+        "summary": {
+            "Coefficient": {
+                "const": -0.6846495837513525,
+                "spatial_lag_log_price": 0.06891844356368478,
+                "conflict_intensity": 0.003437740669656693
+            },
+            "Std. Error": {
+                "const": 0.05122126655599882,
+                "spatial_lag_log_price": 0.07080423416310264,
+                "conflict_intensity": 0.010087118656698577
+            },
+            "t-statistic": {
+                "const": -13.36651023658003,
+                "spatial_lag_log_price": 0.9733661323830746,
+                "conflict_intensity": 0.34080501941689606
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.33094808478418125,
+                "conflict_intensity": 0.733425791948449
+            },
+            "Direct": {
+                "const": -0.6846495837513525,
+                "spatial_lag_log_price": 0.06891844356368478,
+                "conflict_intensity": 0.003437740669656693
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": -0.6846495837513525,
+                "spatial_lag_log_price": 0.06891844356368478,
+                "conflict_intensity": 0.003437740669656693
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0025680168406168047,
+            "Adj. R-squared": -0.003965380428986309,
+            "Log-likelihood": -2.9315879641715243,
+            "AIC": 115.86317592834305,
+            "BIC": 343.3192449378387
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 9.453464128188604e-22,
+            "Durbin-Watson Statistic": 2.202521431596572,
+            "Normality Test (p-value)": 6.694060135521177e-09
+        }
+    },
+    "Tomatoes_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.0935261724741252,
+                "spatial_lag_log_price": 0.025579854819685874,
+                "conflict_intensity": -0.004504755738591023
+            },
+            "Std. Error": {
+                "const": 0.060808026038905,
+                "spatial_lag_log_price": 0.04515182136327943,
+                "conflict_intensity": 0.008277068656803261
+            },
+            "t-statistic": {
+                "const": 17.98325391741029,
+                "spatial_lag_log_price": 0.5665298552161879,
+                "conflict_intensity": -0.5442453029416857
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.5714234587260467,
+                "conflict_intensity": 0.5866447254233393
+            },
+            "Direct": {
+                "const": 1.0935261724741252,
+                "spatial_lag_log_price": 0.025579854819685874,
+                "conflict_intensity": -0.004504755738591023
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.0935261724741252,
+                "spatial_lag_log_price": 0.025579854819685874,
+                "conflict_intensity": -0.004504755738591023
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.00170408240365727,
+            "Adj. R-squared": -0.006303638860484462,
+            "Log-likelihood": 114.61897094109793,
+            "AIC": -123.23794188219586,
+            "BIC": 85.3114504856423
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.6288942082442294e-06,
+            "Durbin-Watson Statistic": 2.1759897185196904,
+            "Normality Test (p-value)": 0.00021050431588708055
+        }
+    },
+    "Sugar_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.114083817720923,
+                "spatial_lag_log_price": 0.02856589326767246,
+                "conflict_intensity": 0.0003803737188993305
+            },
+            "Std. Error": {
+                "const": 0.07574491355194977,
+                "spatial_lag_log_price": 0.04831049562490128,
+                "conflict_intensity": 0.008021089815047462
+            },
+            "t-statistic": {
+                "const": 14.708364766392224,
+                "spatial_lag_log_price": 0.5912978721946373,
+                "conflict_intensity": 0.04742170050081652
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.5547306219761468,
+                "conflict_intensity": 0.962206171486353
+            },
+            "Direct": {
+                "const": 1.114083817720923,
+                "spatial_lag_log_price": 0.02856589326767246,
+                "conflict_intensity": 0.0003803737188993305
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.114083817720923,
+                "spatial_lag_log_price": 0.02856589326767246,
+                "conflict_intensity": 0.0003803737188993305
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0011120706284860615,
+            "Adj. R-squared": -0.006900399393210632,
+            "Log-likelihood": 126.68398450211264,
+            "AIC": -147.36796900422527,
+            "BIC": 61.18142336361288
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.6478896362016203e-16,
+            "Durbin-Watson Statistic": 2.141183286277692,
+            "Normality Test (p-value)": 0.03466953763703666
+        }
+    },
+    "Tomatoes_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.12976182951369758,
+                "spatial_lag_log_price": 0.0518693050313813,
+                "conflict_intensity": -0.006154475395598385
+            },
+            "Std. Error": {
+                "const": 0.0930398844880279,
+                "spatial_lag_log_price": 0.07077963461899127,
+                "conflict_intensity": 0.010383835433002532
+            },
+            "t-statistic": {
+                "const": 1.394690354870281,
+                "spatial_lag_log_price": 0.7328280982318601,
+                "conflict_intensity": -0.5926977016640557
+            },
+            "p-value": {
+                "const": 0.16386809542346348,
+                "spatial_lag_log_price": 0.464084086605951,
+                "conflict_intensity": 0.5537118317905287
+            },
+            "Direct": {
+                "const": 0.12976182951369758,
+                "spatial_lag_log_price": 0.0518693050313813,
+                "conflict_intensity": -0.006154475395598385
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.12976182951369758,
+                "spatial_lag_log_price": 0.0518693050313813,
+                "conflict_intensity": -0.006154475395598385
+            },
+            "Significance": {
+                "const": "",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0022291806072226583,
+            "Adj. R-squared": -0.004306436113690637,
+            "Log-likelihood": -16.265976487992162,
+            "AIC": 142.53195297598432,
+            "BIC": 369.98802198548
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 8.094344824918117e-10,
+            "Durbin-Watson Statistic": 2.1212010490073783,
+            "Normality Test (p-value)": 5.270902261776191e-10
+        }
+    },
+    "Sugar_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.34991498602198745,
+                "spatial_lag_log_price": 0.028369388400544558,
+                "conflict_intensity": 0.0024050288079412257
+            },
+            "Std. Error": {
+                "const": 0.112222633204491,
+                "spatial_lag_log_price": 0.07298936548870463,
+                "conflict_intensity": 0.010039471946014242
+            },
+            "t-statistic": {
+                "const": 3.1180429119353823,
+                "spatial_lag_log_price": 0.3886783808928278,
+                "conflict_intensity": 0.23955730150688284
+            },
+            "p-value": {
+                "const": 0.0019495704292638028,
+                "spatial_lag_log_price": 0.6977168250372352,
+                "conflict_intensity": 0.8107937686165276
+            },
+            "Direct": {
+                "const": 0.34991498602198745,
+                "spatial_lag_log_price": 0.028369388400544558,
+                "conflict_intensity": 0.0024050288079412257
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.34991498602198745,
+                "spatial_lag_log_price": 0.028369388400544558,
+                "conflict_intensity": 0.0024050288079412257
+            },
+            "Significance": {
+                "const": "**",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0004982962986060935,
+            "Adj. R-squared": -0.006048658092451031,
+            "Log-likelihood": -0.6599745489463666,
+            "AIC": 111.31994909789273,
+            "BIC": 338.7760181073884
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 2.2372047916349247e-16,
+            "Durbin-Watson Statistic": 2.134460821141157,
+            "Normality Test (p-value)": 9.55106908048667e-10
+        }
+    },
+    "Sugar_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 1.0377628599930917,
+                "spatial_lag_log_price": -0.17587771179301567,
+                "conflict_intensity": 0.005889956887211637
+            },
+            "Std. Error": {
+                "const": 0.09979712083395886,
+                "spatial_lag_log_price": 0.06427430392136797,
+                "conflict_intensity": 0.009391606649246336
+            },
+            "t-statistic": {
+                "const": 10.398725447397505,
+                "spatial_lag_log_price": -2.7363612059989215,
+                "conflict_intensity": 0.6271511475285539
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0063541039965129276,
+                "conflict_intensity": 0.5307443989628622
+            },
+            "Direct": {
+                "const": 1.0377628599930917,
+                "spatial_lag_log_price": -0.17587771179301567,
+                "conflict_intensity": 0.005889956887211637
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 1.0377628599930917,
+                "spatial_lag_log_price": -0.17587771179301567,
+                "conflict_intensity": 0.005889956887211637
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "**",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.009891226672865128,
+            "Adj. R-squared": 0.006338204759011812,
+            "Log-likelihood": -258.0843964380179,
+            "AIC": 644.1687928760358,
+            "BIC": 947.1065139536267
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 2.8266905629049204e-32,
+            "Durbin-Watson Statistic": 1.9692170177029498,
+            "Normality Test (p-value)": 3.1208196192102e-06
+        }
+    },
+    "Wheat flour_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.8535663430982994,
+                "spatial_lag_log_price": 0.021719549184690864,
+                "conflict_intensity": -0.00011294815603101269
+            },
+            "Std. Error": {
+                "const": 0.05358213576183771,
+                "spatial_lag_log_price": 0.0492442285755527,
+                "conflict_intensity": 0.008028805281952956
+            },
+            "t-statistic": {
+                "const": 15.930054503468053,
+                "spatial_lag_log_price": 0.4410577607357126,
+                "conflict_intensity": -0.014067865898416554
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.659463541059623,
+                "conflict_intensity": 0.9887844425252161
+            },
+            "Direct": {
+                "const": 0.8535663430982994,
+                "spatial_lag_log_price": 0.021719549184690864,
+                "conflict_intensity": -0.00011294815603101269
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.8535663430982994,
+                "spatial_lag_log_price": 0.021719549184690864,
+                "conflict_intensity": -0.00011294815603101269
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0006012411407595453,
+            "Adj. R-squared": -0.007415326443672932,
+            "Log-likelihood": 126.68273175443896,
+            "AIC": -147.36546350887792,
+            "BIC": 61.18392885896023
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.5649036721570663e-18,
+            "Durbin-Watson Statistic": 2.147181099807191,
+            "Normality Test (p-value)": 0.029597400784977277
+        }
+    },
+    "Wheat flour_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.7302597276887636,
+                "spatial_lag_log_price": -0.20707847714452485,
+                "conflict_intensity": 0.00592228348770806
+            },
+            "Std. Error": {
+                "const": 0.06954725366550633,
+                "spatial_lag_log_price": 0.06493213576011812,
+                "conflict_intensity": 0.009360330899713696
+            },
+            "t-statistic": {
+                "const": 10.500195035752416,
+                "spatial_lag_log_price": -3.189152408439863,
+                "conflict_intensity": 0.632700227284615
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0014841345735880918,
+                "conflict_intensity": 0.5271155685107494
+            },
+            "Direct": {
+                "const": 0.7302597276887636,
+                "spatial_lag_log_price": -0.20707847714452485,
+                "conflict_intensity": 0.00592228348770806
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.7302597276887636,
+                "spatial_lag_log_price": -0.20707847714452485,
+                "conflict_intensity": 0.00592228348770806
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "**",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.013228136604130913,
+            "Adj. R-squared": 0.009687089247447211,
+            "Log-likelihood": -255.09861184504825,
+            "AIC": 638.1972236900965,
+            "BIC": 941.1349447676876
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.1781861526141583e-41,
+            "Durbin-Watson Statistic": 1.9660771895830407,
+            "Normality Test (p-value)": 4.063837208782025e-06
+        }
+    },
+    "Tomatoes_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.8723880697472571,
+                "spatial_lag_log_price": -0.16181123485091864,
+                "conflict_intensity": 0.005882571156204161
+            },
+            "Std. Error": {
+                "const": 0.0834761107753532,
+                "spatial_lag_log_price": 0.06273321289524873,
+                "conflict_intensity": 0.00997935539771689
+            },
+            "t-statistic": {
+                "const": 10.450751258584447,
+                "spatial_lag_log_price": -2.579355135550117,
+                "conflict_intensity": 0.5894740613757473
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.01008119623023318,
+                "conflict_intensity": 0.5557146625525973
+            },
+            "Direct": {
+                "const": 0.8723880697472571,
+                "spatial_lag_log_price": -0.16181123485091864,
+                "conflict_intensity": 0.005882571156204161
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.8723880697472571,
+                "spatial_lag_log_price": -0.16181123485091864,
+                "conflict_intensity": 0.005882571156204161
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "*",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.008803540222858008,
+            "Adj. R-squared": 0.005246615127963872,
+            "Log-likelihood": -309.1437547736482,
+            "AIC": 746.2875095472964,
+            "BIC": 1049.2252306248874
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 1.817823212268907e-15,
+            "Durbin-Watson Statistic": 1.972064998103612,
+            "Normality Test (p-value)": 4.894994067826573e-05
+        }
+    },
+    "Wheat flour_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.21400144427324036,
+                "spatial_lag_log_price": -0.10518566143088189,
+                "conflict_intensity": -0.0022976696454125715
+            },
+            "Std. Error": {
+                "const": 0.029094912623718987,
+                "spatial_lag_log_price": 0.03286117167897947,
+                "conflict_intensity": 0.0029430245399439344
+            },
+            "t-statistic": {
+                "const": 7.355287401646307,
+                "spatial_lag_log_price": -3.200910255374939,
+                "conflict_intensity": -0.7807171208488608
+            },
+            "p-value": {
+                "const": 1.0542677841840487e-12,
+                "spatial_lag_log_price": 0.0014771327027307546,
+                "conflict_intensity": 0.4354216137145719
+            },
+            "Direct": {
+                "const": 0.21400144427324036,
+                "spatial_lag_log_price": -0.10518566143088189,
+                "conflict_intensity": -0.0022976696454125715
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.21400144427324036,
+                "spatial_lag_log_price": -0.10518566143088189,
+                "conflict_intensity": -0.0022976696454125715
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "**",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.02462474167279871,
+            "Adj. R-squared": 0.018235820766725364,
+            "Log-likelihood": 573.0031583236943,
+            "AIC": -1036.0063166473885,
+            "BIC": -808.5502476378929
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 0.08080736671735671,
+            "Durbin-Watson Statistic": 2.1134882994212894,
+            "Normality Test (p-value)": 0.06466571169300397
+        }
+    },
+    "Wheat_South": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.7974406091859615,
+                "spatial_lag_log_price": 0.022413691274292113,
+                "conflict_intensity": -0.0018563380413657215
+            },
+            "Std. Error": {
+                "const": 0.04307210006912881,
+                "spatial_lag_log_price": 0.04967944256650521,
+                "conflict_intensity": 0.007860624367767202
+            },
+            "t-statistic": {
+                "const": 18.514087028635814,
+                "spatial_lag_log_price": 0.4511663198371681,
+                "conflict_intensity": -0.23615656397190385
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.6521714938363337,
+                "conflict_intensity": 0.8134604004113593
+            },
+            "Direct": {
+                "const": 0.7974406091859615,
+                "spatial_lag_log_price": 0.022413691274292113,
+                "conflict_intensity": -0.0018563380413657215
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.7974406091859615,
+                "spatial_lag_log_price": 0.022413691274292113,
+                "conflict_intensity": -0.0018563380413657215
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.000779325090040528,
+            "Adj. R-squared": -0.007278906159233323,
+            "Log-likelihood": 131.92356245133936,
+            "AIC": -157.84712490267873,
+            "BIC": 50.421099696985664
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 4.380636756998182e-15,
+            "Durbin-Watson Statistic": 2.216279308608892,
+            "Normality Test (p-value)": 0.018697777048073305
+        }
+    },
+    "Wheat_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.40556503848611974,
+                "spatial_lag_log_price": -0.009826144686118024,
+                "conflict_intensity": 0.00688705596504586
+            },
+            "Std. Error": {
+                "const": 0.051053897589062605,
+                "spatial_lag_log_price": 0.06006530464916268,
+                "conflict_intensity": 0.009176630431005982
+            },
+            "t-statistic": {
+                "const": 7.94386046194845,
+                "spatial_lag_log_price": -0.16359102386164293,
+                "conflict_intensity": 0.7504994362392418
+            },
+            "p-value": {
+                "const": 6.8833827526759706e-15,
+                "spatial_lag_log_price": 0.8700957619970779,
+                "conflict_intensity": 0.4531817543487575
+            },
+            "Direct": {
+                "const": 0.40556503848611974,
+                "spatial_lag_log_price": -0.009826144686118024,
+                "conflict_intensity": 0.00688705596504586
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.40556503848611974,
+                "spatial_lag_log_price": -0.009826144686118024,
+                "conflict_intensity": 0.00688705596504586
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0007691454395613029,
+            "Adj. R-squared": -0.0028252101523826845,
+            "Log-likelihood": -238.0062621341774,
+            "AIC": 604.0125242683548,
+            "BIC": 906.797682699208
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 6.977360618850251e-43,
+            "Durbin-Watson Statistic": 2.0416234832481193,
+            "Normality Test (p-value)": 8.374332532474634e-07
+        }
+    },
+    "Wheat_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.04479942710638631,
+                "spatial_lag_log_price": -0.07592962776822863,
+                "conflict_intensity": 0.000992731190912394
+            },
+            "Std. Error": {
+                "const": 0.05331703491251378,
+                "spatial_lag_log_price": 0.06400615489310454,
+                "conflict_intensity": 0.00999663708309326
+            },
+            "t-statistic": {
+                "const": 0.840246033559373,
+                "spatial_lag_log_price": -1.186286348477537,
+                "conflict_intensity": 0.0993065150470795
+            },
+            "p-value": {
+                "const": 0.4012625678879884,
+                "spatial_lag_log_price": 0.23619957557476612,
+                "conflict_intensity": 0.9209436792106607
+            },
+            "Direct": {
+                "const": 0.04479942710638631,
+                "spatial_lag_log_price": -0.07592962776822863,
+                "conflict_intensity": 0.000992731190912394
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.04479942710638631,
+                "spatial_lag_log_price": -0.07592962776822863,
+                "conflict_intensity": 0.000992731190912394
+            },
+            "Significance": {
+                "const": "",
+                "spatial_lag_log_price": "",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.0035033724600467275,
+            "Adj. R-squared": -0.0030238980260228754,
+            "Log-likelihood": 1.8320930468519054,
+            "AIC": 106.3358139062962,
+            "BIC": 333.79188291579186
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 2.662951620154417e-18,
+            "Durbin-Watson Statistic": 2.1404247060469648,
+            "Normality Test (p-value)": 4.930847825934797e-10
+        }
+    },
+    "Beans (kidney red)_North": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.9666556882334678,
+                "spatial_lag_log_price": 0.1199913091611481,
+                "conflict_intensity": 0.002484771874365892
+            },
+            "Std. Error": {
+                "const": 0.14730310528213542,
+                "spatial_lag_log_price": 0.04483047106457527,
+                "conflict_intensity": 0.010003676881366334
+            },
+            "t-statistic": {
+                "const": 6.56235784291169,
+                "spatial_lag_log_price": 2.676556955832757,
+                "conflict_intensity": 0.24838585890296308
+            },
+            "p-value": {
+                "const": 1.6101586730599138e-10,
+                "spatial_lag_log_price": 0.007738112479234838,
+                "conflict_intensity": 0.803960845013866
+            },
+            "Direct": {
+                "const": 0.9666556882334678,
+                "spatial_lag_log_price": 0.1199913091611481,
+                "conflict_intensity": 0.002484771874365892
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.9666556882334678,
+                "spatial_lag_log_price": 0.1199913091611481,
+                "conflict_intensity": 0.002484771874365892
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "**",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.017279115746019924,
+            "Adj. R-squared": 0.010842079386277681,
+            "Log-likelihood": 1.5275660634403412,
+            "AIC": 106.94486787311932,
+            "BIC": 334.400936882615
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 2.0217783481163156e-19,
+            "Durbin-Watson Statistic": 2.1359938664629454,
+            "Normality Test (p-value)": 4.848382290559972e-10
+        }
+    },
+    "Fuel (petrol-gasoline)_Unified": {
+        "summary": {
+            "Coefficient": {
+                "const": 0.9771719485641497,
+                "spatial_lag_log_price": -0.15992413435814673,
+                "conflict_intensity": 0.007003295217738782
+            },
+            "Std. Error": {
+                "const": 0.08786762695032284,
+                "spatial_lag_log_price": 0.057978375571266866,
+                "conflict_intensity": 0.009374168156066849
+            },
+            "t-statistic": {
+                "const": 11.12095526508992,
+                "spatial_lag_log_price": -2.7583410673789643,
+                "conflict_intensity": 0.7470844453762367
+            },
+            "p-value": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.005946087113491982,
+                "conflict_intensity": 0.4552385973674149
+            },
+            "Direct": {
+                "const": 0.9771719485641497,
+                "spatial_lag_log_price": -0.15992413435814673,
+                "conflict_intensity": 0.007003295217738782
+            },
+            "Indirect": {
+                "const": 0.0,
+                "spatial_lag_log_price": 0.0,
+                "conflict_intensity": 0.0
+            },
+            "Total": {
+                "const": 0.9771719485641497,
+                "spatial_lag_log_price": -0.15992413435814673,
+                "conflict_intensity": 0.007003295217738782
+            },
+            "Significance": {
+                "const": "***",
+                "spatial_lag_log_price": "**",
+                "conflict_intensity": ""
+            }
+        },
+        "fit_stats": {
+            "R-squared": 0.010196122382216344,
+            "Adj. R-squared": 0.00664419459172183,
+            "Log-likelihood": -256.34568217891547,
+            "AIC": 640.6913643578309,
+            "BIC": 943.629085435422
+        },
+        "diagnostics": {
+            "Breusch-Pagan Test (p-value)": 3.935358448519798e-37,
+            "Durbin-Watson Statistic": 1.9258797873048996,
+            "Normality Test (p-value)": 5.726647202462059e-06
+        }
+    }
+}
