@@ -10,9 +10,6 @@ import ecmDiagnostics from '../../data/ecm_diagnostics.json';
 import grangerCausalityResults from '../../data/granger_causality_results.json';
 import stationarityResults from '../../data/stationarity_results.json';
 
-// Import the city-regime mapping
-import { cityRegimeMap } from './cityRegimeMap';
-
 // Function to load all data
 export function loadAllData() {
   return {
@@ -44,8 +41,24 @@ export function getAvailableCommodities() {
 export function getAvailableRegimes() {
   const regimes = new Set();
 
-  Object.values(cityRegimeMap).forEach((regime) => {
-    regimes.add(regime);
+  // Extract regimes from ecmResults
+  ecmResults.forEach(result => {
+    if (result.regime) {
+      regimes.add(result.regime);
+    }
+  });
+
+  // Extract regimes from priceDifferentialResults
+  Object.values(priceDifferentialResults).forEach(commodityData => {
+    Object.keys(commodityData).forEach(regime => regimes.add(regime));
+  });
+
+  // Extract regimes from spatialAnalysisResults
+  Object.keys(spatialAnalysisResults).forEach(key => {
+    const regime = key.split('_')[1];
+    if (regime) {
+      regimes.add(regime);
+    }
   });
 
   return Array.from(regimes);
@@ -65,20 +78,17 @@ export function getCombinedMarketData(commodity, regime) {
       const commodityData = commodities[commodity];
       if (commodityData) {
         Object.entries(commodityData).forEach(([city, cityData]) => {
-          const cityRegime = cityRegimeMap[city];
-          if (cityRegime === regime) {
-            const regimeDataArray = cityData[regime];
-            if (Array.isArray(regimeDataArray)) {
-              regimeDataArray.forEach((dataPoint) => {
-                data.push({
-                  date,
-                  city,
-                  price: Number(dataPoint.price),
-                  usdPrice: Number(dataPoint.usdprice),
-                  conflict: Number(dataPoint.conflict_intensity),
-                });
+          const regimeData = cityData[regime];
+          if (Array.isArray(regimeData)) {
+            regimeData.forEach((dataPoint) => {
+              data.push({
+                date,
+                city,
+                price: Number(dataPoint.price),
+                usdPrice: Number(dataPoint.usdprice),
+                conflict: Number(dataPoint.conflict_intensity),
               });
-            }
+            });
           }
         });
       }
@@ -94,12 +104,12 @@ export function getCombinedMarketData(commodity, regime) {
 // Function to get analysis results based on analysis type
 export function getAnalysisResults(commodity, regime, analysisType) {
   try {
-    if (!commodity || !regime || !analysisType) {
+    if (!analysisType) {
       console.warn('Invalid parameters for getAnalysisResults.');
       return null;
     }
 
-    const key = `('${commodity}', '${regime}')`;
+    const key = commodity && regime ? `('${commodity}', '${regime}')` : null;
 
     switch (analysisType) {
       case 'Error Correction Model':
@@ -142,8 +152,12 @@ export function getAnalysisResults(commodity, regime, analysisType) {
         }
         return spatialData;
 
-      case 'Cointegration':
-        return cointegrationResults[key] || null;
+      case 'Cointegration Analysis':
+        if (commodity && regime) {
+          const result = cointegrationResults[key];
+          return result ? { [key]: result } : null;
+        }
+        return cointegrationResults || {};
 
       case 'ECM Diagnostics':
         return (
@@ -160,9 +174,10 @@ export function getAnalysisResults(commodity, regime, analysisType) {
 
       default:
         return null;
+      }
+    } catch (error) {
+      console.error('Error in getAnalysisResults:', error);
+      return null;
     }
-  } catch (error) {
-    console.error('Error in getAnalysisResults:', error);
-    return null;
   }
-}
+  

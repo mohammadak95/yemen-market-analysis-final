@@ -20,6 +20,8 @@ import {
   ResponsiveContainer,
   Brush,
   CartesianGrid,
+  Area,
+  ComposedChart,
 } from 'recharts';
 import {
   loadAllData,
@@ -64,7 +66,6 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import clsx from 'clsx';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 // Lazy load the ResultsVisualization component
@@ -199,8 +200,8 @@ export default function Dashboard() {
         processedData = applySeasonalAdjustment(
           processedData,
           selectedRegimes,
-          12, // Adjust the period as needed
-          !showUSDPrice // Pass the currency flag
+          12,
+          !showUSDPrice
         );
       }
 
@@ -208,8 +209,8 @@ export default function Dashboard() {
         processedData = applySmoothing(
           processedData,
           selectedRegimes,
-          6, // Adjust the smoothing period as needed
-          !showUSDPrice // Pass the currency flag
+          6,
+          !showUSDPrice
         );
       }
 
@@ -217,11 +218,12 @@ export default function Dashboard() {
 
       // Fetch analysis results for the selected analysis regime and type
       if (selectedAnalysisRegime && selectedAnalysis) {
-        const results = getAnalysisResults(
-          selectedCommodity,
-          selectedAnalysisRegime,
-          selectedAnalysis
-        );
+        let results;
+        if (selectedAnalysis === 'Cointegration Analysis') {
+          results = getAnalysisResults(null, null, selectedAnalysis);
+        } else {
+          results = getAnalysisResults(selectedCommodity, selectedAnalysisRegime, selectedAnalysis);
+        }
         setAnalysisResults(results);
       }
     } catch (err) {
@@ -293,17 +295,8 @@ export default function Dashboard() {
   // Analysis options aligned with methodology
   const analysisOptions = [
     {
-      category: 'Unit Root and Stationarity Tests',
-      analyses: [
-        'Augmented Dickey-Fuller Test',
-        'Zivot-Andrews Test',
-        'Im-Pesaran-Shin Test',
-        'Levin-Lin-Chu Test',
-      ],
-    },
-    {
       category: 'Cointegration Analysis',
-      analyses: ['Pairwise Cointegration Test', 'Pedroni Test', 'Westerlund Test'],
+      analyses: ['Cointegration Analysis'],
     },
     {
       category: 'Error Correction Models',
@@ -311,7 +304,7 @@ export default function Dashboard() {
     },
     {
       category: 'Spatial Analysis',
-      analyses: ['Spatial Autoregressive Model', 'Spatial Error Model'],
+      analyses: ['Spatial Analysis'],
     },
     {
       category: 'Price Differential Analysis',
@@ -320,6 +313,14 @@ export default function Dashboard() {
     {
       category: 'Granger Causality Tests',
       analyses: ['Granger Causality'],
+    },
+    {
+      category: 'Stationarity Tests',
+      analyses: ['Stationarity', 'Unit Root Tests'],
+    },
+    {
+      category: 'Model Diagnostics',
+      analyses: ['Model Diagnostics'],
     },
   ];
 
@@ -378,6 +379,22 @@ export default function Dashboard() {
                 <MenuItem key={regime} value={regime}>
                   <Checkbox checked={selectedRegimes.indexOf(regime) > -1} />
                   <ListItemText primary={regime} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </ListItem>
+        <ListItem>
+          <FormControl fullWidth>
+            <InputLabel id="analysis-regime-label">Analysis Regime</InputLabel>
+            <Select
+              labelId="analysis-regime-label"
+              value={selectedAnalysisRegime}
+              onChange={(e) => setSelectedAnalysisRegime(e.target.value)}
+            >
+              {regimes.map((regime) => (
+                <MenuItem key={regime} value={regime}>
+                  {regime}
                 </MenuItem>
               ))}
             </Select>
@@ -459,7 +476,6 @@ export default function Dashboard() {
         </DrawerStyled>
         <Content>
           <ToolbarStyled />
-          {/* Error Message */}
           {error && (
             <div
               style={{
@@ -476,15 +492,13 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Loading Indicator */}
           {isLoading && (
             <div style={{ textAlign: 'center', marginBottom: '16px' }}>
               <LoadingSpinner />
             </div>
           )}
 
-          {/* Market Data Chart */}
-          {memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
+{memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
             <div style={{ marginBottom: '24px' }}>
               <div
                 style={{
@@ -535,7 +549,7 @@ export default function Dashboard() {
                 </div>
               </div>
               <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={memoizedMarketData}>
+                <ComposedChart data={memoizedMarketData}>
                   <CartesianGrid stroke={theme.palette.divider} />
                   <XAxis dataKey="date" stroke={theme.palette.text.secondary} />
                   <YAxis yAxisId="left" stroke={theme.palette.text.secondary} />
@@ -543,6 +557,7 @@ export default function Dashboard() {
                     yAxisId="right"
                     orientation="right"
                     stroke={theme.palette.text.secondary}
+                    domain={[0, 10]}
                   />
                   <Tooltip
                     contentStyle={{
@@ -554,19 +569,15 @@ export default function Dashboard() {
                   <Legend />
                   <Brush dataKey="date" stroke={theme.palette.primary.main} />
                   {selectedRegimes.map((regime, index) => (
-                    <Line
-                      key={`conflict_line_${regime}`}
+                    <Area
+                      key={`conflict_area_${regime}`}
                       yAxisId="right"
                       type="monotone"
                       dataKey={`conflict_${regime}`}
-                      stroke={
-                        colorPalette[
-                          (index + selectedRegimes.length) % colorPalette.length
-                        ]
-                      }
+                      fill={colorPalette[(index + selectedRegimes.length) % colorPalette.length]}
+                      stroke={colorPalette[(index + selectedRegimes.length) % colorPalette.length]}
+                      fillOpacity={0.3}
                       name={`Conflict Intensity (${regime})`}
-                      dot={false}
-                      strokeDasharray="5 5"
                     />
                   ))}
                   {selectedRegimes.map((regime, index) => (
@@ -584,12 +595,11 @@ export default function Dashboard() {
                       dot={false}
                     />
                   ))}
-                </LineChart>
+                </ComposedChart>
               </ResponsiveContainer>
             </div>
           )}
 
-          {/* Analysis Results or Methodology */}
           {!isLoading && (analysisResults || selectedAnalysis === 'Methodology') && (
             <ErrorBoundary>
               <Suspense fallback={<LoadingSpinner />}>
@@ -622,3 +632,4 @@ export default function Dashboard() {
 Dashboard.propTypes = {
   // No props passed to Dashboard
 };
+

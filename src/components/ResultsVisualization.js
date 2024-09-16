@@ -16,6 +16,7 @@ import {
   CartesianGrid,
 } from 'recharts';
 import PropTypes from 'prop-types';
+import CointegrationResults from './CointegrationResults';
 
 const ResultsVisualization = ({ results, analysisType, commodity, regime }) => {
   if (!results) {
@@ -29,8 +30,12 @@ const ResultsVisualization = ({ results, analysisType, commodity, regime }) => {
       return <ECMChart data={results} />;
     case 'Spatial Analysis':
       return <SpatialAnalysisChart data={results} />;
-    case 'Cointegration':
-      return <CointegrationChart data={results} />;
+    case 'Cointegration Analysis':
+      return Array.isArray(results) || typeof results === 'object' ? (
+        <CointegrationResults data={results} />
+      ) : (
+        <p>Invalid data format for Cointegration Analysis.</p>
+      );
     case 'ECM Diagnostics':
       return <ECMDiagnosticsChart data={results} />;
     case 'Granger Causality':
@@ -53,7 +58,6 @@ ResultsVisualization.propTypes = {
   regime: PropTypes.string.isRequired,
 };
 
-// Color palette for charts
 const colorPalette = [
   '#3b82f6',
   '#10b981',
@@ -67,10 +71,7 @@ const colorPalette = [
   '#a3e635',
 ];
 
-// Individual Analysis Components
-
 const PriceDifferentialsChart = ({ data }) => {
-  // 'data' is an array of models, each model is an array of result entries
   const [selectedModelIndex, setSelectedModelIndex] = useState(0);
 
   if (!data || data.length === 0) {
@@ -92,7 +93,6 @@ const PriceDifferentialsChart = ({ data }) => {
 
   const model = data[selectedModelIndex];
 
-  // Filter out any data points with invalid values
   const validData = model.filter(
     (d) => d.Coefficient !== undefined && !isNaN(d.Coefficient)
   );
@@ -138,7 +138,6 @@ PriceDifferentialsChart.propTypes = {
 };
 
 const ECMChart = ({ data }) => {
-  // Assuming 'data' contains 'coefficients' object with 'speed_of_adjustment', 'cointegration_vector', 'short_run_coefficients'
   const coefficients = [
     {
       name: 'Speed of Adjustment (Alpha)',
@@ -154,7 +153,6 @@ const ECMChart = ({ data }) => {
     },
   ];
 
-  // Flatten arrays if necessary
   const processedCoefficients = coefficients.map((coef) => {
     let value = coef.value;
     if (Array.isArray(value)) {
@@ -163,7 +161,6 @@ const ECMChart = ({ data }) => {
     return { name: coef.name, value };
   });
 
-  // Filter out any coefficients with NaN or undefined values
   const validCoefficients = processedCoefficients.filter(
     (coef) => coef.value !== undefined && !isNaN(coef.value)
   );
@@ -194,14 +191,12 @@ ECMChart.propTypes = {
 };
 
 const SpatialAnalysisChart = ({ data }) => {
-  // 'data' is an object with 'summary', 'fit_stats', 'diagnostics'
   const summary = data.summary;
 
   if (!summary) {
     return <p>No summary data available for Spatial Analysis.</p>;
   }
 
-  // Convert the summary data into an array for charting
   const variables = Object.keys(summary.Coefficient || {});
 
   const chartData = variables.map((variable) => ({
@@ -213,7 +208,6 @@ const SpatialAnalysisChart = ({ data }) => {
     Significance: summary.Significance[variable],
   }));
 
-  // Filter out any invalid data
   const validData = chartData.filter(
     (d) => d.Coefficient !== undefined && !isNaN(d.Coefficient)
   );
@@ -272,43 +266,6 @@ SpatialAnalysisChart.propTypes = {
   data: PropTypes.object.isRequired,
 };
 
-const CointegrationChart = ({ data }) => {
-  const cointegrationData = [
-    { name: 'Test Statistic', value: data.cointegration_statistic },
-    { name: 'Critical Value (5%)', value: data.critical_values?.[1] },
-    { name: 'p-value', value: data.p_value },
-  ];
-
-  // Filter out any data points with NaN or undefined values
-  const validData = cointegrationData.filter(
-    (d) => d.value !== undefined && !isNaN(d.value)
-  );
-
-  return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={validData}>
-        <CartesianGrid stroke="#4b5563" />
-        <XAxis dataKey="name" stroke="#9ca3af" />
-        <YAxis stroke="#9ca3af" />
-        <Tooltip
-          formatter={(value) => (isNaN(value) ? 'N/A' : value.toFixed(6))}
-          contentStyle={{
-            backgroundColor: '#1f2937',
-            border: 'none',
-            color: '#e5e7eb',
-          }}
-        />
-        <Legend />
-        <Bar dataKey="value" fill="#f59e0b" name="Cointegration Metric" />
-      </BarChart>
-    </ResponsiveContainer>
-  );
-};
-
-CointegrationChart.propTypes = {
-  data: PropTypes.object.isRequired,
-};
-
 const ECMDiagnosticsChart = ({ data }) => {
   const diagnosticsData = [
     { name: 'Breusch-Godfrey p-value', value: data.breusch_godfrey_pvalue },
@@ -319,7 +276,6 @@ const ECMDiagnosticsChart = ({ data }) => {
     { name: 'Kurtosis', value: data.kurtosis },
   ];
 
-  // Filter out any data points with NaN or undefined values
   const validData = diagnosticsData.filter(
     (d) => d.value !== undefined && !isNaN(d.value)
   );
@@ -405,7 +361,6 @@ GrangerCausalityChart.propTypes = {
 };
 
 const StationarityTable = ({ data }) => {
-  // 'data' is an object with variables as keys
   const variables = Object.keys(data);
 
   return (
@@ -435,11 +390,6 @@ const StationarityTable = ({ data }) => {
                   {varData.transformation}
                 </td>
                 <td className="py-2 px-4 border-b text-center">
-                  {results.original.ADF.Statistic !== undefined
-                    ? results.original.ADF.Statistic.toFixed(4)
-                    : 'N/A'}
-                </td>
-                <td className="py-2 px-4 border-b text-center">
                   {results.original.ADF['p-value'] !== undefined
                     ? results.original.ADF['p-value'].toFixed(4)
                     : 'N/A'}
@@ -447,8 +397,8 @@ const StationarityTable = ({ data }) => {
                 <td className="py-2 px-4 border-b text-center">
                   {results.original.ADF.Stationary !== undefined
                     ? results.original.ADF.Stationary
-                      ? 'Yes'
-                      : 'No'
+                    ? 'Yes'
+                    : 'No'
                     : 'N/A'}
                 </td>
                 <td className="py-2 px-4 border-b text-center">
@@ -497,7 +447,6 @@ const ModelDiagnostics = ({ data }) => {
     result: data[testName].result,
   }));
 
-  // Filter out any tests with NaN or undefined values
   const validTests = tests.filter(
     (test) =>
       test.statistic !== undefined &&
