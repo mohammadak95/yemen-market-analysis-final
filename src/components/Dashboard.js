@@ -38,6 +38,7 @@ import LoadingSpinner from './ui/LoadingSpinner';
 import ErrorBoundary from './ui/ErrorBoundary';
 import PropTypes from 'prop-types';
 import Methodology from './Methodology';
+import LiteratureReview from './LiteratureReview';
 
 // MUI Components
 import { styled } from '@mui/material/styles';
@@ -63,6 +64,10 @@ import {
   AccordionSummary,
   AccordionDetails,
   Checkbox,
+  Grid,
+  Card,
+  CardContent,
+  CardHeader,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -117,9 +122,8 @@ export default function Dashboard() {
   const [selectedCommodity, setSelectedCommodity] = useState('');
   const [selectedRegimes, setSelectedRegimes] = useState([]);
   const [selectedAnalysis, setSelectedAnalysis] = useState('Price Differentials');
-  const [selectedAnalysisRegime, setSelectedAnalysisRegime] = useState('');
   const [marketData, setMarketData] = useState([]);
-  const [analysisResults, setAnalysisResults] = useState(null);
+  const [analysisResults, setAnalysisResults] = useState({});
   const [error, setError] = useState(null);
   const [showUSDPrice, setShowUSDPrice] = useState(false);
   const [seasonalAdjustment, setSeasonalAdjustment] = useState(false);
@@ -149,7 +153,6 @@ export default function Dashboard() {
         }
         if (availableRegimes && availableRegimes.length > 0) {
           setSelectedRegimes([availableRegimes[0]]);
-          setSelectedAnalysisRegime(availableRegimes[0]);
         }
       } catch (err) {
         console.error('Error loading data:', err);
@@ -216,16 +219,16 @@ export default function Dashboard() {
 
       setMarketData(processedData);
 
-      // Fetch analysis results for the selected analysis regime and type
-      if (selectedAnalysisRegime && selectedAnalysis) {
-        let results;
+      // Fetch analysis results for all selected regimes
+      const results = {};
+      for (const regime of selectedRegimes) {
         if (selectedAnalysis === 'Cointegration Analysis') {
-          results = getAnalysisResults(null, null, selectedAnalysis);
+          results[regime] = getAnalysisResults(null, null, selectedAnalysis);
         } else {
-          results = getAnalysisResults(selectedCommodity, selectedAnalysisRegime, selectedAnalysis);
+          results[regime] = getAnalysisResults(selectedCommodity, regime, selectedAnalysis);
         }
-        setAnalysisResults(results);
       }
+      setAnalysisResults(results);
     } catch (err) {
       console.error('Error fetching analysis data:', err);
       setError('An error occurred while fetching analysis data.');
@@ -237,7 +240,6 @@ export default function Dashboard() {
     selectedCommodity,
     selectedRegimes,
     selectedAnalysis,
-    selectedAnalysisRegime,
     seasonalAdjustment,
     dataSmoothing,
     showUSDPrice,
@@ -249,11 +251,12 @@ export default function Dashboard() {
   }, [fetchAnalysisData]);
 
   // Handle regime selection changes
-  const handleRegimeChange = (regime) => {
-    setSelectedRegimes((prev) =>
-      prev.includes(regime)
-        ? prev.filter((r) => r !== regime)
-        : [...prev, regime]
+  const handleRegimeChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedRegimes(
+      typeof value === 'string' ? value.split(',') : value,
     );
   };
 
@@ -294,6 +297,10 @@ export default function Dashboard() {
 
   // Analysis options aligned with methodology
   const analysisOptions = [
+    {
+      category: 'Background',
+      analyses: ['Literature Review', 'Methodology'],
+    },
     {
       category: 'Cointegration Analysis',
       analyses: ['Cointegration Analysis'],
@@ -353,8 +360,7 @@ export default function Dashboard() {
               onChange={(e) => {
                 setSelectedCommodity(e.target.value);
                 setSelectedRegimes([]);
-                setSelectedAnalysisRegime('');
-                setAnalysisResults(null);
+                setAnalysisResults({});
               }}
             >
               {commodities.map((commodity) => (
@@ -372,29 +378,13 @@ export default function Dashboard() {
               labelId="regime-label"
               multiple
               value={selectedRegimes}
-              onChange={(e) => setSelectedRegimes(e.target.value)}
+              onChange={handleRegimeChange}
               renderValue={(selected) => selected.join(', ')}
             >
               {regimes.map((regime) => (
                 <MenuItem key={regime} value={regime}>
                   <Checkbox checked={selectedRegimes.indexOf(regime) > -1} />
                   <ListItemText primary={regime} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </ListItem>
-        <ListItem>
-          <FormControl fullWidth>
-            <InputLabel id="analysis-regime-label">Analysis Regime</InputLabel>
-            <Select
-              labelId="analysis-regime-label"
-              value={selectedAnalysisRegime}
-              onChange={(e) => setSelectedAnalysisRegime(e.target.value)}
-            >
-              {regimes.map((regime) => (
-                <MenuItem key={regime} value={regime}>
-                  {regime}
                 </MenuItem>
               ))}
             </Select>
@@ -424,16 +414,6 @@ export default function Dashboard() {
             </AccordionDetails>
           </Accordion>
         ))}
-        <Divider />
-        <ListItem
-          button
-          onClick={() => {
-            setSelectedAnalysis('Methodology');
-            setAnalysisResults(null);
-          }}
-        >
-          <ListItemText primary="View Methodology" />
-        </ListItem>
       </List>
     </div>
   );
@@ -498,7 +478,7 @@ export default function Dashboard() {
             </div>
           )}
 
-{memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
+          {memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
             <div style={{ marginBottom: '24px' }}>
               <div
                 style={{
@@ -506,8 +486,7 @@ export default function Dashboard() {
                   flexWrap: 'wrap',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  marginBottom: '16px',
-                }}
+                  marginBottom: '16px',}}
               >
                 <Typography variant="h5" color="primary">
                   Price and Conflict Intensity Over Time
@@ -600,28 +579,32 @@ export default function Dashboard() {
             </div>
           )}
 
-          {!isLoading && (analysisResults || selectedAnalysis === 'Methodology') && (
+          {!isLoading && Object.keys(analysisResults).length > 0 && selectedAnalysis !== 'Methodology' && selectedAnalysis !== 'Literature Review' && (
             <ErrorBoundary>
               <Suspense fallback={<LoadingSpinner />}>
-                {selectedAnalysis === 'Methodology' ? (
-                  <Methodology />
-                ) : (
-                  <div>
-                    <Typography variant="h5" color="primary" gutterBottom>
-                      {selectedAnalysis} Results for {selectedCommodity} in{' '}
-                      {selectedAnalysisRegime}
-                    </Typography>
-                    <ResultsVisualization
-                      results={analysisResults}
-                      analysisType={selectedAnalysis}
-                      commodity={selectedCommodity}
-                      regime={selectedAnalysisRegime}
-                    />
-                  </div>
-                )}
+                <Grid container spacing={3}>
+                  {selectedRegimes.map((regime) => (
+                    <Grid item xs={12} md={6} lg={4} key={regime}>
+                      <Card>
+                        <CardHeader title={`${selectedAnalysis} Results for ${selectedCommodity} in ${regime}`} />
+                        <CardContent>
+                          <ResultsVisualization
+                            results={analysisResults[regime]}
+                            analysisType={selectedAnalysis}
+                            commodity={selectedCommodity}
+                            regime={regime}
+                          />
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
               </Suspense>
             </ErrorBoundary>
           )}
+
+          {selectedAnalysis === 'Methodology' && <Methodology />}
+          {selectedAnalysis === 'Literature Review' && <LiteratureReview />}
         </Content>
       </Root>
     </ThemeProvider>
@@ -632,4 +615,3 @@ export default function Dashboard() {
 Dashboard.propTypes = {
   // No props passed to Dashboard
 };
-

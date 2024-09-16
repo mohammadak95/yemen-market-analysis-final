@@ -32,7 +32,7 @@ const ResultsVisualization = ({ results, analysisType, commodity, regime }) => {
       return <SpatialAnalysisChart data={results} />;
     case 'Cointegration Analysis':
       return Array.isArray(results) || typeof results === 'object' ? (
-        <CointegrationResults data={results} />
+        <CointegrationResults data={results} selectedCommodity={commodity} selectedRegime={regime} />
       ) : (
         <p>Invalid data format for Cointegration Analysis.</p>
       );
@@ -47,7 +47,7 @@ const ResultsVisualization = ({ results, analysisType, commodity, regime }) => {
     case 'Model Diagnostics':
       return <ModelDiagnostics data={results} />;
     default:
-      return <p>Unsupported analysis type.</p>;
+      return <p>Unsupported analysis type: {analysisType}</p>;
   }
 };
 
