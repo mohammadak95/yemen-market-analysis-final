@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { Typography, Paper } from '@mui/material';
-import MathJax from 'react-mathjax';
+import { MathJaxContext, MathJax } from 'better-react-mathjax';
 
 const LiteratureReview = () => {
   return (
-    <MathJax.Provider>
+    <MathJaxContext>
       <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
         <Typography variant="h4" gutterBottom>
           Literature Review
@@ -160,7 +160,7 @@ const LiteratureReview = () => {
           </Typography>
         </section>
       </Paper>
-    </MathJax.Provider>
+    </MathJaxContext>
   );
 };
 
