@@ -306,6 +306,10 @@ export default function Dashboard() {
       analyses: ['Cointegration Analysis'],
     },
     {
+      category: 'Granger Causality Tests',
+      analyses: ['Granger Causality'],
+    },
+    {
       category: 'Error Correction Models',
       analyses: ['Error Correction Model', 'ECM Diagnostics'],
     },
@@ -316,18 +320,6 @@ export default function Dashboard() {
     {
       category: 'Price Differential Analysis',
       analyses: ['Price Differentials'],
-    },
-    {
-      category: 'Granger Causality Tests',
-      analyses: ['Granger Causality'],
-    },
-    {
-      category: 'Stationarity Tests',
-      analyses: ['Stationarity', 'Unit Root Tests'],
-    },
-    {
-      category: 'Model Diagnostics',
-      analyses: ['Model Diagnostics'],
     },
   ];
 

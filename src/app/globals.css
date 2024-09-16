@@ -1,22 +1,24 @@
+/* globals.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Define CSS variables for light mode */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ffffff; /* Light mode background */
+  --foreground: #171717; /* Light mode text */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Define CSS variables for dark mode */
+.dark {
+  --background: #0a0a0a; /* Dark mode background */
+  --foreground: #ededed; /* Dark mode text */
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
 
