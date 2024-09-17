@@ -1,4 +1,4 @@
-// src/components/ui/LoadingSpinner.js
+// File: src/components/ui/LoadingSpinner.js
 
 import React from 'react';
 

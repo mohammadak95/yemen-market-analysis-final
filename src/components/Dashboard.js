@@ -2,27 +2,8 @@
 
 'use client';
 
-import React, {
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-  Suspense,
-  lazy,
-} from 'react';
-import {
-  LineChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Line,
-  ResponsiveContainer,
-  Brush,
-  CartesianGrid,
-  Area,
-  ComposedChart,
-} from 'recharts';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import {
   loadAllData,
   getAvailableCommodities,
@@ -36,11 +17,9 @@ import {
 } from '../lib/dataProcessing';
 import LoadingSpinner from './ui/LoadingSpinner';
 import ErrorBoundary from './ui/ErrorBoundary';
-import PropTypes from 'prop-types';
-import Methodology from './Methodology';
-import LiteratureReview from './LiteratureReview';
+import QuickGuide from './QuickGuide';
+import GuidedTour from './GuidedTour';
 
-// MUI Components
 import { styled } from '@mui/material/styles';
 import {
   AppBar,
@@ -68,17 +47,19 @@ import {
   Card,
   CardContent,
   CardHeader,
+  ListItemButton,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-// Lazy load the ResultsVisualization component
-const ResultsVisualization = lazy(() => import('./ResultsVisualization'));
+const DynamicMethodology = dynamic(() => import('./Methodology'), { ssr: false });
+const DynamicLiteratureReview = dynamic(() => import('./LiteratureReview'), { ssr: false });
+const DynamicResultsVisualization = dynamic(() => import('./ResultsVisualization'), { ssr: false });
+const DynamicCharts = dynamic(() => import('./DynamicCharts'), { ssr: false });
 
 const drawerWidth = 240;
 
-// Styled components
 const Root = styled('div')(({ theme }) => ({
   display: 'flex',
   backgroundColor: theme.palette.background.default,
@@ -115,7 +96,6 @@ const Content = styled('main')(({ theme }) => ({
 }));
 
 export default function Dashboard() {
-  // State variables
   const [allData, setAllData] = useState(null);
   const [commodities, setCommodities] = useState([]);
   const [regimes, setRegimes] = useState([]);
@@ -131,8 +111,49 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
+  const [isClient, setIsClient] = useState(false);
+  const [showQuickGuide, setShowQuickGuide] = useState(false);
+  const [runTour, setRunTour] = useState(false);
+  const [tourCompleted, setTourCompleted] = useState(false);
+  const [tourSteps, setTourSteps] = useState([
+    {
+      target: '.tour-sidebar',
+      content: 'Choose your commodity and regime here.',
+      placement: 'right',
+    },
+    {
+      target: '.tour-main-chart',
+      content: 'Watch how prices and conflict interact over time.',
+      placement: 'top',
+    },
+    {
+      target: '.tour-analysis-section',
+      content: 'Dive deep with our econometric analyses.',
+      placement: 'left',
+    },
+  ]);
 
-  // Fetch all data on component mount
+  useEffect(() => {
+    setIsClient(true);
+    const storedTourCompleted = localStorage.getItem('tourCompleted');
+    if (storedTourCompleted === 'true') {
+      setTourCompleted(true);
+    } else {
+      setShowQuickGuide(true);
+    }
+  }, []);
+
+  const handleQuickGuideClose = () => {
+    setShowQuickGuide(false);
+    setRunTour(true);
+  };
+
+  const handleTourEnd = () => {
+    setRunTour(false);
+    setTourCompleted(true);
+    localStorage.setItem('tourCompleted', 'true');
+  };
+
   useEffect(() => {
     const fetchData = () => {
       setIsLoading(true);
@@ -140,14 +161,12 @@ export default function Dashboard() {
         const loadedData = loadAllData();
         setAllData(loadedData);
 
-        // Extract available commodities and regimes
         const availableCommodities = getAvailableCommodities(loadedData.combinedMarketData);
         const availableRegimes = getAvailableRegimes();
 
         setCommodities(availableCommodities || []);
         setRegimes(availableRegimes || []);
 
-        // Initialize selections
         if (availableCommodities && availableCommodities.length > 0) {
           setSelectedCommodity(availableCommodities[0]);
         }
@@ -165,19 +184,16 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  // Fetch market data and analysis results when selections change
   const fetchAnalysisData = useCallback(() => {
     if (!allData || !selectedCommodity || selectedRegimes.length === 0) return;
     setIsLoading(true);
     try {
       setError(null);
 
-      // Fetch market data for selected regimes
       const allRegimeData = selectedRegimes.map((regime) =>
         getCombinedMarketData(selectedCommodity, regime)
       );
 
-      // Aggregate data per date
       const dataByDate = {};
 
       selectedRegimes.forEach((regime, regimeIndex) => {
@@ -195,10 +211,8 @@ export default function Dashboard() {
 
       let processedData = Object.values(dataByDate);
 
-      // Sort data by date
       processedData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-      // Apply seasonal adjustment and smoothing
       if (seasonalAdjustment) {
         processedData = applySeasonalAdjustment(
           processedData,
@@ -219,7 +233,6 @@ export default function Dashboard() {
 
       setMarketData(processedData);
 
-      // Fetch analysis results for all selected regimes
       const results = {};
       for (const regime of selectedRegimes) {
         if (selectedAnalysis === 'Cointegration Analysis') {
@@ -245,12 +258,10 @@ export default function Dashboard() {
     showUSDPrice,
   ]);
 
-  // Fetch data whenever selections or processing options change
   useEffect(() => {
     fetchAnalysisData();
   }, [fetchAnalysisData]);
 
-  // Handle regime selection changes
   const handleRegimeChange = (event) => {
     const {
       target: { value },
@@ -260,7 +271,6 @@ export default function Dashboard() {
     );
   };
 
-  // Color palette for dynamic assignment
   const colorPalette = [
     '#3b82f6',
     '#10b981',
@@ -274,15 +284,12 @@ export default function Dashboard() {
     '#a3e635',
   ];
 
-  // Memoize market data to prevent unnecessary re-renders
   const memoizedMarketData = useMemo(() => marketData, [marketData]);
 
-  // Handle drawer toggle
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  // Theme settings
   const theme = createTheme({
     palette: {
       mode: darkMode ? 'dark' : 'light',
@@ -295,7 +302,6 @@ export default function Dashboard() {
     },
   });
 
-  // Analysis options aligned with methodology
   const analysisOptions = [
     {
       category: 'Background',
@@ -323,9 +329,8 @@ export default function Dashboard() {
     },
   ];
 
-  // Drawer content
   const drawer = (
-    <div>
+    <div className="tour-sidebar">
       <ToolbarStyled />
       <Divider />
       <List>
@@ -385,21 +390,21 @@ export default function Dashboard() {
         <Divider />
         {analysisOptions.map((category) => (
           <Accordion key={category.category}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-            >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography variant="subtitle1">{category.category}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <List>
                 {category.analyses.map((analysis) => (
                   <ListItem
-                    button
                     key={analysis}
+                    disablePadding
                     selected={selectedAnalysis === analysis}
                     onClick={() => setSelectedAnalysis(analysis)}
                   >
-                    <ListItemText primary={analysis} />
+                    <ListItemButton>
+                      <ListItemText primary={analysis} />
+                    </ListItemButton>
                   </ListItem>
                 ))}
               </List>
@@ -448,10 +453,19 @@ export default function Dashboard() {
         </DrawerStyled>
         <Content>
           <ToolbarStyled />
+          {isClient && showQuickGuide && !tourCompleted && (
+            <QuickGuide onClose={handleQuickGuideClose} />
+          )}
+          {isClient && (
+            <GuidedTour
+              run={runTour}
+              steps={tourSteps}
+              onEnd={handleTourEnd}
+            />
+          )}
           {error && (
             <div
-              style={{
-                backgroundColor: theme.palette.error.dark,
+              style={{backgroundColor: theme.palette.error.dark,
                 color: theme.palette.error.contrastText,
                 padding: '16px',
                 borderRadius: '4px',
@@ -470,15 +484,16 @@ export default function Dashboard() {
             </div>
           )}
 
-          {memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
-            <div style={{ marginBottom: '24px' }}>
+          {isClient && memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
+            <div style={{ marginBottom: '24px' }} className="tour-main-chart">
               <div
                 style={{
                   display: 'flex',
                   flexWrap: 'wrap',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  marginBottom: '16px',}}
+                  marginBottom: '16px',
+                }}
               >
                 <Typography variant="h5" color="primary">
                   Price and Conflict Intensity Over Time
@@ -519,68 +534,26 @@ export default function Dashboard() {
                   />
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={400}>
-                <ComposedChart data={memoizedMarketData}>
-                  <CartesianGrid stroke={theme.palette.divider} />
-                  <XAxis dataKey="date" stroke={theme.palette.text.secondary} />
-                  <YAxis yAxisId="left" stroke={theme.palette.text.secondary} />
-                  <YAxis
-                    yAxisId="right"
-                    orientation="right"
-                    stroke={theme.palette.text.secondary}
-                    domain={[0, 10]}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: theme.palette.background.paper,
-                      border: 'none',
-                      color: theme.palette.text.primary,
-                    }}
-                  />
-                  <Legend />
-                  <Brush dataKey="date" stroke={theme.palette.primary.main} />
-                  {selectedRegimes.map((regime, index) => (
-                    <Area
-                      key={`conflict_area_${regime}`}
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey={`conflict_${regime}`}
-                      fill={colorPalette[(index + selectedRegimes.length) % colorPalette.length]}
-                      stroke={colorPalette[(index + selectedRegimes.length) % colorPalette.length]}
-                      fillOpacity={0.3}
-                      name={`Conflict Intensity (${regime})`}
-                    />
-                  ))}
-                  {selectedRegimes.map((regime, index) => (
-                    <Line
-                      key={`price_${regime}`}
-                      yAxisId="left"
-                      type="monotone"
-                      dataKey={
-                        showUSDPrice ? `usdPrice_${regime}` : `price_${regime}`
-                      }
-                      stroke={colorPalette[index % colorPalette.length]}
-                      name={`${regime} Price (${
-                        showUSDPrice ? 'USD' : 'Local Currency'
-                      })`}
-                      dot={false}
-                    />
-                  ))}
-                </ComposedChart>
-              </ResponsiveContainer>
+              <DynamicCharts
+                data={memoizedMarketData}
+                selectedRegimes={selectedRegimes}
+                showUSDPrice={showUSDPrice}
+                colorPalette={colorPalette}
+                theme={theme}
+              />
             </div>
           )}
 
-          {!isLoading && Object.keys(analysisResults).length > 0 && selectedAnalysis !== 'Methodology' && selectedAnalysis !== 'Literature Review' && (
+          {isClient && !isLoading && Object.keys(analysisResults).length > 0 && selectedAnalysis !== 'Methodology' && selectedAnalysis !== 'Literature Review' && (
             <ErrorBoundary>
-              <Suspense fallback={<LoadingSpinner />}>
-                <Grid container spacing={3}>
+              <React.Suspense fallback={<LoadingSpinner />}>
+                <Grid container spacing={3} className="tour-analysis-section">
                   {selectedRegimes.map((regime) => (
                     <Grid item xs={12} md={6} lg={4} key={regime}>
                       <Card>
                         <CardHeader title={`${selectedAnalysis} Results for ${selectedCommodity} in ${regime}`} />
                         <CardContent>
-                          <ResultsVisualization
+                          <DynamicResultsVisualization
                             results={analysisResults[regime]}
                             analysisType={selectedAnalysis}
                             commodity={selectedCommodity}
@@ -591,19 +564,14 @@ export default function Dashboard() {
                     </Grid>
                   ))}
                 </Grid>
-              </Suspense>
+              </React.Suspense>
             </ErrorBoundary>
           )}
 
-          {selectedAnalysis === 'Methodology' && <Methodology />}
-          {selectedAnalysis === 'Literature Review' && <LiteratureReview />}
+          {isClient && selectedAnalysis === 'Methodology' && <DynamicMethodology />}
+          {isClient && selectedAnalysis === 'Literature Review' && <DynamicLiteratureReview />}
         </Content>
       </Root>
     </ThemeProvider>
   );
 }
-
-// Type checking with PropTypes
-Dashboard.propTypes = {
-  // No props passed to Dashboard
-};
