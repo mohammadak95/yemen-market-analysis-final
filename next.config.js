@@ -1,5 +1,7 @@
 const path = require('path');
 
+const repoName = 'yemen-market-analysis-final';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -7,6 +9,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  basePath: `/${repoName}`,
+  assetPrefix: `/${repoName}/`,
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,

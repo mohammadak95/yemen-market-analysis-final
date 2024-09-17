@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "touch out/.nojekyll",
+    "postbuild": "touch out/.nojekyll && echo 'mohammadak95.github.io' > out/CNAME",
     "start": "next start",
     "lint": "next lint"
   },
