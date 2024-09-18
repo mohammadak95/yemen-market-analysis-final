@@ -1,0 +1,715 @@
+commodity,exchange_rate_regime,market_id,Start Date,End Date,Total Dates
+Beans (kidney red),North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,62
+Beans (kidney red),North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Beans (kidney red),North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Beans (kidney red),North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,72
+Beans (kidney red),North,Alsuail_Hajjah,2018-04-01,2024-05-01,52
+Beans (kidney red),North,Amran City_Amran,2015-01-01,2024-05-01,72
+Beans (kidney red),North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Beans (kidney red),North,Haradh Town_Hajjah,2015-01-01,2020-03-01,22
+Beans (kidney red),North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Beans (kidney red),North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Beans (kidney red),North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Beans (kidney red),North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,72
+Beans (kidney red),South,Aden City_Aden,2015-01-01,2024-07-01,73
+Beans (kidney red),South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,63
+Beans (kidney red),South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Beans (kidney red),South,Marib City_Marib,2018-04-01,2024-07-01,56
+Beans (kidney red),South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Beans (kidney red),South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Beans (kidney red),South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,33
+Beans (kidney red),South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Beans (kidney red),South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Beans (kidney red),Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Beans (kidney red),Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Beans (kidney red),Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Beans (kidney red),Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Beans (kidney red),Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Jihana Almarkazi_Sana'a,2016-07-01,2019-12-01,40
+Beans (kidney red),Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Beans (kidney red),Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Beans (kidney red),Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Beans (kidney red),Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Beans (kidney red),Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,38
+Beans (kidney red),Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Beans (kidney red),Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Beans (white),North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,61
+Beans (white),North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Beans (white),North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Beans (white),North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,59
+Beans (white),North,Alsuail_Hajjah,2018-04-01,2024-05-01,51
+Beans (white),North,Amran City_Amran,2015-01-01,2024-05-01,59
+Beans (white),North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Beans (white),North,Haradh Town_Hajjah,2015-01-01,2020-03-01,9
+Beans (white),North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Beans (white),North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Beans (white),North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Beans (white),North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,59
+Beans (white),South,Aden City_Aden,2015-01-01,2024-07-01,66
+Beans (white),South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,62
+Beans (white),South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Beans (white),South,Marib City_Marib,2018-04-01,2024-07-01,56
+Beans (white),South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Beans (white),South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Beans (white),South,Soqatra (Hudaibo)_Socotra,2018-04-01,2023-04-01,18
+Beans (white),South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Beans (white),South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Beans (white),Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Beans (white),Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Beans (white),Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Beans (white),Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Beans (white),Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Beans (white),Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Beans (white),Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Beans (white),Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Beans (white),Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Beans (white),Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Beans (white),Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Beans (white),Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Beans (white),Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Beans (white),Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Beans (white),Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Beans (white),Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Beans (white),Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Beans (white),Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Beans (white),Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2019-07-01,36
+Beans (white),Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Beans (white),Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Eggs,North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,61
+Eggs,North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Eggs,North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Eggs,North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,59
+Eggs,North,Alsuail_Hajjah,2018-04-01,2024-05-01,51
+Eggs,North,Amran City_Amran,2015-01-01,2024-05-01,59
+Eggs,North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Eggs,North,Haradh Town_Hajjah,2015-01-01,2020-03-01,9
+Eggs,North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Eggs,North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Eggs,North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Eggs,North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,59
+Eggs,South,Aden City_Aden,2015-01-01,2024-07-01,66
+Eggs,South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,62
+Eggs,South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Eggs,South,Marib City_Marib,2018-04-01,2024-07-01,56
+Eggs,South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Eggs,South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Eggs,South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,49
+Eggs,South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Eggs,South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Eggs,Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Eggs,Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Eggs,Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Eggs,Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Eggs,Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Eggs,Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Eggs,Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Eggs,Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Eggs,Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Eggs,Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Eggs,Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Eggs,Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Eggs,Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Eggs,Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Eggs,Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Eggs,Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Eggs,Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Eggs,Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Eggs,Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Eggs,Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Eggs,Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Fuel (diesel),North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,62
+Fuel (diesel),North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Fuel (diesel),North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Fuel (diesel),North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,72
+Fuel (diesel),North,Alsuail_Hajjah,2018-04-01,2024-05-01,52
+Fuel (diesel),North,Amran City_Amran,2015-01-01,2024-05-01,72
+Fuel (diesel),North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Fuel (diesel),North,Haradh Town_Hajjah,2015-01-01,2020-03-01,22
+Fuel (diesel),North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Fuel (diesel),North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Fuel (diesel),North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Fuel (diesel),North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,70
+Fuel (diesel),South,Aden City_Aden,2015-01-01,2024-07-01,73
+Fuel (diesel),South,Al Ghaidha_Al Maharah,2018-04-01,2024-07-01,56
+Fuel (diesel),South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Fuel (diesel),South,Marib City_Marib,2018-04-01,2024-07-01,56
+Fuel (diesel),South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Fuel (diesel),South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Fuel (diesel),South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Fuel (diesel),South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Fuel (diesel),South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Fuel (diesel),Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Fuel (diesel),Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Fuel (diesel),Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Fuel (diesel),Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Fuel (diesel),Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Fuel (diesel),Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Fuel (diesel),Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Fuel (diesel),Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Fuel (diesel),Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Fuel (diesel),Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Fuel (diesel),Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Fuel (gas),North,Al Bayda City_Al Bayda,2018-04-01,2024-05-01,55
+Fuel (gas),North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Fuel (gas),North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Fuel (gas),North,Alduhamih_Al Hudaydah,2018-04-01,2024-05-01,55
+Fuel (gas),North,Alsuail_Hajjah,2018-04-01,2024-05-01,52
+Fuel (gas),North,Amran City_Amran,2018-04-01,2024-05-01,55
+Fuel (gas),North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Fuel (gas),North,Haradh Town_Hajjah,2018-04-01,2020-03-01,5
+Fuel (gas),North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Fuel (gas),North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Fuel (gas),North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Fuel (gas),North,Sana'a City_Amanat Al Asimah,2018-04-01,2024-05-01,55
+Fuel (gas),South,Aden City_Aden,2018-04-01,2024-07-01,56
+Fuel (gas),South,Al Ghaidha_Al Maharah,2018-04-01,2024-07-01,56
+Fuel (gas),South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Fuel (gas),South,Marib City_Marib,2018-04-01,2024-07-01,56
+Fuel (gas),South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Fuel (gas),South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Fuel (gas),South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Fuel (gas),South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Fuel (gas),South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Fuel (gas),Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Fuel (gas),Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Fuel (gas),Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Fuel (gas),Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Fuel (gas),Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Fuel (gas),Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Fuel (gas),Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Fuel (gas),Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Fuel (gas),Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Fuel (gas),Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Fuel (gas),Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Fuel (petrol-gasoline),North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,62
+Fuel (petrol-gasoline),North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Fuel (petrol-gasoline),North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Fuel (petrol-gasoline),North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,72
+Fuel (petrol-gasoline),North,Alsuail_Hajjah,2018-04-01,2024-05-01,52
+Fuel (petrol-gasoline),North,Amran City_Amran,2015-01-01,2024-05-01,72
+Fuel (petrol-gasoline),North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Fuel (petrol-gasoline),North,Haradh Town_Hajjah,2015-01-01,2020-03-01,22
+Fuel (petrol-gasoline),North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Fuel (petrol-gasoline),North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Fuel (petrol-gasoline),North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Fuel (petrol-gasoline),North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,72
+Fuel (petrol-gasoline),South,Aden City_Aden,2015-01-01,2024-07-01,73
+Fuel (petrol-gasoline),South,Al Ghaidha_Al Maharah,2018-04-01,2024-07-01,56
+Fuel (petrol-gasoline),South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Fuel (petrol-gasoline),South,Marib City_Marib,2018-04-01,2024-07-01,56
+Fuel (petrol-gasoline),South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Fuel (petrol-gasoline),South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Fuel (petrol-gasoline),South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Fuel (petrol-gasoline),South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Fuel (petrol-gasoline),South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Fuel (petrol-gasoline),Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Fuel (petrol-gasoline),Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Fuel (petrol-gasoline),Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Fuel (petrol-gasoline),Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Fuel (petrol-gasoline),Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Fuel (petrol-gasoline),Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Fuel (petrol-gasoline),Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Fuel (petrol-gasoline),Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Fuel (petrol-gasoline),Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Fuel (petrol-gasoline),Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Fuel (petrol-gasoline),Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Lentils,North,Al Bayda City_Al Bayda,2015-12-01,2024-05-01,60
+Lentils,North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Lentils,North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Lentils,North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,59
+Lentils,North,Alsuail_Hajjah,2018-04-01,2024-05-01,51
+Lentils,North,Amran City_Amran,2015-01-01,2024-05-01,59
+Lentils,North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Lentils,North,Haradh Town_Hajjah,2015-01-01,2020-03-01,9
+Lentils,North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Lentils,North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Lentils,North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Lentils,North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,59
+Lentils,South,Aden City_Aden,2015-01-01,2024-07-01,66
+Lentils,South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,62
+Lentils,South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Lentils,South,Marib City_Marib,2018-04-01,2024-07-01,56
+Lentils,South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Lentils,South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Lentils,South,Soqatra (Hudaibo)_Socotra,2018-04-01,2023-04-01,23
+Lentils,South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Lentils,South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Lentils,Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Lentils,Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Lentils,Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Lentils,Unified,Al Hazum_Al Jawf,2016-07-01,2019-12-01,40
+Lentils,Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Lentils,Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Lentils,Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Lentils,Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Lentils,Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Lentils,Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Lentils,Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Lentils,Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Lentils,Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Lentils,Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Lentils,Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Lentils,Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Lentils,Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Lentils,Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Lentils,Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2019-12-01,41
+Lentils,Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Lentils,Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+"Livestock (sheep, two-year-old male)",North,Al Bayda City_Al Bayda,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",North,Al Hazum_Al Jawf,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",North,Al Jabeen_Raymah,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",North,Alduhamih_Al Hudaydah,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",North,Alsuail_Hajjah,2018-04-01,2020-09-01,7
+"Livestock (sheep, two-year-old male)",North,Amran City_Amran,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",North,Dhamar City_Dhamar,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",North,Haradh Town_Hajjah,2018-04-01,2020-03-01,5
+"Livestock (sheep, two-year-old male)",North,Ibb City_Ibb,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",North,Jihana Almarkazi_Sana'a,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",North,Mahweet City_Al Mahwit,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",North,Sana'a City_Amanat Al Asimah,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",South,Aden City_Aden,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",South,Al Ghaidha_Al Maharah,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",South,Central Ataq_Shabwah,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",South,Marib City_Marib,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",South,Mukalla City_Hadramaut,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",South,Sayoun City_Hadramaut,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",South,Soqatra (Hudaibo)_Socotra,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",South,Taiz City_Taizz,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",South,Zungubar City_Abyan,2018-04-01,2020-09-01,11
+"Livestock (sheep, two-year-old male)",Unified,Aden City_Aden,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Al Ghaidha_Al Maharah,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+"Livestock (sheep, two-year-old male)",Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Central Ataq_Shabwah,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Marib City_Marib,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Mukalla City_Hadramaut,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Sayoun City_Hadramaut,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Taiz City_Taizz,2016-06-01,2019-12-01,41
+"Livestock (sheep, two-year-old male)",Unified,Zungubar City_Abyan,2016-07-01,2019-12-01,40
+Oil (vegetable),North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,62
+Oil (vegetable),North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Oil (vegetable),North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Oil (vegetable),North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,72
+Oil (vegetable),North,Alsuail_Hajjah,2015-02-01,2024-05-01,68
+Oil (vegetable),North,Amran City_Amran,2015-01-01,2024-05-01,72
+Oil (vegetable),North,Dhamar City_Dhamar,2015-02-01,2024-05-01,71
+Oil (vegetable),North,Haradh Town_Hajjah,2015-01-01,2020-03-01,22
+Oil (vegetable),North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Oil (vegetable),North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Oil (vegetable),North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Oil (vegetable),North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,72
+Oil (vegetable),South,Aden City_Aden,2015-01-01,2024-07-01,73
+Oil (vegetable),South,Al Ghaidha_Al Maharah,2018-04-01,2024-07-01,56
+Oil (vegetable),South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Oil (vegetable),South,Marib City_Marib,2018-04-01,2024-07-01,56
+Oil (vegetable),South,Mukalla City_Hadramaut,2015-02-01,2024-07-01,72
+Oil (vegetable),South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Oil (vegetable),South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Oil (vegetable),South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Oil (vegetable),South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Oil (vegetable),Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Oil (vegetable),Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Oil (vegetable),Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Alsuail_Hajjah,2016-06-01,2019-05-01,34
+Oil (vegetable),Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Oil (vegetable),Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Oil (vegetable),Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Oil (vegetable),Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Oil (vegetable),Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Oil (vegetable),Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Oil (vegetable),Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Oil (vegetable),Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Onions,North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,62
+Onions,North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Onions,North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Onions,North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,72
+Onions,North,Alsuail_Hajjah,2015-02-01,2024-05-01,70
+Onions,North,Amran City_Amran,2015-01-01,2024-05-01,72
+Onions,North,Dhamar City_Dhamar,2015-02-01,2024-05-01,71
+Onions,North,Haradh Town_Hajjah,2015-01-01,2020-03-01,22
+Onions,North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Onions,North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Onions,North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Onions,North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,72
+Onions,South,Aden City_Aden,2015-01-01,2024-07-01,73
+Onions,South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,63
+Onions,South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Onions,South,Marib City_Marib,2018-04-01,2024-07-01,56
+Onions,South,Mukalla City_Hadramaut,2015-02-01,2024-07-01,72
+Onions,South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Onions,South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Onions,South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Onions,South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Onions,Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Onions,Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Onions,Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Onions,Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Onions,Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Onions,Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Onions,Unified,Alsuail_Hajjah,2016-06-01,2019-11-01,39
+Onions,Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Onions,Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Onions,Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Onions,Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Onions,Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Onions,Unified,Jihana Almarkazi_Sana'a,2016-07-01,2019-12-01,40
+Onions,Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Onions,Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Onions,Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Onions,Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Onions,Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Onions,Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Onions,Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Onions,Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+"Peas (yellow, split)",North,Al Bayda City_Al Bayda,2018-04-01,2024-05-01,49
+"Peas (yellow, split)",North,Al Hazum_Al Jawf,2018-04-01,2021-11-01,10
+"Peas (yellow, split)",North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+"Peas (yellow, split)",North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,59
+"Peas (yellow, split)",North,Alsuail_Hajjah,2018-04-01,2021-04-01,13
+"Peas (yellow, split)",North,Amran City_Amran,2015-01-01,2024-05-01,59
+"Peas (yellow, split)",North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+"Peas (yellow, split)",North,Haradh Town_Hajjah,2015-01-01,2020-03-01,7
+"Peas (yellow, split)",North,Ibb City_Ibb,2018-04-01,2024-05-01,30
+"Peas (yellow, split)",North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+"Peas (yellow, split)",North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+"Peas (yellow, split)",North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,59
+"Peas (yellow, split)",South,Aden City_Aden,2015-01-01,2024-07-01,60
+"Peas (yellow, split)",South,Al Ghaidha_Al Maharah,2018-04-01,2018-09-01,2
+"Peas (yellow, split)",South,Central Ataq_Shabwah,2018-04-01,2022-02-01,12
+"Peas (yellow, split)",South,Marib City_Marib,2018-04-01,2022-03-01,29
+"Peas (yellow, split)",South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+"Peas (yellow, split)",South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,5
+"Peas (yellow, split)",South,Soqatra (Hudaibo)_Socotra,2018-04-01,2023-03-01,3
+"Peas (yellow, split)",South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+"Peas (yellow, split)",South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+"Peas (yellow, split)",Unified,Aden City_Aden,2016-07-01,2024-06-01,41
+"Peas (yellow, split)",Unified,Al Bayda City_Al Bayda,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Al Ghaidha_Al Maharah,2016-06-01,2019-09-01,38
+"Peas (yellow, split)",Unified,Al Hazum_Al Jawf,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Al Jabeen_Raymah,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Alduhamih_Al Hudaydah,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+"Peas (yellow, split)",Unified,Amran City_Amran,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Central Ataq_Shabwah,2016-06-01,2019-12-01,41
+"Peas (yellow, split)",Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+"Peas (yellow, split)",Unified,Haradh Town_Hajjah,2016-07-01,2019-09-01,37
+"Peas (yellow, split)",Unified,Ibb City_Ibb,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Jihana Almarkazi_Sana'a,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Mahweet City_Al Mahwit,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Marib City_Marib,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Mukalla City_Hadramaut,2016-07-01,2024-06-01,41
+"Peas (yellow, split)",Unified,Sana'a City_Amanat Al Asimah,2016-07-01,2019-12-01,40
+"Peas (yellow, split)",Unified,Sayoun City_Hadramaut,2016-07-01,2024-06-01,27
+"Peas (yellow, split)",Unified,Soqatra (Hudaibo)_Socotra,2016-08-01,2018-10-01,25
+"Peas (yellow, split)",Unified,Taiz City_Taizz,2016-07-01,2024-06-01,41
+"Peas (yellow, split)",Unified,Zungubar City_Abyan,2016-08-01,2024-06-01,40
+Rice (imported),North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,61
+Rice (imported),North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Rice (imported),North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Rice (imported),North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,59
+Rice (imported),North,Alsuail_Hajjah,2018-04-01,2024-05-01,52
+Rice (imported),North,Amran City_Amran,2015-01-01,2024-05-01,59
+Rice (imported),North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Rice (imported),North,Haradh Town_Hajjah,2015-01-01,2020-03-01,9
+Rice (imported),North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Rice (imported),North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Rice (imported),North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Rice (imported),North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,59
+Rice (imported),South,Aden City_Aden,2015-01-01,2024-07-01,66
+Rice (imported),South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,62
+Rice (imported),South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Rice (imported),South,Marib City_Marib,2018-04-01,2024-07-01,56
+Rice (imported),South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Rice (imported),South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Rice (imported),South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Rice (imported),South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Rice (imported),South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Rice (imported),Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Rice (imported),Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Rice (imported),Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Rice (imported),Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Rice (imported),Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Rice (imported),Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Rice (imported),Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Rice (imported),Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Rice (imported),Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Rice (imported),Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Rice (imported),Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Salt,North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,61
+Salt,North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Salt,North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Salt,North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,59
+Salt,North,Alsuail_Hajjah,2018-04-01,2024-05-01,51
+Salt,North,Amran City_Amran,2015-01-01,2024-05-01,59
+Salt,North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Salt,North,Haradh Town_Hajjah,2015-01-01,2020-03-01,9
+Salt,North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Salt,North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Salt,North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Salt,North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,59
+Salt,South,Aden City_Aden,2015-01-01,2024-07-01,66
+Salt,South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,62
+Salt,South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Salt,South,Marib City_Marib,2018-04-01,2024-07-01,56
+Salt,South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Salt,South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Salt,South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Salt,South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Salt,South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Salt,Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Salt,Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Salt,Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Salt,Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Salt,Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Salt,Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Salt,Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Salt,Unified,Amran City_Amran,2016-07-01,2019-12-01,40
+Salt,Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Salt,Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Salt,Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Salt,Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Salt,Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Salt,Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Salt,Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Salt,Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Salt,Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Salt,Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Salt,Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Salt,Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Salt,Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Sugar,North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,62
+Sugar,North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Sugar,North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Sugar,North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,72
+Sugar,North,Alsuail_Hajjah,2018-04-01,2024-05-01,52
+Sugar,North,Amran City_Amran,2015-01-01,2024-05-01,72
+Sugar,North,Dhamar City_Dhamar,2018-04-01,2024-05-01,55
+Sugar,North,Haradh Town_Hajjah,2015-01-01,2020-03-01,22
+Sugar,North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Sugar,North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Sugar,North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Sugar,North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,72
+Sugar,South,Aden City_Aden,2015-01-01,2024-07-01,73
+Sugar,South,Al Ghaidha_Al Maharah,2018-04-01,2024-07-01,56
+Sugar,South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Sugar,South,Marib City_Marib,2018-04-01,2024-07-01,56
+Sugar,South,Mukalla City_Hadramaut,2018-04-01,2024-07-01,56
+Sugar,South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Sugar,South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Sugar,South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Sugar,South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Sugar,Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Sugar,Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Sugar,Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Sugar,Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Sugar,Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Sugar,Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Sugar,Unified,Alsuail_Hajjah,2016-07-01,2018-08-01,25
+Sugar,Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Sugar,Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Sugar,Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Sugar,Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Sugar,Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Sugar,Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Sugar,Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Sugar,Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Sugar,Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Sugar,Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Sugar,Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Sugar,Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Sugar,Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Sugar,Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Tomatoes,North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,61
+Tomatoes,North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Tomatoes,North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Tomatoes,North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,72
+Tomatoes,North,Alsuail_Hajjah,2015-02-01,2024-05-01,70
+Tomatoes,North,Amran City_Amran,2015-01-01,2024-05-01,59
+Tomatoes,North,Dhamar City_Dhamar,2015-02-01,2024-05-01,71
+Tomatoes,North,Haradh Town_Hajjah,2015-01-01,2020-03-01,9
+Tomatoes,North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Tomatoes,North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Tomatoes,North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Tomatoes,North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,72
+Tomatoes,South,Aden City_Aden,2015-01-01,2024-07-01,66
+Tomatoes,South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,62
+Tomatoes,South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Tomatoes,South,Marib City_Marib,2018-04-01,2024-07-01,56
+Tomatoes,South,Mukalla City_Hadramaut,2015-02-01,2024-07-01,72
+Tomatoes,South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Tomatoes,South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Tomatoes,South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Tomatoes,South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Tomatoes,Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Tomatoes,Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Tomatoes,Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Alsuail_Hajjah,2016-06-01,2019-11-01,39
+Tomatoes,Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Tomatoes,Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Jihana Almarkazi_Sana'a,2016-07-01,2019-12-01,40
+Tomatoes,Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Tomatoes,Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Tomatoes,Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Tomatoes,Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Tomatoes,Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Tomatoes,Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Tomatoes,Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Wheat,North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,61
+Wheat,North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Wheat,North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Wheat,North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,72
+Wheat,North,Alsuail_Hajjah,2015-02-01,2024-05-01,70
+Wheat,North,Amran City_Amran,2015-01-01,2024-05-01,59
+Wheat,North,Dhamar City_Dhamar,2015-02-01,2024-05-01,71
+Wheat,North,Haradh Town_Hajjah,2015-01-01,2020-03-01,9
+Wheat,North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Wheat,North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Wheat,North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Wheat,North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,72
+Wheat,South,Aden City_Aden,2015-01-01,2024-07-01,66
+Wheat,South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,62
+Wheat,South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Wheat,South,Marib City_Marib,2018-04-01,2024-07-01,56
+Wheat,South,Mukalla City_Hadramaut,2015-02-01,2024-07-01,72
+Wheat,South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Wheat,South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,54
+Wheat,South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Wheat,South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Wheat,Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Wheat,Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Wheat,Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Wheat,Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Wheat,Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Wheat,Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Wheat,Unified,Alsuail_Hajjah,2016-06-01,2019-11-01,39
+Wheat,Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Wheat,Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Wheat,Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Wheat,Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Wheat,Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Wheat,Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Wheat,Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Wheat,Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Wheat,Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Wheat,Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Wheat,Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Wheat,Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Wheat,Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Wheat,Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
+Wheat flour,North,Al Bayda City_Al Bayda,2015-11-01,2024-05-01,62
+Wheat flour,North,Al Hazum_Al Jawf,2018-04-01,2024-05-01,55
+Wheat flour,North,Al Jabeen_Raymah,2018-04-01,2024-05-01,55
+Wheat flour,North,Alduhamih_Al Hudaydah,2015-01-01,2024-05-01,72
+Wheat flour,North,Alsuail_Hajjah,2015-02-01,2024-05-01,70
+Wheat flour,North,Amran City_Amran,2015-01-01,2024-05-01,72
+Wheat flour,North,Dhamar City_Dhamar,2015-02-01,2024-05-01,71
+Wheat flour,North,Haradh Town_Hajjah,2015-01-01,2020-03-01,22
+Wheat flour,North,Ibb City_Ibb,2018-04-01,2024-05-01,55
+Wheat flour,North,Jihana Almarkazi_Sana'a,2018-04-01,2024-05-01,55
+Wheat flour,North,Mahweet City_Al Mahwit,2018-04-01,2024-05-01,55
+Wheat flour,North,Sana'a City_Amanat Al Asimah,2015-01-01,2024-05-01,72
+Wheat flour,South,Aden City_Aden,2015-01-01,2024-07-01,73
+Wheat flour,South,Al Ghaidha_Al Maharah,2015-11-01,2024-07-01,63
+Wheat flour,South,Central Ataq_Shabwah,2018-04-01,2024-07-01,56
+Wheat flour,South,Marib City_Marib,2018-04-01,2024-07-01,56
+Wheat flour,South,Mukalla City_Hadramaut,2015-02-01,2024-07-01,72
+Wheat flour,South,Sayoun City_Hadramaut,2018-04-01,2024-07-01,56
+Wheat flour,South,Soqatra (Hudaibo)_Socotra,2018-04-01,2024-07-01,56
+Wheat flour,South,Taiz City_Taizz,2018-04-01,2024-07-01,56
+Wheat flour,South,Zungubar City_Abyan,2018-04-01,2024-07-01,56
+Wheat flour,Unified,Aden City_Aden,2016-06-01,2024-06-01,42
+Wheat flour,Unified,Al Bayda City_Al Bayda,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Al Ghaidha_Al Maharah,2016-06-01,2024-06-01,42
+Wheat flour,Unified,Al Hazum_Al Jawf,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Al Jabeen_Raymah,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Alduhamih_Al Hudaydah,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Alsuail_Hajjah,2016-06-01,2019-11-01,39
+Wheat flour,Unified,Amran City_Amran,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Central Ataq_Shabwah,2016-06-01,2024-06-01,42
+Wheat flour,Unified,Dhamar City_Dhamar,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Haradh Town_Hajjah,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Ibb City_Ibb,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Jihana Almarkazi_Sana'a,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Mahweet City_Al Mahwit,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Marib City_Marib,2016-06-01,2024-06-01,42
+Wheat flour,Unified,Mukalla City_Hadramaut,2016-06-01,2024-06-01,42
+Wheat flour,Unified,Sana'a City_Amanat Al Asimah,2016-06-01,2019-12-01,41
+Wheat flour,Unified,Sayoun City_Hadramaut,2016-06-01,2024-06-01,42
+Wheat flour,Unified,Soqatra (Hudaibo)_Socotra,2016-06-01,2024-06-01,42
+Wheat flour,Unified,Taiz City_Taizz,2016-06-01,2024-06-01,42
+Wheat flour,Unified,Zungubar City_Abyan,2016-07-01,2024-06-01,41
