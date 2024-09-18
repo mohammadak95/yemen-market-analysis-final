@@ -1,16 +1,17 @@
 const path = require('path');
 
 const repoName = 'yemen-market-analysis-final';
+const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',
+  output: isGitHubPages ? 'export' : undefined,
   images: {
-    unoptimized: true,
+    unoptimized: isGitHubPages,
   },
-  basePath: `/${repoName}`,
-  assetPrefix: `/${repoName}/`,
+  basePath: isGitHubPages ? `/${repoName}` : '',
+  assetPrefix: isGitHubPages ? `/${repoName}/` : '',
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,

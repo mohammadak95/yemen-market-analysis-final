@@ -1,1532 +1,716 @@
 {
     "('Beans (kidney red)', 'North')": {
         "engle_granger": {
-            "cointegration_statistic": -1.5345202316414484,
-            "p_value": 0.7465622800849386,
+            "cointegration_statistic": -5.658270292933451,
+            "p_value": 7.986197553276737e-06,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.2681224222381773,
-            "adf_p_value": 0.1824552809360998,
-            "lb_statistic": 156.79551962373037,
-            "lb_p_value": 1.4850034489093183e-28
-        },
-        "westerlund": {
-            "Gt_statistic": 0.6235476408405862,
-            "Gt_p_value": 0.06926745481087226,
-            "Ga_statistic": 0.6189667211098293,
-            "Ga_p_value": 0.41771657501126713,
-            "Pt_statistic": 0.956010203823254,
-            "Pt_p_value": 0.4188932651916092,
-            "Pa_statistic": 0.7354339755352027,
-            "Pa_p_value": 0.7206260489278677
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Peas (yellow, split)', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -2.6620052112207797,
-            "p_value": 0.2135317648469921,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.6278704892387563,
-            "adf_p_value": 0.08737271947284614,
-            "lb_statistic": 34.78427354551878,
-            "lb_p_value": 0.0001359020611949264
-        },
-        "westerlund": {
-            "Gt_statistic": 0.8497955490571377,
-            "Gt_p_value": 0.6194820908055889,
-            "Ga_statistic": 0.9760112500254297,
-            "Ga_p_value": 0.7223919836543756,
-            "Pt_statistic": 0.5736153711462791,
-            "Pt_p_value": 0.5527771967153281,
-            "Pa_statistic": 0.4637223809006692,
-            "Pa_p_value": 0.7114165461313373
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Salt', 'Unified')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.2383266511914255,
-            "p_value": 0.8461781724362534,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.2205017537219323,
-            "adf_p_value": 0.664714786391924,
-            "lb_statistic": 212.18024316269936,
-            "lb_p_value": 4.620213345064713e-40
-        },
-        "westerlund": {
-            "Gt_statistic": 0.12071065360538336,
-            "Gt_p_value": 0.8562710180004022,
-            "Ga_statistic": 0.7272518078937701,
-            "Ga_p_value": 0.16404414258306899,
-            "Pt_statistic": 0.6257584562790817,
-            "Pt_p_value": 0.358949928550925,
-            "Pa_statistic": 0.7519757048168935,
-            "Pa_p_value": 0.6630464882712103
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "original"
-    },
-    "('Sugar', 'Unified')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.3867828555035457,
-            "p_value": 0.8005793302245978,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -0.9407534906255888,
-            "adf_p_value": 0.7742557285502507,
-            "lb_statistic": 193.28406745542338,
-            "lb_p_value": 4.05052257790066e-36
-        },
-        "westerlund": {
-            "Gt_statistic": 0.8477661110989971,
-            "Gt_p_value": 0.8484929321127396,
-            "Ga_statistic": 0.7342058670497664,
-            "Ga_p_value": 0.4449619268835653,
-            "Pt_statistic": 0.7314421399248141,
-            "Pt_p_value": 0.013882780448859156,
-            "Pa_statistic": 0.19461419682789927,
-            "Pa_p_value": 0.9864847888626567
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "original"
-    },
-    "('Wheat flour', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.5773021626533394,
-            "p_value": 0.7293556320844432,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.5085474894308573,
-            "adf_p_value": 0.5292788602120095,
-            "lb_statistic": 201.50933593973815,
-            "lb_p_value": 7.817443042455722e-38
-        },
-        "westerlund": {
-            "Gt_statistic": 0.17465765676887557,
-            "Gt_p_value": 0.17174572045332814,
-            "Ga_statistic": 0.7243375586351389,
-            "Ga_p_value": 0.03893551527495942,
-            "Pt_statistic": 0.023389343020179476,
-            "Pt_p_value": 0.06969492236614816,
-            "Pa_statistic": 0.2856975883831182,
-            "Pa_p_value": 0.48066050137799354
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Peas (yellow, split)', 'Unified')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.432803284621555,
-            "p_value": 0.7846707836383692,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.4145351826984027,
-            "adf_p_value": 0.5752882739586893,
-            "lb_statistic": 190.62684875551977,
-            "lb_p_value": 1.447859913921838e-35
-        },
-        "westerlund": {
-            "Gt_statistic": 0.6334458516378035,
-            "Gt_p_value": 0.5551845750113671,
-            "Ga_statistic": 0.0879664272333075,
-            "Ga_p_value": 0.21186699245324958,
-            "Pt_statistic": 0.6140343544680453,
-            "Pt_p_value": 0.02008353262537277,
-            "Pa_statistic": 0.6564616817601903,
-            "Pa_p_value": 0.8728455829268579
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "original"
-    },
-    "('Tomatoes', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -4.345494667086317,
-            "p_value": 0.0021986503078850104,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.053281566752768,
+                -3.347986330263506,
+                -3.9160529659276566
             ],
             "cointegrated": true
         },
-        "pedroni": {
-            "adf_statistic": -2.2766987227154694,
-            "adf_p_value": 0.17959324899505852,
-            "lb_statistic": 55.40809942805707,
-            "lb_p_value": 2.6494043605789364e-08
-        },
-        "westerlund": {
-            "Gt_statistic": 0.4528092756730494,
-            "Gt_p_value": 0.17166279049273792,
-            "Ga_statistic": 0.05851859426357131,
-            "Ga_p_value": 0.35117857052772394,
-            "Pt_statistic": 0.3637348914959767,
-            "Pt_p_value": 0.4689094674646265,
-            "Pa_statistic": 0.8540113200556064,
-            "Pa_p_value": 0.07807443914605638
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Beans (kidney red)', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.162611621189211,
+            "p_value": 8.001518174224434e-05,
+            "critical_values": [
+                -3.056229724354658,
+                -3.351973538577696,
+                -3.9226982413631264
+            ],
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "diff"
     },
-    "('Oil (vegetable)', 'South')": {
+    "('Beans (kidney red)', 'Unified')": {
         "engle_granger": {
-            "cointegration_statistic": -1.6595364531057566,
-            "p_value": 0.6988942243307086,
+            "cointegration_statistic": -7.002909648205873,
+            "p_value": 6.1869418574124034e-09,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0514231245996997,
+                -3.3454736918282832,
+                -3.911867969208844
             ],
-            "cointegrated": false
+            "cointegrated": true
         },
-        "pedroni": {
-            "adf_statistic": -2.8377336387754997,
-            "adf_p_value": 0.05308265513965643,
-            "lb_statistic": 171.21771998660248,
-            "lb_p_value": 1.5521554310342033e-31
-        },
-        "westerlund": {
-            "Gt_statistic": 0.8961642078105572,
-            "Gt_p_value": 0.24797234607059981,
-            "Ga_statistic": 0.39481654702138824,
-            "Ga_p_value": 0.056691792994674306,
-            "Pt_statistic": 0.7423389266591583,
-            "Pt_p_value": 0.5179817320589866,
-            "Pa_statistic": 0.27346108575434436,
-            "Pa_p_value": 0.20254579069198775
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Beans (white)', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.3095652122572305,
+            "p_value": 4.1290472788302065e-05,
+            "critical_values": [
+                -3.0540574076999656,
+                -3.349035459390149,
+                -3.9178009887357166
+            ],
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "diff"
     },
-    "('Fuel (gas)', 'South')": {
+    "('Beans (white)', 'South')": {
         "engle_granger": {
-            "cointegration_statistic": -1.3687358675183232,
-            "p_value": 0.8065883367608482,
+            "cointegration_statistic": -5.104522587204066,
+            "p_value": 0.00010338809019100775,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.056799536950589,
+                -3.3527443542624242,
+                -3.923983522604855
             ],
-            "cointegrated": false
+            "cointegrated": true
         },
-        "pedroni": {
-            "adf_statistic": -2.714916084739445,
-            "adf_p_value": 0.07149250983253214,
-            "lb_statistic": 152.83849973335438,
-            "lb_p_value": 9.708858803485746e-28
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Beans (white)', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -7.2629640890423515,
+            "p_value": 1.3654944234865583e-09,
+            "critical_values": [
+                -3.0514313043650794,
+                -3.345484749631519,
+                -3.911886382284581
+            ],
+            "cointegrated": true
         },
-        "westerlund": {
-            "Gt_statistic": 0.24505211010811967,
-            "Gt_p_value": 0.4267313670770597,
-            "Ga_statistic": 0.13669674955309508,
-            "Ga_p_value": 0.910600044977647,
-            "Pt_statistic": 0.6080977687535227,
-            "Pt_p_value": 0.7836612506798433,
-            "Pa_statistic": 0.5817478111391772,
-            "Pa_p_value": 0.7309670638424001
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Eggs', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.850194207669728,
+            "p_value": 3.1015401196154396e-06,
+            "critical_values": [
+                -3.0538883702934276,
+                -3.3488068698275657,
+                -3.9174200898055913
+            ],
+            "cointegrated": true
         },
-        "price_transformation": "diff",
+        "price_transformation": "original",
         "conflict_transformation": "diff"
     },
     "('Eggs', 'South')": {
         "engle_granger": {
-            "cointegration_statistic": -1.0144490372707498,
-            "p_value": 0.8991500761632383,
+            "cointegration_statistic": -5.0678980562949985,
+            "p_value": 0.00012132999489784945,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0560437668620484,
+                -3.3517219964902436,
+                -3.9222788547047736
             ],
-            "cointegrated": false
+            "cointegrated": true
         },
-        "pedroni": {
-            "adf_statistic": -0.9554716332950578,
-            "adf_p_value": 0.7691567571575044,
-            "lb_statistic": 180.37877829743445,
-            "lb_p_value": 1.9549238060496312e-33
-        },
-        "westerlund": {
-            "Gt_statistic": 0.9845617839066566,
-            "Gt_p_value": 0.02999024153254537,
-            "Ga_statistic": 0.6443282076876662,
-            "Ga_p_value": 0.4907527894656959,
-            "Pt_statistic": 0.7495268142857928,
-            "Pt_p_value": 0.1946990451502384,
-            "Pa_statistic": 0.34362222185965274,
-            "Pa_p_value": 0.9677012219175123
-        },
-        "price_transformation": "original",
+        "price_transformation": "diff",
         "conflict_transformation": "diff"
     },
-    "('Tomatoes', 'Unified')": {
+    "('Eggs', 'Unified')": {
         "engle_granger": {
-            "cointegration_statistic": -2.2720131705328925,
-            "p_value": 0.38565132048400347,
+            "cointegration_statistic": -9.381409086163062,
+            "p_value": 2.4185600994715283e-15,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0513583809539666,
+                -3.345386168651264,
+                -3.9117222300329773
             ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.9794320399235197,
-            "adf_p_value": 0.03686034656879894,
-            "lb_statistic": 70.52924975937216,
-            "lb_p_value": 3.503814991306246e-11
-        },
-        "westerlund": {
-            "Gt_statistic": 0.04537306046146017,
-            "Gt_p_value": 0.24672569507781816,
-            "Ga_statistic": 0.024921668614628856,
-            "Ga_p_value": 0.35507067119753744,
-            "Pt_statistic": 0.7105473124761456,
-            "Pt_p_value": 0.11366947981856268,
-            "Pa_statistic": 0.4039135592386065,
-            "Pa_p_value": 0.1417642824869949
+            "cointegrated": true
         },
         "price_transformation": "diff",
         "conflict_transformation": "original"
     },
-    "('Livestock (sheep, two-year-old male)', 'North')": {
+    "('Fuel (diesel)', 'North')": {
         "engle_granger": {
-            "cointegration_statistic": -1.1905791706488176,
-            "p_value": 0.8590167914624932,
+            "cointegration_statistic": -7.113930882338562,
+            "p_value": 3.25964771903514e-09,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0532421643055008,
+                -3.3479330512521903,
+                -3.9159642039459555
             ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": 1.5100640839248296,
-            "adf_p_value": 0.9975610279216032,
-            "lb_statistic": 74.97766557162814,
-            "lb_p_value": 4.805653095497385e-12
-        },
-        "westerlund": {
-            "Gt_statistic": 0.9584895019478489,
-            "Gt_p_value": 0.23259277893494257,
-            "Ga_statistic": 0.19444687753766887,
-            "Ga_p_value": 0.7230354703906748,
-            "Pt_statistic": 0.24969463861021157,
-            "Pt_p_value": 0.9737911707933601,
-            "Pa_statistic": 0.5657337889285092,
-            "Pa_p_value": 0.8898556580840173
+            "cointegrated": true
         },
         "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Fuel (petrol-gasoline)', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.3997574308678338,
-            "p_value": 0.7961792634656355,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.381115602244018,
-            "adf_p_value": 0.5912953087126742,
-            "lb_statistic": 203.99699616539453,
-            "lb_p_value": 2.365790126544712e-38
-        },
-        "westerlund": {
-            "Gt_statistic": 0.8143242658736473,
-            "Gt_p_value": 0.9878191773946178,
-            "Ga_statistic": 0.1927445265244393,
-            "Ga_p_value": 0.32828564610040645,
-            "Pt_statistic": 0.07139242931006828,
-            "Pt_p_value": 0.05957318449834392,
-            "Pa_statistic": 0.5388200851787776,
-            "Pa_p_value": 0.8332365521877115
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Salt', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -2.5171690602393597,
-            "p_value": 0.27145000184847146,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.627253802525917,
-            "adf_p_value": 0.08749426020759798,
-            "lb_statistic": 40.480878434611974,
-            "lb_p_value": 1.393945977029253e-05
-        },
-        "westerlund": {
-            "Gt_statistic": 0.9471594586750618,
-            "Gt_p_value": 0.9095032409322473,
-            "Ga_statistic": 0.11214348443052569,
-            "Ga_p_value": 0.058943382281530066,
-            "Pt_statistic": 0.9645121321774857,
-            "Pt_p_value": 0.90259894740356,
-            "Pa_statistic": 0.8356499971329194,
-            "Pa_p_value": 0.7400747842802219
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Oil (vegetable)', 'Unified')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.6595336631108644,
-            "p_value": 0.6988955327932868,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.8377428866820926,
-            "adf_p_value": 0.05308143082598613,
-            "lb_statistic": 171.21777408686938,
-            "lb_p_value": 1.5521153838551866e-31
-        },
-        "westerlund": {
-            "Gt_statistic": 0.3483856884705153,
-            "Gt_p_value": 0.2416583241144935,
-            "Ga_statistic": 0.7452739805505376,
-            "Ga_p_value": 0.575107107526458,
-            "Pt_statistic": 0.38119030570048384,
-            "Pt_p_value": 0.5919163515836284,
-            "Pa_statistic": 0.8788455161996578,
-            "Pa_p_value": 0.700369562760982
-        },
-        "price_transformation": "diff",
         "conflict_transformation": "original"
     },
-    "('Beans (white)', 'Unified')": {
+    "('Fuel (diesel)', 'South')": {
         "engle_granger": {
-            "cointegration_statistic": -1.6553415173161934,
-            "p_value": 0.7008588890792242,
+            "cointegration_statistic": -5.786473503600893,
+            "p_value": 4.259139224705073e-06,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0558636428705466,
+                -3.351478351147552,
+                -3.921872653788857
             ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.63517135538418,
-            "adf_p_value": 0.4647849975593096,
-            "lb_statistic": 175.59129056766824,
-            "lb_p_value": 1.9254246525665554e-32
-        },
-        "westerlund": {
-            "Gt_statistic": 0.002023890514308402,
-            "Gt_p_value": 0.9748655348229197,
-            "Ga_statistic": 0.38614882531557426,
-            "Ga_p_value": 0.8755363550720284,
-            "Pt_statistic": 0.8089100739672377,
-            "Pt_p_value": 0.7845951351297693,
-            "Pa_statistic": 0.9574246680436226,
-            "Pa_p_value": 0.19890896417409787
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "original"
-    },
-    "('Lentils', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.2526334582129393,
-            "p_value": 0.8421607310606573,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -0.8439370757659483,
-            "adf_p_value": 0.8058740939183178,
-            "lb_statistic": 211.19574166769104,
-            "lb_p_value": 7.420658234128246e-40
-        },
-        "westerlund": {
-            "Gt_statistic": 0.5022060326729578,
-            "Gt_p_value": 0.3863693084206318,
-            "Ga_statistic": 0.31338670742827,
-            "Ga_p_value": 0.6172090636830923,
-            "Pt_statistic": 0.7308775812068845,
-            "Pt_p_value": 0.6485797253319884,
-            "Pa_statistic": 0.2718367843705263,
-            "Pa_p_value": 0.7879393879672896
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "diff"
     },
     "('Fuel (diesel)', 'Unified')": {
         "engle_granger": {
-            "cointegration_statistic": -1.3639132143867494,
-            "p_value": 0.8081721808527738,
+            "cointegration_statistic": -7.3488962714313315,
+            "p_value": 8.227460905194177e-10,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0514891132587487,
+                -3.3455628988354045,
+                -3.9120165148172115
             ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.220191061010211,
-            "adf_p_value": 0.19899904629819087,
-            "lb_statistic": 207.21168290200666,
-            "lb_p_value": 5.044387125878918e-39
-        },
-        "westerlund": {
-            "Gt_statistic": 0.8936963738101813,
-            "Gt_p_value": 0.5861892005253461,
-            "Ga_statistic": 0.010284964809155084,
-            "Ga_p_value": 0.07959750585539915,
-            "Pt_statistic": 0.37328237046118984,
-            "Pt_p_value": 0.26393560645963077,
-            "Pa_statistic": 0.6351234425635502,
-            "Pa_p_value": 0.22701713436408977
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "original"
     },
-    "('Wheat flour', 'Unified')": {
+    "('Fuel (gas)', 'North')": {
         "engle_granger": {
-            "cointegration_statistic": -1.577304832685059,
-            "p_value": 0.7293545371313513,
+            "cointegration_statistic": -4.316125917128593,
+            "p_value": 0.002446504394469333,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0543476324619365,
+                -3.349427942660155,
+                -3.9184550239586327
             ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.5085475074660104,
-            "adf_p_value": 0.5292788512728996,
-            "lb_statistic": 201.50930994977077,
-            "lb_p_value": 7.817540638358622e-38
-        },
-        "westerlund": {
-            "Gt_statistic": 0.6846678087423641,
-            "Gt_p_value": 0.12090605686698663,
-            "Ga_statistic": 0.5060914736579158,
-            "Ga_p_value": 0.53944381320856,
-            "Pt_statistic": 0.8971420011728817,
-            "Pt_p_value": 0.9249069733889295,
-            "Pa_statistic": 0.18775338467310576,
-            "Pa_p_value": 0.8135576671618957
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "original"
-    },
-    "('Fuel (diesel)', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.363912521571299,
-            "p_value": 0.8081724077211648,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.220189886361906,
-            "adf_p_value": 0.19899946310391792,
-            "lb_statistic": 207.21158245099235,
-            "lb_p_value": 5.0446308033104334e-39
-        },
-        "westerlund": {
-            "Gt_statistic": 0.35131037222439343,
-            "Gt_p_value": 0.629745198031566,
-            "Ga_statistic": 0.19951369439274402,
-            "Ga_p_value": 0.9825880854780112,
-            "Pt_statistic": 0.1524774051439982,
-            "Pt_p_value": 0.7301987184609393,
-            "Pa_statistic": 0.54418418783024,
-            "Pa_p_value": 0.2349784548731335
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "diff"
     },
-    "('Onions', 'North')": {
+    "('Fuel (gas)', 'South')": {
         "engle_granger": {
-            "cointegration_statistic": -1.6495253599812723,
-            "p_value": 0.6988094786570314,
+            "cointegration_statistic": -3.306527786486271,
+            "p_value": 0.054406573070672315,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.056229724354658,
+                -3.351973538577696,
+                -3.9226982413631264
             ],
             "cointegrated": false
         },
-        "pedroni": {
-            "adf_statistic": -2.0678585325380303,
-            "adf_p_value": 0.2576336456060226,
-            "lb_statistic": 74.22804483074836,
-            "lb_p_value": 6.723062791727606e-12
-        },
-        "westerlund": {
-            "Gt_statistic": 0.7338342563632748,
-            "Gt_p_value": 0.8098214501689361,
-            "Ga_statistic": 0.13575029855610143,
-            "Ga_p_value": 0.38080238070386263,
-            "Pt_statistic": 0.7314933167424085,
-            "Pt_p_value": 0.8198949910883546,
-            "Pa_statistic": 0.8830485610619091,
-            "Pa_p_value": 0.5591229045006847
-        },
-        "price_transformation": "original",
+        "price_transformation": "diff",
         "conflict_transformation": "diff"
     },
     "('Fuel (gas)', 'Unified')": {
         "engle_granger": {
-            "cointegration_statistic": -1.3687367007980842,
-            "p_value": 0.8065880622979905,
+            "cointegration_statistic": -5.6317251289981805,
+            "p_value": 9.081759352122456e-06,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.7149095065038895,
-            "adf_p_value": 0.0714936170444107,
-            "lb_statistic": 152.83844395781463,
-            "lb_p_value": 9.709115583273897e-28
-        },
-        "westerlund": {
-            "Gt_statistic": 0.8828423443811431,
-            "Gt_p_value": 0.02390696863771047,
-            "Ga_statistic": 0.06419576815894212,
-            "Ga_p_value": 0.9112551772209665,
-            "Pt_statistic": 0.42228664859238296,
-            "Pt_p_value": 0.03804318860808109,
-            "Pa_statistic": 0.6241754867703702,
-            "Pa_p_value": 0.41321403717204996
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "original"
-    },
-    "('Beans (white)', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.6553433709275125,
-            "p_value": 0.7008580221487226,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.6351731964074339,
-            "adf_p_value": 0.4647840347408985,
-            "lb_statistic": 175.59122536108418,
-            "lb_p_value": 1.9254846019316698e-32
-        },
-        "westerlund": {
-            "Gt_statistic": 0.436218976111422,
-            "Gt_p_value": 0.43542330384240335,
-            "Ga_statistic": 0.0565846407588132,
-            "Ga_p_value": 0.28355685904763395,
-            "Pt_statistic": 0.11206307323557618,
-            "Pt_p_value": 0.08598574838627815,
-            "Pa_statistic": 0.05704310817527791,
-            "Pa_p_value": 0.14896016566424686
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Rice (imported)', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -2.41333885464836,
-            "p_value": 0.31762299650492565,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": 2.0458112497257885,
-            "adf_p_value": 0.998729600395622,
-            "lb_statistic": 68.93567351331488,
-            "lb_p_value": 7.113489467932948e-11
-        },
-        "westerlund": {
-            "Gt_statistic": 0.07847712353412573,
-            "Gt_p_value": 0.36610727186344716,
-            "Ga_statistic": 0.7275784056253739,
-            "Ga_p_value": 0.28375454442103654,
-            "Pt_statistic": 0.7006681580367425,
-            "Pt_p_value": 0.887053449615259,
-            "Pa_statistic": 0.5774234615583852,
-            "Pa_p_value": 0.14227359760225888
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Sugar', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -3.578351356451179,
-            "p_value": 0.026413576946207325,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.051374452076849,
+                -3.345407894199822,
+                -3.9117584060835595
             ],
             "cointegrated": true
         },
-        "pedroni": {
-            "adf_statistic": -3.430777593505594,
-            "adf_p_value": 0.009953356052642037,
-            "lb_statistic": 26.092949140062814,
-            "lb_p_value": 0.0036171653445657126
-        },
-        "westerlund": {
-            "Gt_statistic": 0.7947647460480419,
-            "Gt_p_value": 0.3867292083876903,
-            "Ga_statistic": 0.9008474866564503,
-            "Ga_p_value": 0.5174308927494278,
-            "Pt_statistic": 0.5686508489285482,
-            "Pt_p_value": 0.29995558761818286,
-            "Pa_statistic": 0.1561693929726048,
-            "Pa_p_value": 0.6456742743074015
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Wheat', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.6082341287243112,
-            "p_value": 0.7164980284881963,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.3701234200662826,
-            "adf_p_value": 0.5965125902547905,
-            "lb_statistic": 193.99120779830994,
-            "lb_p_value": 2.8855897257736375e-36
-        },
-        "westerlund": {
-            "Gt_statistic": 0.8658455363170208,
-            "Gt_p_value": 0.660156040085212,
-            "Ga_statistic": 0.2238648524201694,
-            "Ga_p_value": 0.8659628619084833,
-            "Pt_statistic": 0.7221097314493267,
-            "Pt_p_value": 0.8804882706095926,
-            "Pa_statistic": 0.83550096185802,
-            "Pa_p_value": 0.8126682755438338
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Fuel (gas)', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -2.0912521580414736,
-            "p_value": 0.4785736210997666,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.0045840198334477,
-            "adf_p_value": 0.284566790390597,
-            "lb_statistic": 79.86773805644268,
-            "lb_p_value": 5.329239076858127e-13
-        },
-        "westerlund": {
-            "Gt_statistic": 0.39949858850141196,
-            "Gt_p_value": 0.6627287623499997,
-            "Ga_statistic": 0.9564811548386183,
-            "Ga_p_value": 0.17019304328727902,
-            "Pt_statistic": 0.5253788526413927,
-            "Pt_p_value": 0.48168768738961676,
-            "Pa_statistic": 0.6358896678506322,
-            "Pa_p_value": 0.23465056587445132
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Eggs', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -2.533217153633854,
-            "p_value": 0.26464487014033666,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -3.155758467647968,
-            "adf_p_value": 0.022692674130550552,
-            "lb_statistic": 32.38514085009476,
-            "lb_p_value": 0.0003453414603438689
-        },
-        "westerlund": {
-            "Gt_statistic": 0.3271894829815779,
-            "Gt_p_value": 0.1114789196041307,
-            "Ga_statistic": 0.3772361828170461,
-            "Ga_p_value": 0.27863803553010724,
-            "Pt_statistic": 0.18590726692509207,
-            "Pt_p_value": 0.38246592972123394,
-            "Pa_statistic": 0.8091437293462185,
-            "Pa_p_value": 0.45666494142601577
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "diff"
-    },
-    "('Beans (kidney red)', 'Unified')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.9194403259550983,
-            "p_value": 0.568891216702989,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.9042472200497378,
-            "adf_p_value": 0.3300657299181058,
-            "lb_statistic": 169.71366429207225,
-            "lb_p_value": 3.179751325830887e-31
-        },
-        "westerlund": {
-            "Gt_statistic": 0.21730500390334306,
-            "Gt_p_value": 0.09850652792652781,
-            "Ga_statistic": 0.6744922796104295,
-            "Ga_p_value": 0.9055180823388711,
-            "Pt_statistic": 0.759307674501177,
-            "Pt_p_value": 0.05802913362752671,
-            "Pa_statistic": 0.14729413151161486,
-            "Pa_p_value": 0.45993088651297753
-        },
         "price_transformation": "diff",
         "conflict_transformation": "original"
     },
-    "('Livestock (sheep, two-year-old male)', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.6397528972737583,
-            "p_value": 0.7030487747738836,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.605181298939972,
-            "adf_p_value": 0.48099025775575066,
-            "lb_statistic": 110.43903159796054,
-            "lb_p_value": 4.351607590612389e-19
-        },
-        "westerlund": {
-            "Gt_statistic": 0.4538613951557361,
-            "Gt_p_value": 0.9203912084826954,
-            "Ga_statistic": 0.4529134969375519,
-            "Ga_p_value": 0.8864827582886111,
-            "Pt_statistic": 0.9188663369355079,
-            "Pt_p_value": 0.5281862075475834,
-            "Pa_statistic": 0.3124785916933538,
-            "Pa_p_value": 0.737769223552872
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "diff"
-    },
     "('Fuel (petrol-gasoline)', 'North')": {
         "engle_granger": {
-            "cointegration_statistic": -1.2521084534422313,
-            "p_value": 0.8423095582006441,
+            "cointegration_statistic": -6.854874570899494,
+            "p_value": 1.4391644046462804e-08,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.053255258836551,
+                -3.3479507573214544,
+                -3.915993701870736
             ],
-            "cointegrated": false
+            "cointegrated": true
         },
-        "pedroni": {
-            "adf_statistic": -3.4924614492722963,
-            "adf_p_value": 0.008182823905759824,
-            "lb_statistic": 84.93261903444932,
-            "lb_p_value": 5.381907476909685e-14
-        },
-        "westerlund": {
-            "Gt_statistic": 0.6249356293145453,
-            "Gt_p_value": 0.4459456740820379,
-            "Ga_statistic": 0.924980884653636,
-            "Ga_p_value": 0.32147420296285634,
-            "Pt_statistic": 0.010427487289807247,
-            "Pt_p_value": 0.9960846605594785,
-            "Pa_statistic": 0.08868021058799402,
-            "Pa_p_value": 0.5431051347563948
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Fuel (petrol-gasoline)', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -7.020624654165755,
+            "p_value": 5.588005334934498e-09,
+            "critical_values": [
+                -3.055710606803715,
+                -3.3512713509041308,
+                -3.9215275622009216
+            ],
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "diff"
     },
-    "('Salt', 'South')": {
+    "('Fuel (petrol-gasoline)', 'Unified')": {
         "engle_granger": {
-            "cointegration_statistic": -1.2383267938996139,
-            "p_value": 0.8461781327579098,
+            "cointegration_statistic": -8.214182511871567,
+            "p_value": 4.213835232520998e-12,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0514477225294914,
+                -3.345506944537796,
+                -3.91192334060526
             ],
-            "cointegrated": false
+            "cointegrated": true
         },
-        "pedroni": {
-            "adf_statistic": -1.2205018639334697,
-            "adf_p_value": 0.6647147383227815,
-            "lb_statistic": 212.1802008346422,
-            "lb_p_value": 4.620307476985676e-40
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Lentils', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.742328374909977,
+            "p_value": 5.2961308362367496e-06,
+            "critical_values": [
+                -3.053918655359099,
+                -3.348847823998067,
+                -3.91748833050075
+            ],
+            "cointegrated": true
         },
-        "westerlund": {
-            "Gt_statistic": 0.22730919783299608,
-            "Gt_p_value": 0.41877572147774567,
-            "Ga_statistic": 0.29860142880756546,
-            "Ga_p_value": 0.2632616105153891,
-            "Pt_statistic": 0.28715921166990266,
-            "Pt_p_value": 0.42887268485127095,
-            "Pa_statistic": 0.24272512201657281,
-            "Pa_p_value": 0.08460215734562726
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Lentils', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -4.825427576781269,
+            "p_value": 0.0003393150875364274,
+            "critical_values": [
+                -3.0566709807980526,
+                -3.352570444514765,
+                -3.923693523243191
+            ],
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "diff"
     },
     "('Lentils', 'Unified')": {
         "engle_granger": {
-            "cointegration_statistic": -1.2526323254295346,
-            "p_value": 0.842161052294726,
+            "cointegration_statistic": -6.580862561026849,
+            "p_value": 6.644506408502361e-08,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.051414964285916,
+                -3.3454626603325415,
+                -3.9118495999796887
             ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -0.8439390074559896,
-            "adf_p_value": 0.8058734964035479,
-            "lb_statistic": 211.19580916760907,
-            "lb_p_value": 7.420417186424028e-40
-        },
-        "westerlund": {
-            "Gt_statistic": 0.769484744319944,
-            "Gt_p_value": 0.31812261875060954,
-            "Ga_statistic": 0.6938283594701978,
-            "Ga_p_value": 0.9838467079085975,
-            "Pt_statistic": 0.2433004839556927,
-            "Pt_p_value": 0.8298629654954737,
-            "Pa_statistic": 0.5854519842158633,
-            "Pa_p_value": 0.3748907205843598
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "original"
     },
-    "('Rice (imported)', 'Unified')": {
+    "('Livestock (sheep, two-year-old male)', 'North')": {
         "engle_granger": {
-            "cointegration_statistic": -1.4481459524030262,
-            "p_value": 0.7791808344035978,
+            "cointegration_statistic": -4.575197254003819,
+            "p_value": 0.0009249570262301639,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0938179301924738,
+                -3.402942973283539,
+                -4.008098649813272
             ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.0760640534536787,
-            "adf_p_value": 0.7245222959890547,
-            "lb_statistic": 184.73589755792918,
-            "lb_p_value": 2.432163092561872e-34
-        },
-        "westerlund": {
-            "Gt_statistic": 0.050794266282730094,
-            "Gt_p_value": 0.34521006051167746,
-            "Ga_statistic": 0.9350895156069761,
-            "Ga_p_value": 0.9550738307299358,
-            "Pt_statistic": 0.3576224925181839,
-            "Pt_p_value": 0.21420411461867517,
-            "Pa_statistic": 0.21429612313783708,
-            "Pa_p_value": 0.7640343794510283
+            "cointegrated": true
         },
         "price_transformation": "diff",
         "conflict_transformation": "original"
     },
-    "('Beans (kidney red)', 'South')": {
+    "('Livestock (sheep, two-year-old male)', 'South')": {
         "engle_granger": {
-            "cointegration_statistic": -1.9194428448027787,
-            "p_value": 0.5688899014117035,
+            "cointegration_statistic": -2.1901213261375387,
+            "p_value": 0.42716081183958937,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.1115627810807243,
+                -3.42708938697318,
+                -4.04884168978729
             ],
             "cointegrated": false
         },
-        "pedroni": {
-            "adf_statistic": -1.9042497602791975,
-            "adf_p_value": 0.3300645380840534,
-            "lb_statistic": 169.71370424652633,
-            "lb_p_value": 3.179690762028112e-31
+        "price_transformation": "log_diff",
+        "conflict_transformation": "original"
+    },
+    "('Livestock (sheep, two-year-old male)', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -7.240995838735282,
+            "p_value": 1.553428468388014e-09,
+            "critical_values": [
+                -3.0514231245996997,
+                -3.3454736918282832,
+                -3.911867969208844
+            ],
+            "cointegrated": true
         },
-        "westerlund": {
-            "Gt_statistic": 0.6687948872939418,
-            "Gt_p_value": 0.5753047445448297,
-            "Ga_statistic": 0.49047841659879743,
-            "Ga_p_value": 0.24875647496054776,
-            "Pt_statistic": 0.6217013089874885,
-            "Pt_p_value": 0.9741802653285414,
-            "Pa_statistic": 0.8186500187996885,
-            "Pa_p_value": 0.8689322715122049
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Oil (vegetable)', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.0793524050702725,
+            "p_value": 0.00011542214254808708,
+            "critical_values": [
+                -3.0528430057697573,
+                -3.347393334561525,
+                -3.9150650972913223
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Oil (vegetable)', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.935525138352936,
+            "p_value": 2.0185492478968184e-06,
+            "critical_values": [
+                -3.0555198308062894,
+                -3.351013308548981,
+                -3.9210973976430266
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Oil (vegetable)', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -11.009980410352519,
+            "p_value": 5.946446032458244e-20,
+            "critical_values": [
+                -3.05138251616563,
+                -3.345418795555779,
+                -3.9117765584114372
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Onions', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.166709798117923,
+            "p_value": 7.857259564656894e-05,
+            "critical_values": [
+                -3.0528430057697573,
+                -3.347393334561525,
+                -3.9150650972913223
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Onions', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -4.732269094521671,
+            "p_value": 0.0004963903187446174,
+            "critical_values": [
+                -3.05558269331624,
+                -3.351098335251442,
+                -3.9212391373608764
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Onions', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -8.986781851554493,
+            "p_value": 3.107980557144214e-14,
+            "critical_values": [
+                -3.0512479711293037,
+                -3.3452369137410387,
+                -3.9114737041283942
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Peas (yellow, split)', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -3.910839844880218,
+            "p_value": 0.009732954908669789,
+            "critical_values": [
+                -3.05620615098205,
+                -3.3519416508682363,
+                -3.92264507503577
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "diff",
+        "conflict_transformation": "diff"
+    },
+    "('Peas (yellow, split)', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -3.3534208072214486,
+            "p_value": 0.04832445593878761,
+            "critical_values": [
+                -3.065675263732751,
+                -3.3647584314561243,
+                -3.944041236613565
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Peas (yellow, split)', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -6.724312680450354,
+            "p_value": 2.999494690274774e-08,
+            "critical_values": [
+                -3.0518298734526583,
+                -3.3460235690855216,
+                -3.9127836549308737
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "diff",
+        "conflict_transformation": "original"
+    },
+    "('Rice (imported)', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.376331790472759,
+            "p_value": 3.0383204475553894e-05,
+            "critical_values": [
+                -3.053995235379555,
+                -3.348951383068478,
+                -3.917660890309283
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "diff",
+        "conflict_transformation": "diff"
+    },
+    "('Rice (imported)', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.203281733177909,
+            "p_value": 6.675365534019546e-05,
+            "critical_values": [
+                -3.0558858487504805,
+                -3.3515083876970393,
+                -3.9219227291041907
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Rice (imported)', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -14.162781947780713,
+            "p_value": 3.2700803759895723e-28,
+            "critical_values": [
+                -3.0514559610687884,
+                -3.345518081830626,
+                -3.911941886166816
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Salt', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -3.5272567478649948,
+            "p_value": 0.03045381014324706,
+            "critical_values": [
+                -3.054010702023192,
+                -3.3489722987187966,
+                -3.9176957423504173
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Salt', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -4.134000406265903,
+            "p_value": 0.004650214921837293,
+            "critical_values": [
+                -3.0558858487504805,
+                -3.3515083876970393,
+                -3.9219227291041907
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "diff",
+        "conflict_transformation": "diff"
+    },
+    "('Salt', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -4.85249426770094,
+            "p_value": 0.00030333749006599477,
+            "critical_values": [
+                -3.0513905993627675,
+                -3.345429722754805,
+                -3.911794753811141
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "diff",
+        "conflict_transformation": "original"
+    },
+    "('Sugar', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.292395548488403,
+            "p_value": 4.465191901509754e-05,
+            "critical_values": [
+                -3.053281566752768,
+                -3.347986330263506,
+                -3.9160529659276566
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "original"
+    },
+    "('Sugar', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -5.524827785690494,
+            "p_value": 1.5153549814035168e-05,
+            "critical_values": [
+                -3.0558636428705466,
+                -3.351478351147552,
+                -3.921872653788857
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Sugar', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -7.467572747830011,
+            "p_value": 4.0639236955896967e-10,
+            "critical_values": [
+                -3.051414964285916,
+                -3.3454626603325415,
+                -3.9118495999796887
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "diff",
+        "conflict_transformation": "original"
+    },
+    "('Tomatoes', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -3.980985767244299,
+            "p_value": 0.007761557241072886,
+            "critical_values": [
+                -3.053164417922846,
+                -3.3478279253333216,
+                -3.915789068587712
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Tomatoes', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -4.117013484069163,
+            "p_value": 0.004928458801664176,
+            "critical_values": [
+                -3.0556462811071285,
+                -3.3511843436695266,
+                -3.921382516016372
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "diff",
+        "conflict_transformation": "diff"
+    },
+    "('Tomatoes', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -7.6437026794734555,
+            "p_value": 1.4104011230497438e-10,
+            "critical_values": [
+                -3.0512479711293037,
+                -3.3452369137410387,
+                -3.9114737041283942
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "diff",
+        "conflict_transformation": "original"
+    },
+    "('Wheat', 'North')": {
+        "engle_granger": {
+            "cointegration_statistic": -4.607054830095194,
+            "p_value": 0.0008168650431710321,
+            "critical_values": [
+                -3.0531515953621033,
+                -3.3478105872218675,
+                -3.9157601843732284
+            ],
+            "cointegrated": true
+        },
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Wheat', 'South')": {
+        "engle_granger": {
+            "cointegration_statistic": -4.662421296710894,
+            "p_value": 0.000656624294234773,
+            "critical_values": [
+                -3.05558269331624,
+                -3.351098335251442,
+                -3.9212391373608764
+            ],
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "diff"
     },
     "('Wheat', 'Unified')": {
         "engle_granger": {
-            "cointegration_statistic": -1.60823635303306,
-            "p_value": 0.7164970916068398,
+            "cointegration_statistic": -11.669398687052828,
+            "p_value": 8.659752687004963e-22,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.3701225894074733,
-            "adf_p_value": 0.5965129835797827,
-            "lb_statistic": 193.99109200354698,
-            "lb_p_value": 2.8857499810721607e-36
-        },
-        "westerlund": {
-            "Gt_statistic": 0.9922732155815167,
-            "Gt_p_value": 0.9170967544001591,
-            "Ga_statistic": 0.2176120913742534,
-            "Ga_p_value": 0.7338782324411279,
-            "Pt_statistic": 0.6985965949102927,
-            "Pt_p_value": 0.4083820916872859,
-            "Pa_statistic": 0.0019195149757946783,
-            "Pa_p_value": 0.4617531464858661
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "original"
-    },
-    "('Peas (yellow, split)', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.4327992809028673,
-            "p_value": 0.7846722041421084,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.4145311726420142,
-            "adf_p_value": 0.5752902070904841,
-            "lb_statistic": 190.6270619686477,
-            "lb_p_value": 1.4477119783687456e-35
-        },
-        "westerlund": {
-            "Gt_statistic": 0.9564274986644605,
-            "Gt_p_value": 0.8109242672239401,
-            "Ga_statistic": 0.3477161077821699,
-            "Ga_p_value": 0.02561872600875148,
-            "Pt_statistic": 0.31235415882561723,
-            "Pt_p_value": 0.353387062067667,
-            "Pa_statistic": 0.33688288047842674,
-            "Pa_p_value": 0.9680311723032986
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "diff"
-    },
-    "('Wheat flour', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.3748115114035986,
-            "p_value": 0.8045798233748982,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.9463081093633416,
-            "adf_p_value": 0.04022194254351289,
-            "lb_statistic": 129.59940815670217,
-            "lb_p_value": 5.638251306888237e-23
-        },
-        "westerlund": {
-            "Gt_statistic": 0.3659880800535331,
-            "Gt_p_value": 0.2665531285035643,
-            "Ga_statistic": 0.9158804154386002,
-            "Ga_p_value": 0.45395244082603037,
-            "Pt_statistic": 0.3832861629402149,
-            "Pt_p_value": 0.947120760829288,
-            "Pa_statistic": 0.06680030514793112,
-            "Pa_p_value": 0.23604282994909642
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Eggs', 'Unified')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.0144500646200119,
-            "p_value": 0.8991498734157799,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -0.9554770339924856,
-            "adf_p_value": 0.7691548720357355,
-            "lb_statistic": 180.3788588768968,
-            "lb_p_value": 1.954848497806574e-33
-        },
-        "westerlund": {
-            "Gt_statistic": 0.5241678080889307,
-            "Gt_p_value": 0.31954895508824377,
-            "Ga_statistic": 0.3082582463608444,
-            "Ga_p_value": 0.3910980304171634,
-            "Pt_statistic": 0.15738905261643665,
-            "Pt_p_value": 0.9100250431690697,
-            "Pa_statistic": 0.9351430650915479,
-            "Pa_p_value": 0.7015712343554924
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "original"
-    },
-    "('Fuel (petrol-gasoline)', 'Unified')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.3997550555193368,
-            "p_value": 0.7961800751374326,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.3811132082906277,
-            "adf_p_value": 0.5912964476322902,
-            "lb_statistic": 203.99701568365106,
-            "lb_p_value": 2.365767934977447e-38
-        },
-        "westerlund": {
-            "Gt_statistic": 0.1264734994755845,
-            "Gt_p_value": 0.14077591859859262,
-            "Ga_statistic": 0.7558799226734172,
-            "Ga_p_value": 0.5765878211877419,
-            "Pt_statistic": 0.6864850327846116,
-            "Pt_p_value": 0.8995089859894295,
-            "Pa_statistic": 0.11163242814801277,
-            "Pa_p_value": 0.47100533630612773
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "original"
-    },
-    "('Tomatoes', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -2.27201524661602,
-            "p_value": 0.385650284681109,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -2.9794349007058383,
-            "adf_p_value": 0.03686006677521661,
-            "lb_statistic": 70.5292281403588,
-            "lb_p_value": 3.50384869843779e-11
-        },
-        "westerlund": {
-            "Gt_statistic": 0.3680003425635555,
-            "Gt_p_value": 0.3055629593196816,
-            "Ga_statistic": 0.6301801714480487,
-            "Ga_p_value": 0.3093736193983663,
-            "Pt_statistic": 0.5652443827407209,
-            "Pt_p_value": 0.4160478217411522,
-            "Pa_statistic": 0.8115616131737794,
-            "Pa_p_value": 0.17750350392811765
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Oil (vegetable)', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -0.7385156497542574,
-            "p_value": 0.9422924473561364,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -3.7120970432213567,
-            "adf_p_value": 0.003946180381303948,
-            "lb_statistic": 116.15343120640581,
-            "lb_p_value": 3.0466329966818424e-20
-        },
-        "westerlund": {
-            "Gt_statistic": 0.02529099211594299,
-            "Gt_p_value": 0.6286420780924974,
-            "Ga_statistic": 0.06730182076948121,
-            "Ga_p_value": 0.6627790729721205,
-            "Pt_statistic": 0.5302553539254676,
-            "Pt_p_value": 0.4818186929907271,
-            "Pa_statistic": 0.9418402475252985,
-            "Pa_p_value": 0.07723928089169818
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Beans (white)', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -3.897008681811201,
-            "p_value": 0.010170667762368236,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0513423854565236,
+                -3.3453645453817376,
+                -3.911686224445976
             ],
             "cointegrated": true
         },
-        "pedroni": {
-            "adf_statistic": -3.8560535899466832,
-            "adf_p_value": 0.002383158185361791,
-            "lb_statistic": 20.016292788231247,
-            "lb_p_value": 0.029098961762017303
-        },
-        "westerlund": {
-            "Gt_statistic": 0.3627400367784186,
-            "Gt_p_value": 0.05033027751268393,
-            "Ga_statistic": 0.09200717532892178,
-            "Ga_p_value": 0.4214498312876007,
-            "Pt_statistic": 0.0600238769623922,
-            "Pt_p_value": 0.5018867181307723,
-            "Pa_statistic": 0.1937731987521093,
-            "Pa_p_value": 0.18160799983078857
-        },
         "price_transformation": "original",
-        "conflict_transformation": "diff"
+        "conflict_transformation": "original"
     },
-    "('Rice (imported)', 'South')": {
+    "('Wheat flour', 'North')": {
         "engle_granger": {
-            "cointegration_statistic": -1.4481426729694138,
-            "p_value": 0.7791820177645397,
+            "cointegration_statistic": -5.669007698366539,
+            "p_value": 7.58033166300751e-06,
             "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
+                -3.0528549231239266,
+                -3.347409448036398,
+                -3.9150919391184438
             ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.0760587627681675,
-            "adf_p_value": 0.7245243637305719,
-            "lb_statistic": 184.7360137478282,
-            "lb_p_value": 2.432027851115772e-34
-        },
-        "westerlund": {
-            "Gt_statistic": 0.347241102245757,
-            "Gt_p_value": 0.3332784155124925,
-            "Ga_statistic": 0.33003089436934396,
-            "Ga_p_value": 0.2986981430874549,
-            "Pt_statistic": 0.19538797302182176,
-            "Pt_p_value": 0.7499084949344647,
-            "Pa_statistic": 0.691791964670072,
-            "Pa_p_value": 0.09115956368838896
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Wheat', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -2.208547304749284,
-            "p_value": 0.41771709472507657,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -3.321606451825467,
-            "adf_p_value": 0.013939861203342467,
-            "lb_statistic": 53.90986470824592,
-            "lb_p_value": 5.043476222905863e-08
-        },
-        "westerlund": {
-            "Gt_statistic": 0.6956121863233945,
-            "Gt_p_value": 0.957562247088781,
-            "Ga_statistic": 0.969764836436214,
-            "Ga_p_value": 0.21138109987653908,
-            "Pt_statistic": 0.7534987613315837,
-            "Pt_p_value": 0.7095837641929773,
-            "Pa_statistic": 0.5629480464397898,
-            "Pa_p_value": 0.43825228277656936
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Sugar', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.3867848245212684,
-            "p_value": 0.8005786675468195,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -0.940751370069108,
-            "adf_p_value": 0.774256457658991,
-            "lb_statistic": 193.28400808188624,
-            "lb_p_value": 4.0506379020180764e-36
-        },
-        "westerlund": {
-            "Gt_statistic": 0.4044749744263616,
-            "Gt_p_value": 0.5245248210033557,
-            "Ga_statistic": 0.2680429268672744,
-            "Ga_p_value": 0.2191867446428768,
-            "Pt_statistic": 0.9573817982722451,
-            "Pt_p_value": 0.6594955013483207,
-            "Pa_statistic": 0.6637435979087469,
-            "Pa_p_value": 0.7400475364431548
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Livestock (sheep, two-year-old male)', 'Unified')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.618544779328209,
-            "p_value": 0.7121364539502203,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -3.0343075497919934,
-            "adf_p_value": 0.03181236002224436,
-            "lb_statistic": 95.34672808111496,
-            "lb_p_value": 4.632383769792158e-16
-        },
-        "westerlund": {
-            "Gt_statistic": 0.3157834088858753,
-            "Gt_p_value": 0.2053858854133298,
-            "Ga_statistic": 0.09464717265969713,
-            "Ga_p_value": 0.2989081117959712,
-            "Pt_statistic": 0.020692563572953016,
-            "Pt_p_value": 0.305155471708885,
-            "Pa_statistic": 0.867769739020534,
-            "Pa_p_value": 0.3363630098244452
+            "cointegrated": true
         },
         "price_transformation": "original",
         "conflict_transformation": "original"
     },
-    "('Onions', 'Unified')": {
+    "('Wheat flour', 'South')": {
         "engle_granger": {
-            "cointegration_statistic": -1.5861090039486332,
-            "p_value": 0.7257299375787835,
+            "cointegration_statistic": -4.694810551007744,
+            "p_value": 0.0005770786655799918,
             "critical_values": [
-                -3.2001318975069255,
-                -3.5483841828254845,
-                -4.256109695290859
+                -3.0553759033651757,
+                -3.3508186375177096,
+                -3.920772889506095
             ],
-            "cointegrated": false
+            "cointegrated": true
         },
-        "pedroni": {
-            "adf_statistic": -1.5757791774701062,
-            "adf_p_value": 0.49574795659785326,
-            "lb_statistic": 128.9107940115218,
-            "lb_p_value": 7.79054268274628e-23
+        "price_transformation": "original",
+        "conflict_transformation": "diff"
+    },
+    "('Wheat flour', 'Unified')": {
+        "engle_granger": {
+            "cointegration_statistic": -11.315485623326897,
+            "p_value": 8.298263496323125e-21,
+            "critical_values": [
+                -3.0513423854565236,
+                -3.3453645453817376,
+                -3.911686224445976
+            ],
+            "cointegrated": true
         },
-        "westerlund": {
-            "Gt_statistic": 0.8407708509020495,
-            "Gt_p_value": 0.3467680214672989,
-            "Ga_statistic": 0.4948722655354555,
-            "Ga_p_value": 0.7918303391410805,
-            "Pt_statistic": 0.9277780920297947,
-            "Pt_p_value": 0.39781043198345223,
-            "Pa_statistic": 0.5855222586049347,
-            "Pa_p_value": 0.7982440787656914
-        },
-        "price_transformation": "diff",
+        "price_transformation": "original",
         "conflict_transformation": "original"
-    },
-    "('Lentils', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.4109787461921726,
-            "p_value": 0.792319874266677,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.3912681575837307,
-            "adf_p_value": 0.5864550406274495,
-            "lb_statistic": 173.74968146291474,
-            "lb_p_value": 4.6379441464742326e-32
-        },
-        "westerlund": {
-            "Gt_statistic": 0.5205459019511952,
-            "Gt_p_value": 0.8398337140988278,
-            "Ga_statistic": 0.10308239848438916,
-            "Ga_p_value": 0.7749236211736147,
-            "Pt_statistic": 0.054628929640811674,
-            "Pt_p_value": 0.9755734118227138,
-            "Pa_statistic": 0.6192369063228594,
-            "Pa_p_value": 0.8273320738516369
-        },
-        "price_transformation": "diff",
-        "conflict_transformation": "diff"
-    },
-    "('Fuel (diesel)', 'North')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.3667393738240463,
-            "p_value": 0.8072451422261059,
-            "critical_values": [
-                -3.1960465811965815,
-                -3.5427619000657464,
-                -4.246410539119001
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -3.353137544065042,
-            "adf_p_value": 0.012663997255233669,
-            "lb_statistic": 81.08478894539935,
-            "lb_p_value": 3.075909491605228e-13
-        },
-        "westerlund": {
-            "Gt_statistic": 0.7533567609303133,
-            "Gt_p_value": 0.8245589859029337,
-            "Ga_statistic": 0.852837933529886,
-            "Ga_p_value": 0.18292378663699416,
-            "Pt_statistic": 0.5590377885319138,
-            "Pt_p_value": 0.5129326967132226,
-            "Pa_statistic": 0.8675816001632234,
-            "Pa_p_value": 0.699618375953056
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
-    },
-    "('Onions', 'South')": {
-        "engle_granger": {
-            "cointegration_statistic": -1.5861077874281013,
-            "p_value": 0.7257304403513035,
-            "critical_values": [
-                -3.2001318975069255,
-                -3.5483841828254845,
-                -4.256109695290859
-            ],
-            "cointegrated": false
-        },
-        "pedroni": {
-            "adf_statistic": -1.5757779260705669,
-            "adf_p_value": 0.4957485838286804,
-            "lb_statistic": 128.91081881132658,
-            "lb_p_value": 7.790451980425055e-23
-        },
-        "westerlund": {
-            "Gt_statistic": 0.8331469210769094,
-            "Gt_p_value": 0.46877814295813325,
-            "Ga_statistic": 0.2039056696716175,
-            "Ga_p_value": 0.08193798056410251,
-            "Pt_statistic": 0.4695461473705973,
-            "Pt_p_value": 0.9338863046011914,
-            "Pa_statistic": 0.972740294426067,
-            "Pa_p_value": 0.08344826932168292
-        },
-        "price_transformation": "original",
-        "conflict_transformation": "diff"
     }
 }

@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "touch out/.nojekyll && echo 'mohammadak95.github.io' > out/CNAME",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:gh-pages": "GITHUB_PAGES=true next build && next export",
+    "postbuild": "touch out/.nojekyll && echo 'mohammadak95.github.io' > out/CNAME"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
@@ -15,6 +16,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.0",
     "@mui/material": "^6.1.0",
+    "@popperjs/core": "^2.11.8",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
@@ -25,7 +27,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-joyride": "^2.9.2",
-    "recharts": "^2.12.7"
+    "recharts": "^2.12.7",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@types/node": "22.5.5",

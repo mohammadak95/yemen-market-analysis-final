@@ -851,3 +851,60 @@
 2024-09-18 16:02:52,964 - INFO - Analysis complete. Results saved to 'results/spatial_analysis_results.json'.
 2024-09-18 16:02:53,979 - INFO - Created 33,277 records
 2024-09-18 16:02:53,980 - INFO - Modified GeoJSON with 'region_id' saved to Econometrics/data/processed/unified_data_with_region_id.geojson.
+2024-09-18 19:13:34,711 - INFO - Loading GeoJSON data from Econometrics/data/processed/unified_data.geojson.
+2024-09-18 19:13:36,324 - INFO - 'region_id' column assigned using 'market_id'.
+2024-09-18 19:13:36,325 - INFO - GeoJSON data loaded with 33277 records.
+2024-09-18 19:13:39,341 - INFO - Spatial analysis completed for 'Beans (kidney red)' in 'North' regime.
+2024-09-18 19:13:39,457 - INFO - Spatial analysis completed for 'Beans (kidney red)' in 'South' regime.
+2024-09-18 19:13:39,582 - INFO - Spatial analysis completed for 'Beans (kidney red)' in 'Unified' regime.
+2024-09-18 19:13:39,705 - INFO - Spatial analysis completed for 'Beans (white)' in 'North' regime.
+2024-09-18 19:13:39,827 - INFO - Spatial analysis completed for 'Beans (white)' in 'South' regime.
+2024-09-18 19:13:39,962 - INFO - Spatial analysis completed for 'Beans (white)' in 'Unified' regime.
+2024-09-18 19:13:40,078 - INFO - Spatial analysis completed for 'Eggs' in 'North' regime.
+2024-09-18 19:13:40,213 - INFO - Spatial analysis completed for 'Eggs' in 'South' regime.
+2024-09-18 19:13:40,351 - INFO - Spatial analysis completed for 'Eggs' in 'Unified' regime.
+2024-09-18 19:13:40,465 - INFO - Spatial analysis completed for 'Fuel (diesel)' in 'North' regime.
+2024-09-18 19:13:40,594 - INFO - Spatial analysis completed for 'Fuel (diesel)' in 'South' regime.
+2024-09-18 19:13:40,732 - INFO - Spatial analysis completed for 'Fuel (diesel)' in 'Unified' regime.
+2024-09-18 19:13:40,853 - INFO - Spatial analysis completed for 'Fuel (gas)' in 'North' regime.
+2024-09-18 19:13:40,978 - INFO - Spatial analysis completed for 'Fuel (gas)' in 'South' regime.
+2024-09-18 19:13:41,077 - INFO - Spatial analysis completed for 'Fuel (gas)' in 'Unified' regime.
+2024-09-18 19:13:41,177 - INFO - Spatial analysis completed for 'Fuel (petrol-gasoline)' in 'North' regime.
+2024-09-18 19:13:41,297 - INFO - Spatial analysis completed for 'Fuel (petrol-gasoline)' in 'South' regime.
+2024-09-18 19:13:41,474 - INFO - Spatial analysis completed for 'Fuel (petrol-gasoline)' in 'Unified' regime.
+2024-09-18 19:13:41,588 - INFO - Spatial analysis completed for 'Lentils' in 'North' regime.
+2024-09-18 19:13:41,703 - INFO - Spatial analysis completed for 'Lentils' in 'South' regime.
+2024-09-18 19:13:41,832 - INFO - Spatial analysis completed for 'Lentils' in 'Unified' regime.
+2024-09-18 19:13:41,926 - INFO - Spatial analysis completed for 'Livestock (sheep, two-year-old male)' in 'North' regime.
+2024-09-18 19:13:42,036 - INFO - Spatial analysis completed for 'Livestock (sheep, two-year-old male)' in 'South' regime.
+2024-09-18 19:13:42,206 - INFO - Spatial analysis completed for 'Livestock (sheep, two-year-old male)' in 'Unified' regime.
+2024-09-18 19:13:42,328 - INFO - Spatial analysis completed for 'Oil (vegetable)' in 'North' regime.
+2024-09-18 19:13:42,420 - INFO - Spatial analysis completed for 'Oil (vegetable)' in 'South' regime.
+2024-09-18 19:13:42,575 - INFO - Spatial analysis completed for 'Oil (vegetable)' in 'Unified' regime.
+2024-09-18 19:13:42,697 - INFO - Spatial analysis completed for 'Onions' in 'North' regime.
+2024-09-18 19:13:42,810 - INFO - Spatial analysis completed for 'Onions' in 'South' regime.
+2024-09-18 19:13:42,939 - INFO - Spatial analysis completed for 'Onions' in 'Unified' regime.
+2024-09-18 19:13:43,030 - INFO - Spatial analysis completed for 'Peas (yellow, split)' in 'North' regime.
+2024-09-18 19:13:43,153 - INFO - Spatial analysis completed for 'Peas (yellow, split)' in 'South' regime.
+2024-09-18 19:13:43,326 - INFO - Spatial analysis completed for 'Peas (yellow, split)' in 'Unified' regime.
+2024-09-18 19:13:43,421 - INFO - Spatial analysis completed for 'Rice (imported)' in 'North' regime.
+2024-09-18 19:13:43,540 - INFO - Spatial analysis completed for 'Rice (imported)' in 'South' regime.
+2024-09-18 19:13:43,670 - INFO - Spatial analysis completed for 'Rice (imported)' in 'Unified' regime.
+2024-09-18 19:13:43,787 - INFO - Spatial analysis completed for 'Salt' in 'North' regime.
+2024-09-18 19:13:43,914 - INFO - Spatial analysis completed for 'Salt' in 'South' regime.
+2024-09-18 19:13:44,036 - INFO - Spatial analysis completed for 'Salt' in 'Unified' regime.
+2024-09-18 19:13:44,144 - INFO - Spatial analysis completed for 'Sugar' in 'North' regime.
+2024-09-18 19:13:44,273 - INFO - Spatial analysis completed for 'Sugar' in 'South' regime.
+2024-09-18 19:13:44,450 - INFO - Spatial analysis completed for 'Sugar' in 'Unified' regime.
+2024-09-18 19:13:44,597 - INFO - Spatial analysis completed for 'Tomatoes' in 'North' regime.
+2024-09-18 19:13:44,723 - INFO - Spatial analysis completed for 'Tomatoes' in 'South' regime.
+2024-09-18 19:13:44,864 - INFO - Spatial analysis completed for 'Tomatoes' in 'Unified' regime.
+2024-09-18 19:13:44,987 - INFO - Spatial analysis completed for 'Wheat flour' in 'North' regime.
+2024-09-18 19:13:45,105 - INFO - Spatial analysis completed for 'Wheat flour' in 'South' regime.
+2024-09-18 19:13:45,247 - INFO - Spatial analysis completed for 'Wheat flour' in 'Unified' regime.
+2024-09-18 19:13:45,368 - INFO - Spatial analysis completed for 'Wheat' in 'North' regime.
+2024-09-18 19:13:45,452 - INFO - Spatial analysis completed for 'Wheat' in 'South' regime.
+2024-09-18 19:13:45,573 - INFO - Spatial analysis completed for 'Wheat' in 'Unified' regime.
+2024-09-18 19:13:46,003 - INFO - Analysis complete. Results saved to 'results/spatial_analysis_results.json'.
+2024-09-18 19:13:47,003 - INFO - Created 33,277 records
+2024-09-18 19:13:47,004 - INFO - Modified GeoJSON with 'region_id' saved to Econometrics/data/processed/unified_data_with_region_id.geojson.
