@@ -1,22 +1,41 @@
 name: Deploy to GitHub Pages
+
 on:
   push:
     branches:
       - main
+
 permissions:
   contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout 🛎️
+      # 1. Checkout the repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Install and Build 🔧
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'  # Ensures Node.js version 20.x is used
+          cache: 'npm'           # Optional: Caches npm dependencies for faster builds
+
+      # 3. Install Dependencies and Build
+      - name: Install Dependencies and Build
         run: |
           npm ci
           npm run build
-      - name: Deploy 🚀
+        env:
+          NEXT_TELEMETRY_DISABLED: 1  # Optional: Disables Next.js telemetry
+
+      # 4. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: out
+          branch: gh-pages        # The branch the action should deploy to.
+          folder: out              # The folder the action should deploy.
           token: ${{ secrets.GITHUB_TOKEN }}

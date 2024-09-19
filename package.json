@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint",
-    "build:gh-pages": "GITHUB_PAGES=true next build && next export",
-    "postbuild": "touch out/.nojekyll && echo 'mohammadak95.github.io' > out/CNAME"
+    "build:gh-pages": "GITHUB_PAGES=true npm run build",
+    "postbuild": "mkdir -p out && touch out/.nojekyll && echo 'mohammadak95.github.io' > out/CNAME"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
@@ -38,5 +38,8 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.11",
     "typescript": "^5.6.2"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
