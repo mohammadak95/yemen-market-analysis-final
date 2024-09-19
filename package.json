@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "build:gh-pages": "GITHUB_PAGES=true npm run build",
@@ -28,14 +28,17 @@
     "react-dom": "^18",
     "react-joyride": "^2.9.2",
     "recharts": "^2.12.7",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "glob": "^9.3.4",
+    "@eslint/config-array": "^0.2.0",
+    "@eslint/object-schema": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "22.5.5",
     "@types/react": "18.3.6",
-    "eslint": "^8",
+    "eslint": "^8.43.0",
     "eslint-config-next": "14.2.11",
-    "postcss": "^8",
+    "postcss": "^8.4.24",
     "tailwindcss": "^3.4.11",
     "typescript": "^5.6.2"
   },

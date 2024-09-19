@@ -1,3 +1,5 @@
+# .github/workflows/deploy.yml
+
 name: Deploy to GitHub Pages
 
 on:
@@ -21,21 +23,19 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'  # Ensures Node.js version 20.x is used
-          cache: 'npm'           # Optional: Caches npm dependencies for faster builds
+          node-version: '20.x'      # Ensures Node.js version 20.x is used
+          cache: 'npm'               # Caches npm dependencies for faster builds
 
       # 3. Install Dependencies and Build
       - name: Install Dependencies and Build
         run: |
           npm ci
-          npm run build
-        env:
-          NEXT_TELEMETRY_DISABLED: 1  # Optional: Disables Next.js telemetry
+          npm run build:gh-pages    # Uses the build:gh-pages script to trigger static export
 
       # 4. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages        # The branch the action should deploy to.
-          folder: out              # The folder the action should deploy.
+          branch: gh-pages            # The branch the action should deploy to.
+          folder: out                  # The folder the action should deploy.
           token: ${{ secrets.GITHUB_TOKEN }}
