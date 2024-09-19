@@ -28,10 +28,10 @@
     "react-dom": "^18",
     "react-joyride": "^2.9.2",
     "recharts": "^2.12.7",
-    "rimraf": "^6.0.1",
+    "rimraf": "^4.4.0",
     "glob": "^9.3.4",
-    "@eslint/config-array": "^0.2.0",
-    "@eslint/object-schema": "^1.0.0"
+    "@eslint/config-array": "^0.18.0",
+    "@eslint/object-schema": "^2.1.4"
   },
   "devDependencies": {
     "@types/node": "22.5.5",
