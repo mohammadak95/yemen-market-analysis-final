@@ -48,6 +48,7 @@ import {
   CardContent,
   CardHeader,
   ListItemButton,
+  Box, // Add this import
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -115,6 +116,7 @@ export default function Dashboard() {
   const [showQuickGuide, setShowQuickGuide] = useState(false);
   const [runTour, setRunTour] = useState(false);
   const [tourCompleted, setTourCompleted] = useState(false);
+  const [combinedMarketDates, setCombinedMarketDates] = useState([]);
   const [tourSteps, setTourSteps] = useState([
     {
       target: '.tour-sidebar',
@@ -195,11 +197,13 @@ export default function Dashboard() {
       );
 
       const dataByDate = {};
+      const dates = new Set();
 
       selectedRegimes.forEach((regime, regimeIndex) => {
         const regimeData = allRegimeData[regimeIndex] || [];
         regimeData.forEach((item) => {
           const date = item.date;
+          dates.add(date);
           if (!dataByDate[date]) {
             dataByDate[date] = { date };
           }
@@ -232,6 +236,7 @@ export default function Dashboard() {
       }
 
       setMarketData(processedData);
+      setCombinedMarketDates(Array.from(dates).sort());
 
       const results = {};
       for (const regime of selectedRegimes) {
@@ -256,6 +261,7 @@ export default function Dashboard() {
     seasonalAdjustment,
     dataSmoothing,
     showUSDPrice,
+    setCombinedMarketDates,
   ]);
 
   useEffect(() => {
@@ -547,23 +553,15 @@ export default function Dashboard() {
           {isClient && !isLoading && Object.keys(analysisResults).length > 0 && selectedAnalysis !== 'Methodology' && selectedAnalysis !== 'Literature Review' && (
             <ErrorBoundary>
               <React.Suspense fallback={<LoadingSpinner />}>
-                <Grid container spacing={3} className="tour-analysis-section">
-                  {selectedRegimes.map((regime) => (
-                    <Grid item xs={12} md={6} lg={4} key={regime}>
-                      <Card>
-                        <CardHeader title={`${selectedAnalysis} Results for ${selectedCommodity} in ${regime}`} />
-                        <CardContent>
-                          <DynamicResultsVisualization
-                            results={analysisResults[regime]}
-                            analysisType={selectedAnalysis}
-                            commodity={selectedCommodity}
-                            regime={regime}
-                          />
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
+                <Box sx={{ width: '100%' }} className="tour-analysis-section">
+                  <DynamicResultsVisualization
+                    results={analysisResults}
+                    analysisType={selectedAnalysis}
+                    commodity={selectedCommodity}
+                    selectedRegimes={selectedRegimes}
+                    combinedMarketDates={combinedMarketDates}
+                  />
+                </Box>
               </React.Suspense>
             </ErrorBoundary>
           )}

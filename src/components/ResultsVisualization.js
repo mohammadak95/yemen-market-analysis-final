@@ -1,92 +1,73 @@
 // src/components/ResultsVisualization.js
 
-'use client';
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import CointegrationResults from './CointegrationResults';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import PriceDifferentialsChart from './PriceDifferentialsChart';
-import ECMTable from './ECMTable'; // Updated import
+import ECMTable from './ECMTable';
 import SpatialAnalysisChart from './SpatialAnalysisChart';
-import ECMDiagnosticsTable from './ECMDiagnosticsTable'; // Updated import
+import ECMDiagnosticsTable from './ECMDiagnosticsTable';
 import GrangerCausalityChart from './GrangerCausalityChart';
 import StationarityTable from './StationarityTable';
-import UnitRootTests from './UnitRootTests';
-import ModelDiagnostics from './ModelDiagnostics';
+import CointegrationResults from './CointegrationResults';
 
-const ResultsVisualization = ({ results, analysisType, commodity, regime }) => {
-  if (!results || (Array.isArray(results) && results.length === 0)) {
-    return <p className="text-gray-700 dark:text-gray-300">No results available for the selected analysis.</p>;
+const ResultsVisualization = ({ results, analysisType, commodity, selectedRegimes, combinedMarketDates }) => {
+  if (!results) {
+    return <Typography>No results available for the selected analysis.</Typography>;
   }
 
-  // Function to filter results based on commodity and regime
-  const getFilteredResult = () => {
-    if (Array.isArray(results)) {
-      return results.find(
-        (item) => item.commodity === commodity && item.regime === regime
-      );
+  const renderContent = (regime) => {
+    const regimeData = results[regime];
+    
+    switch (analysisType) {
+      case 'Price Differentials':
+        return (
+          <PriceDifferentialsChart 
+            data={regimeData} 
+            commodity={commodity} 
+            regime={regime}
+            combinedMarketDates={combinedMarketDates}
+          />
+        );
+      case 'Error Correction Model':
+        return <ECMTable data={regimeData} />;
+      case 'Spatial Analysis':
+        return <SpatialAnalysisChart data={regimeData} />;
+      case 'ECM Diagnostics':
+        return <ECMDiagnosticsTable data={regimeData} />;
+      case 'Granger Causality':
+        return <GrangerCausalityChart data={regimeData} commodity={commodity} regime={regime} />;
+      case 'Stationarity':
+        return <StationarityTable data={regimeData} />;
+      case 'Cointegration Analysis':
+        return <CointegrationResults data={regimeData} selectedCommodity={commodity} selectedRegime={regime} />;
+      default:
+        return <Typography>Unsupported analysis type: {analysisType}</Typography>;
     }
-    return results; // If results is not an array, return as is
   };
 
-  switch (analysisType) {
-    case 'Price Differentials':
-      return <PriceDifferentialsChart data={results} />;
-    case 'Error Correction Model': {
-      const ecmData = getFilteredResult();
-      if (!ecmData) {
-        return (
-          <p className="text-gray-700 dark:text-gray-300">
-            No ECM results found for commodity "{commodity}" and regime "{regime}".
-          </p>
-        );
-      }
-      return <ECMTable data={ecmData} />; // Use ECMTable
-    }
-    case 'Spatial Analysis':
-      return <SpatialAnalysisChart data={results} />;
-    case 'Cointegration Analysis':
-      return Array.isArray(results) || typeof results === 'object' ? (
-        <CointegrationResults
-          data={results}
-          selectedCommodity={commodity}
-          selectedRegime={regime}
-        />
-      ) : (
-        <p className="text-gray-700 dark:text-gray-300">Invalid data format for Cointegration Analysis.</p>
-      );
-    case 'ECM Diagnostics': {
-      const ecmDiagnosticsData = getFilteredResult();
-      if (!ecmDiagnosticsData) {
-        return (
-          <p className="text-gray-700 dark:text-gray-300">
-            No ECM Diagnostics results found for commodity "{commodity}" and regime "{regime}".
-          </p>
-        );
-      }
-      return <ECMDiagnosticsTable data={ecmDiagnosticsData} />; // Use ECMDiagnosticsTable
-    }
-    case 'Granger Causality':
-      return <GrangerCausalityChart data={results} />;
-    case 'Stationarity':
-      return <StationarityTable data={results} />;
-    case 'Unit Root Tests':
-      return <UnitRootTests data={results} />;
-    case 'Model Diagnostics':
-      return <ModelDiagnostics data={results} />;
-    default:
-      return <p className="text-gray-700 dark:text-gray-300">Unsupported analysis type: {analysisType}</p>;
-  }
+  return (
+    <Box sx={{ width: '100%' }}>
+      {selectedRegimes.map((regime) => (
+        <Card key={regime} sx={{ mb: 4, width: '100%' }}>
+          <CardContent>
+            <Typography variant="h5" gutterBottom>
+              Results for {regime} Regime
+            </Typography>
+            {renderContent(regime)}
+          </CardContent>
+        </Card>
+      ))}
+    </Box>
+  );
 };
 
 ResultsVisualization.propTypes = {
-  results: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.object),
-    PropTypes.object,
-  ]).isRequired,
+  results: PropTypes.object,
   analysisType: PropTypes.string.isRequired,
   commodity: PropTypes.string.isRequired,
-  regime: PropTypes.string.isRequired,
+  selectedRegimes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  combinedMarketDates: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ResultsVisualization;

@@ -1,16 +1,73 @@
-// File: src/lib/dataService.js
+// src/lib/dataService.js
 
-// Import the JSON data files
+// Import JSON data files
 import combinedMarketData from '../../data/combined_market_data.json';
 import ecmResults from '../../data/ecm_results.json';
-import priceDifferentialResults from '../../data/price_differential_results.json';
 import spatialAnalysisResults from '../../data/spatial_analysis_results.json';
 import cointegrationResults from '../../data/cointegration_results.json';
 import ecmDiagnostics from '../../data/ecm_diagnostics.json';
 import grangerCausalityResults from '../../data/granger_causality_results.json';
 import stationarityResults from '../../data/stationarity_results.json';
 
-// Function to load all data
+// Updated imports for Price Differential Results
+import priceDifferentialNorthSanaa from '../../data/price_differential/price_differential_results_North_Sana\'a_City_Amanat_Al_Asimah.json';
+import priceDifferentialSouthAden from '../../data/price_differential/price_differential_results_South_Aden_City_Aden.json';
+import priceDifferentialUnifiedAden from '../../data/price_differential/price_differential_results_Unified_Aden_City_Aden.json';
+import priceDifferentialUnifiedSanaa from '../../data/price_differential/price_differential_results_Unified_Sana\'a_City_Amanat_Al_Asimah.json';
+
+/**
+ * Merges multiple price differential data objects into a single structured object.
+ * 
+ * @param  {...Object} dataFiles - The price differential data objects to merge.
+ * @returns {Object} The merged price differential results.
+ */
+function mergePriceDifferentialData(...dataFiles) {
+  const mergedResults = {};
+
+  dataFiles.forEach(file => {
+    if (!file || !Array.isArray(file.market_pairs)) {
+      console.warn('Invalid price differential data file:', file);
+      return;
+    }
+
+    file.market_pairs.forEach(pair => {
+      const { commodity, base_market } = pair;
+      if (!commodity || !base_market) {
+        console.warn('Invalid market pair data:', pair);
+        return;
+      }
+
+      let regime;
+      if (base_market.includes('Sana\'a')) {
+        regime = file === priceDifferentialNorthSanaa ? 'North' : 'Unified';
+      } else if (base_market.includes('Aden')) {
+        regime = file === priceDifferentialSouthAden ? 'South' : 'Unified';
+      } else {
+        console.warn(`Unknown base market: ${base_market}`);
+        return;
+      }
+
+      if (!mergedResults[commodity]) {
+        mergedResults[commodity] = {};
+      }
+      if (!mergedResults[commodity][regime]) {
+        mergedResults[commodity][regime] = [];
+      }
+      mergedResults[commodity][regime].push(pair);
+    });
+  });
+
+  return mergedResults;
+}
+
+// Merge the imported price differential data
+const priceDifferentialResults = mergePriceDifferentialData(
+  priceDifferentialNorthSanaa,
+  priceDifferentialSouthAden,
+  priceDifferentialUnifiedAden,
+  priceDifferentialUnifiedSanaa
+);
+
 export function loadAllData() {
   return {
     combinedMarketData,
@@ -24,7 +81,6 @@ export function loadAllData() {
   };
 }
 
-// Utility function to get available commodities
 export function getAvailableCommodities() {
   if (!combinedMarketData || Object.keys(combinedMarketData).length === 0) {
     console.warn('Combined market data is empty or undefined.');
@@ -37,34 +93,10 @@ export function getAvailableCommodities() {
   return Array.from(commodities);
 }
 
-// Utility function to get available regimes
 export function getAvailableRegimes() {
-  const regimes = new Set();
-
-  // Extract regimes from ecmResults
-  ecmResults.forEach(result => {
-    if (result.regime) {
-      regimes.add(result.regime);
-    }
-  });
-
-  // Extract regimes from priceDifferentialResults
-  Object.values(priceDifferentialResults).forEach(commodityData => {
-    Object.keys(commodityData).forEach(regime => regimes.add(regime));
-  });
-
-  // Extract regimes from spatialAnalysisResults
-  Object.keys(spatialAnalysisResults).forEach(key => {
-    const regime = key.split('_')[1];
-    if (regime) {
-      regimes.add(regime);
-    }
-  });
-
-  return Array.from(regimes);
+  return ['North', 'South', 'Unified'];
 }
 
-// Function to get combined market data based on commodity and regime
 export function getCombinedMarketData(commodity, regime) {
   try {
     if (!combinedMarketData || !commodity || !regime) {
@@ -101,7 +133,6 @@ export function getCombinedMarketData(commodity, regime) {
   }
 }
 
-// Function to get analysis results based on analysis type
 export function getAnalysisResults(commodity, regime, analysisType) {
   try {
     if (!analysisType) {
@@ -112,46 +143,6 @@ export function getAnalysisResults(commodity, regime, analysisType) {
     const key = commodity && regime ? `('${commodity}', '${regime}')` : null;
 
     switch (analysisType) {
-      case 'Error Correction Model':
-        return (
-          ecmResults.find(
-            (item) => item.commodity === commodity && item.regime === regime
-          ) || null
-        );
-
-      case 'Price Differentials':
-        const resultsArray = priceDifferentialResults[commodity]?.[regime];
-        if (!resultsArray) {
-          return null;
-        }
-        // Group the results by model runs based on R_squared changes
-        const models = [];
-        let currentModel = [];
-        let prevR2 = null;
-        resultsArray.forEach((entry) => {
-          if (prevR2 !== null && entry.R_squared !== prevR2) {
-            // Start of a new model
-            if (currentModel.length > 0) {
-              models.push(currentModel);
-            }
-            currentModel = [];
-          }
-          currentModel.push(entry);
-          prevR2 = entry.R_squared;
-        });
-        if (currentModel.length > 0) {
-          models.push(currentModel);
-        }
-        return models;
-
-      case 'Spatial Analysis':
-        const spatialKey = `${commodity}_${regime}`;
-        const spatialData = spatialAnalysisResults[spatialKey];
-        if (!spatialData) {
-          return null;
-        }
-        return spatialData;
-
       case 'Cointegration Analysis':
         if (commodity && regime) {
           const result = cointegrationResults[key];
@@ -159,12 +150,22 @@ export function getAnalysisResults(commodity, regime, analysisType) {
         }
         return cointegrationResults || {};
 
+      case 'Error Correction Model':
+        return ecmResults.find(
+          (item) => item.commodity === commodity && item.regime === regime
+        ) || null;
+
+      case 'Price Differentials':
+        return priceDifferentialResults[commodity]?.[regime] || null;
+
+      case 'Spatial Analysis':
+        const spatialKey = `${commodity}_${regime}`;
+        return spatialAnalysisResults[spatialKey] || null;
+
       case 'ECM Diagnostics':
-        return (
-          ecmDiagnostics.find(
-            (item) => item.commodity === commodity && item.regime === regime
-          ) || null
-        );
+        return ecmDiagnostics.find(
+          (item) => item.commodity === commodity && item.regime === regime
+        ) || null;
 
       case 'Granger Causality':
         return grangerCausalityResults[key] || null;
@@ -173,11 +174,11 @@ export function getAnalysisResults(commodity, regime, analysisType) {
         return stationarityResults[key] || null;
 
       default:
+        console.error(`Unknown analysis type: ${analysisType}`);
         return null;
-      }
-    } catch (error) {
-      console.error('Error in getAnalysisResults:', error);
-      return null;
     }
+  } catch (error) {
+    console.error(`Error in getAnalysisResults for ${analysisType} with commodity: ${commodity}, regime: ${regime}:`, error);
+    return null;
   }
-  
+}
