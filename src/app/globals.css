@@ -24,6 +24,8 @@ body {
 
 @layer utilities {
   .text-balance {
-    text-wrap: balance;
+    /* Removed invalid property */
+    /* If needed, use a supported property */
+    overflow-wrap: break-word;
   }
 }

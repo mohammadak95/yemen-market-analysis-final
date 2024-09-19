@@ -20,7 +20,6 @@ import ErrorBoundary from './ui/ErrorBoundary';
 import QuickGuide from './QuickGuide';
 import GuidedTour from './GuidedTour';
 
-import { styled } from '@mui/material/styles';
 import {
   AppBar,
   Toolbar,
@@ -31,10 +30,8 @@ import {
   ListItemText,
   CssBaseline,
   Divider,
-  IconButton,
   Switch as MuiSwitch,
   FormControlLabel,
-  FormGroup,
   MenuItem,
   Select,
   InputLabel,
@@ -43,16 +40,11 @@ import {
   AccordionSummary,
   AccordionDetails,
   Checkbox,
-  Grid,
-  Card,
-  CardContent,
-  CardHeader,
   ListItemButton,
-  Box, // Add this import
+  Box,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 
 const DynamicMethodology = dynamic(() => import('./Methodology'), { ssr: false });
 const DynamicLiteratureReview = dynamic(() => import('./LiteratureReview'), { ssr: false });
@@ -69,22 +61,6 @@ const Root = styled('div')(({ theme }) => ({
 
 const AppBarStyled = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
-}));
-
-const DrawerStyled = styled(Drawer, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  width: open ? drawerWidth : theme.spacing(7) + 1,
-  flexShrink: 0,
-  whiteSpace: 'nowrap',
-  '& .MuiDrawer-paper': {
-    width: open ? drawerWidth : theme.spacing(7) + 1,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.standard,
-    }),
-    overflowX: 'hidden',
-  },
 }));
 
 const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
@@ -110,7 +86,6 @@ export default function Dashboard() {
   const [seasonalAdjustment, setSeasonalAdjustment] = useState(false);
   const [dataSmoothing, setDataSmoothing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const [isClient, setIsClient] = useState(false);
   const [showQuickGuide, setShowQuickGuide] = useState(false);
@@ -134,6 +109,15 @@ export default function Dashboard() {
       placement: 'left',
     },
   ]);
+
+  // Synchronize dark mode with the .dark class in CSS
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     setIsClient(true);
@@ -292,11 +276,7 @@ export default function Dashboard() {
 
   const memoizedMarketData = useMemo(() => marketData, [marketData]);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const theme = createTheme({
+  const customizedTheme = createTheme({
     palette: {
       mode: darkMode ? 'dark' : 'light',
       primary: {
@@ -335,11 +315,12 @@ export default function Dashboard() {
     },
   ];
 
-  const drawer = (
+  const drawerContent = (
     <div className="tour-sidebar">
       <ToolbarStyled />
       <Divider />
       <List>
+        {/* Dark Mode Toggle */}
         <ListItem>
           <FormControlLabel
             control={
@@ -354,6 +335,7 @@ export default function Dashboard() {
           />
         </ListItem>
         <Divider />
+        {/* Commodity Selector */}
         <ListItem>
           <FormControl fullWidth>
             <InputLabel id="commodity-label">Commodity</InputLabel>
@@ -374,6 +356,7 @@ export default function Dashboard() {
             </Select>
           </FormControl>
         </ListItem>
+        {/* Regimes Selector */}
         <ListItem>
           <FormControl fullWidth>
             <InputLabel id="regime-label">Regimes</InputLabel>
@@ -394,6 +377,7 @@ export default function Dashboard() {
           </FormControl>
         </ListItem>
         <Divider />
+        {/* Analysis Options */}
         {analysisOptions.map((category) => (
           <Accordion key={category.category}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -422,41 +406,31 @@ export default function Dashboard() {
   );
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customizedTheme}>
       <Root>
         <CssBaseline />
         <AppBarStyled position="fixed">
           <ToolbarStyled>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerToggle}
-              edge="start"
-              sx={{ marginRight: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
+            {/* Removed the Menu Button */}
             <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
               Yemen Market Analysis Dashboard
             </Typography>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <MuiSwitch
-                    checked={darkMode}
-                    onChange={() => setDarkMode(!darkMode)}
-                    name="darkModeSwitch"
-                    color="secondary"
-                  />
-                }
-                label="Dark Mode"
-              />
-            </FormGroup>
+            {/* Removed the Dark Mode toggle from AppBar */}
           </ToolbarStyled>
         </AppBarStyled>
-        <DrawerStyled variant="permanent" open={true}>
-          {drawer}
-        </DrawerStyled>
+
+        {/* Permanent Drawer */}
+        <Drawer
+          variant="permanent"
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+
         <Content>
           <ToolbarStyled />
           {isClient && showQuickGuide && !tourCompleted && (
@@ -471,8 +445,9 @@ export default function Dashboard() {
           )}
           {error && (
             <div
-              style={{backgroundColor: theme.palette.error.dark,
-                color: theme.palette.error.contrastText,
+              style={{
+                backgroundColor: customizedTheme.palette.error.dark,
+                color: customizedTheme.palette.error.contrastText,
                 padding: '16px',
                 borderRadius: '4px',
                 marginBottom: '16px',
@@ -545,7 +520,7 @@ export default function Dashboard() {
                 selectedRegimes={selectedRegimes}
                 showUSDPrice={showUSDPrice}
                 colorPalette={colorPalette}
-                theme={theme}
+                theme={customizedTheme}
               />
             </div>
           )}
