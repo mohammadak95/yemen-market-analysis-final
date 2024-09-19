@@ -225,9 +225,14 @@ export default function Dashboard() {
       const results = {};
       for (const regime of selectedRegimes) {
         if (selectedAnalysis === 'Cointegration Analysis') {
-          results[regime] = getAnalysisResults(null, null, selectedAnalysis);
+          // Use the ('Commodity', 'Regime') key format
+          const key = `('${selectedCommodity}', '${regime}')`;
+          const analysisData = getAnalysisResults(selectedCommodity, regime, selectedAnalysis);
+          results[key] = analysisData || {};
         } else {
-          results[regime] = getAnalysisResults(selectedCommodity, regime, selectedAnalysis);
+          // Use the regime as the key
+          const analysisData = getAnalysisResults(selectedCommodity, regime, selectedAnalysis);
+          results[regime] = analysisData || {};
         }
       }
       setAnalysisResults(results);
@@ -247,6 +252,7 @@ export default function Dashboard() {
     showUSDPrice,
     setCombinedMarketDates,
   ]);
+  
 
   useEffect(() => {
     fetchAnalysisData();

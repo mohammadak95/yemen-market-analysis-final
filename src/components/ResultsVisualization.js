@@ -17,8 +17,20 @@ const ResultsVisualization = ({ results, analysisType, commodity, selectedRegime
   }
 
   const renderContent = (regime) => {
-    const regimeData = results[regime];
-    
+    let regimeData;
+    if (analysisType === 'Cointegration Analysis') {
+      // Use the ('Commodity', 'Regime') key format
+      const key = `('${commodity}', '${regime}')`;
+      regimeData = results[key];
+    } else {
+      // Use the regime as the key
+      regimeData = results[regime];
+    }
+
+    if (!regimeData) {
+      return <Typography>No data available for the {regime} regime.</Typography>;
+    }
+
     switch (analysisType) {
       case 'Price Differentials':
         return (

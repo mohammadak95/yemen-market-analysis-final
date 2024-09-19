@@ -1,11 +1,10 @@
+// src/components/CointegrationResults.js
+
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography,
   Paper,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Table,
   TableBody,
   TableCell,
@@ -16,17 +15,12 @@ import {
   Tooltip,
   Box,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
 
 // Styled components for consistent and responsive design
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(3),
+  padding: theme.spacing(4), // Increased padding for better spacing
   marginTop: theme.spacing(3),
-}));
-
-const StyledAccordion = styled(Accordion)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
 }));
 
 const StyledTable = styled(Table)(({ theme }) => ({
@@ -37,6 +31,13 @@ const ChipContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   gap: theme.spacing(1),
   marginTop: theme.spacing(1),
+}));
+
+const IncreasedTypography = styled(Typography)(({ theme }) => ({
+  fontSize: '1.1rem', // Increase base font size
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '1.25rem', // Further increase on larger screens
+  },
 }));
 
 const CointegrationResults = ({ data, selectedCommodity, selectedRegime }) => {
@@ -66,46 +67,24 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime }) => {
     return <Chip label="NS" color="default" size="small" />;
   };
 
-  // Helper function to render individual test results
-  const renderTestResults = (testName, results) => {
+  // Render only Engle-Granger test results without Accordion
+  const renderEngleGrangerResults = (results) => {
     if (!results || typeof results !== 'object') {
       return (
-        <Typography variant="body2" color="textSecondary">
-          No data available for the {testName} test.
+        <Typography variant="body1" color="textSecondary">
+          No data available for the Engle-Granger test.
         </Typography>
       );
     }
 
-    // Determine if the test indicates cointegration based on p-values
-    let indicatesCointegration = false;
-
-    switch (testName) {
-      case 'Engle-Granger':
-        indicatesCointegration = results.p_value < 0.10;
-        break;
-      case 'Pedroni':
-        // Pedroni has multiple p-values; consider cointegration if any p-value is significant
-        indicatesCointegration =
-          results.adf_p_value < 0.10 || results.lb_p_value < 0.10;
-        break;
-      case 'Westerlund':
-        // Westerlund has multiple p-values; consider cointegration if any p-value is significant
-        indicatesCointegration =
-          results.Gt_p_value < 0.10 ||
-          results.Ga_p_value < 0.10 ||
-          results.Pt_p_value < 0.10 ||
-          results.Pa_p_value < 0.10;
-        break;
-      default:
-        indicatesCointegration = false;
-    }
+    const indicatesCointegration = results.p_value < 0.10;
 
     return (
-      <StyledAccordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="subtitle1">{testName} Test Results</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
+      <Box>
+        <Box mb={2}>
+          <Typography variant="h6" gutterBottom>
+            Engle-Granger Test Results
+          </Typography>
           <TableContainer>
             <StyledTable size="small">
               <TableHead>
@@ -115,80 +94,51 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {testName === 'Engle-Granger' ? (
-                  // Handle critical values mapping for Engle-Granger
-                  <>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        Cointegration Statistic
-                      </TableCell>
-                      <TableCell align="right">
-                        {formatNumber(results.cointegration_statistic)}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        Critical Values
-                      </TableCell>
-                      <TableCell align="right">
-                        <Box>
-                          <Typography variant="body2">
-                            10%: {formatNumber(results.critical_values[0])}
-                          </Typography>
-                          <Typography variant="body2">
-                            5%: {formatNumber(results.critical_values[1])}
-                          </Typography>
-                          <Typography variant="body2">
-                            1%: {formatNumber(results.critical_values[2])}
-                          </Typography>
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        P-Value
-                      </TableCell>
-                      <TableCell align="right">
-                        {formatNumber(results.p_value)}
-                        <Tooltip title="P-Value significance">
-                          <span style={{ marginLeft: '8px' }}>{getSignificance(results.p_value)}</span>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        Indicates Cointegration
-                      </TableCell>
-                      <TableCell align="right">
-                        {indicatesCointegration ? (
-                          <Chip label="Yes" color="success" size="small" />
-                        ) : (
-                          <Chip label="No" color="error" size="small" />
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  </>
-                ) : (
-                  // Handle Pedroni and Westerlund tests
-                  Object.entries(results).map(([key, value]) => (
-                    <TableRow key={key}>
-                      <TableCell component="th" scope="row">
-                        {key.replace(/_/g, ' ')}
-                      </TableCell>
-                      <TableCell align="right">
-                        {typeof value === 'number' ? formatNumber(value) : JSON.stringify(value)}
-                        {key.toLowerCase().includes('p_value') && (
-                          <Tooltip title="P-Value significance">
-                            <span style={{ marginLeft: '8px' }}>{getSignificance(value)}</span>
-                          </Tooltip>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-                {/* Indicates Cointegration */}
                 <TableRow>
-                  <TableCell><strong>Indicates Cointegration</strong></TableCell>
+                  <TableCell component="th" scope="row">
+                    Cointegration Statistic
+                  </TableCell>
+                  <TableCell align="right">
+                    <IncreasedTypography>
+                      {formatNumber(results.cointegration_statistic)}
+                    </IncreasedTypography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Critical Values
+                  </TableCell>
+                  <TableCell align="right">
+                    <Box>
+                      <Typography variant="body1">
+                        10%: {formatNumber(results.critical_values[0])}
+                      </Typography>
+                      <Typography variant="body1">
+                        5%: {formatNumber(results.critical_values[1])}
+                      </Typography>
+                      <Typography variant="body1">
+                        1%: {formatNumber(results.critical_values[2])}
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    P-Value
+                  </TableCell>
+                  <TableCell align="right">
+                    <IncreasedTypography>
+                      {formatNumber(results.p_value)}
+                      <Tooltip title="P-Value significance">
+                        <span style={{ marginLeft: '8px' }}>{getSignificance(results.p_value)}</span>
+                      </Tooltip>
+                    </IncreasedTypography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Indicates Cointegration
+                  </TableCell>
                   <TableCell align="right">
                     {indicatesCointegration ? (
                       <Chip label="Yes" color="success" size="small" />
@@ -200,14 +150,29 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime }) => {
               </TableBody>
             </StyledTable>
           </TableContainer>
-        </AccordionDetails>
-      </StyledAccordion>
+        </Box>
+
+        {/* Additional Transformations */}
+        <Box mt={2}>
+          <Typography variant="subtitle1" gutterBottom>
+            Additional Transformations
+          </Typography>
+          <ChipContainer>
+            <Tooltip title="Price Transformation applied to stabilize variance and linearize relationships.">
+              <Chip label={`Price Transformation: ${results.price_transformation || 'N/A'}`} />
+            </Tooltip>
+            <Tooltip title="Conflict Transformation accounts for differential impact of conflict across regions.">
+              <Chip label={`Conflict Transformation: ${results.conflict_transformation || 'N/A'}`} />
+            </Tooltip>
+          </ChipContainer>
+        </Box>
+      </Box>
     );
   };
 
   return (
     <StyledPaper elevation={3}>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         Cointegration Analysis Results
       </Typography>
 
@@ -230,33 +195,12 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime }) => {
 
           return (
             <Box key={key} mb={3}>
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h5" gutterBottom>
                 {`${commodity} - ${regime}`}
               </Typography>
-              {/* Render each test vertically */}
+              {/* Render only Engle-Granger test results */}
               <Box mb={2}>
-                {renderTestResults('Engle-Granger', results.engle_granger)}
-              </Box>
-              <Box mb={2}>
-                {renderTestResults('Pedroni', results.pedroni)}
-              </Box>
-              <Box mb={2}>
-                {renderTestResults('Westerlund', results.westerlund)}
-              </Box>
-
-              {/* Additional Transformations */}
-              <Box mt={2}>
-                <Typography variant="subtitle1" gutterBottom>
-                  Additional Transformations
-                </Typography>
-                <ChipContainer>
-                  <Tooltip title="Price Transformation applied to stabilize variance and linearize relationships.">
-                    <Chip label={`Price Transformation: ${results.price_transformation || 'N/A'}`} />
-                  </Tooltip>
-                  <Tooltip title="Conflict Transformation accounts for differential impact of conflict across regions.">
-                    <Chip label={`Conflict Transformation: ${results.conflict_transformation || 'N/A'}`} />
-                  </Tooltip>
-                </ChipContainer>
+                {renderEngleGrangerResults(results.engle_granger)}
               </Box>
             </Box>
           );
