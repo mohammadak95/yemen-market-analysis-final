@@ -1,5 +1,3 @@
-// next.config.js
-
 const path = require('path');
 
 const repoName = 'yemen-market-analysis-final';
@@ -8,17 +6,36 @@ const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: isGitHubPages ? 'export' : undefined, // Enables static export for GitHub Pages
+  output: isGitHubPages ? 'export' : undefined,
   images: {
-    unoptimized: isGitHubPages, // Disables image optimization for static export
+    unoptimized: isGitHubPages,
   },
-  basePath: isGitHubPages ? `/${repoName}` : '', // Sets basePath for GitHub Pages
-  assetPrefix: isGitHubPages ? `/${repoName}/` : '', // Sets assetPrefix for GitHub Pages
+  basePath: isGitHubPages ? `/${repoName}` : '',
+  assetPrefix: isGitHubPages ? `/${repoName}/` : '',
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': path.resolve(__dirname, './src'), // Alias for easier imports
+      '@': path.resolve(__dirname, './src'),
     };
+    
+    // Add this new rule for CSV files
+    config.module.rules.push({
+      test: /\.csv$/,
+      loader: 'csv-loader',
+      options: {
+        dynamicTyping: true,
+        header: true,
+        skipEmptyLines: true,
+      },
+    });
+    
+    // Add this new rule for GeoJSON files
+    config.module.rules.push({
+      test: /\.geojson$/,
+      use: ['json-loader'],
+      type: 'javascript/auto',
+    });
+    
     return config;
   },
 };

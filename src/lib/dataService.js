@@ -1,184 +1,359 @@
 // src/lib/dataService.js
 
-// Import JSON data files
-import combinedMarketData from '../../data/combined_market_data.json';
-import ecmResults from '../../data/ecm_results.json';
-import spatialAnalysisResults from '../../data/spatial_analysis_results.json';
-import cointegrationResults from '../../data/cointegration_results.json';
-import ecmDiagnostics from '../../data/ecm_diagnostics.json';
-import grangerCausalityResults from '../../data/granger_causality_results.json';
-import stationarityResults from '../../data/stationarity_results.json';
-
-// Updated imports for Price Differential Results
-import priceDifferentialNorthSanaa from '../../data/price_differential/price_differential_results_North_Sana\'a_City_Amanat_Al_Asimah.json';
-import priceDifferentialSouthAden from '../../data/price_differential/price_differential_results_South_Aden_City_Aden.json';
-import priceDifferentialUnifiedAden from '../../data/price_differential/price_differential_results_Unified_Aden_City_Aden.json';
-import priceDifferentialUnifiedSanaa from '../../data/price_differential/price_differential_results_Unified_Sana\'a_City_Amanat_Al_Asimah.json';
+import Papa from 'papaparse';
 
 /**
- * Merges multiple price differential data objects into a single structured object.
- * 
- * @param  {...Object} dataFiles - The price differential data objects to merge.
- * @returns {Object} The merged price differential results.
+ * Fetches and parses a CSV file from the given URL.
+ * @param {string} url - The URL of the CSV file.
+ * @returns {Promise<Array<Object>>} - Parsed CSV data.
  */
-function mergePriceDifferentialData(...dataFiles) {
-  const mergedResults = {};
-
-  dataFiles.forEach(file => {
-    if (!file || !Array.isArray(file.market_pairs)) {
-      console.warn('Invalid price differential data file:', file);
-      return;
+async function fetchCSV(url) {
+  try {
+    console.log(`Fetching CSV data from URL: ${url}`);
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch CSV data from ${url}: ${response.statusText}`);
     }
-
-    file.market_pairs.forEach(pair => {
-      const { commodity, base_market } = pair;
-      if (!commodity || !base_market) {
-        console.warn('Invalid market pair data:', pair);
-        return;
-      }
-
-      let regime;
-      if (base_market.includes('Sana\'a')) {
-        regime = file === priceDifferentialNorthSanaa ? 'North' : 'Unified';
-      } else if (base_market.includes('Aden')) {
-        regime = file === priceDifferentialSouthAden ? 'South' : 'Unified';
-      } else {
-        console.warn(`Unknown base market: ${base_market}`);
-        return;
-      }
-
-      if (!mergedResults[commodity]) {
-        mergedResults[commodity] = {};
-      }
-      if (!mergedResults[commodity][regime]) {
-        mergedResults[commodity][regime] = [];
-      }
-      mergedResults[commodity][regime].push(pair);
+    const text = await response.text();
+    return new Promise((resolve, reject) => {
+      Papa.parse(text, {
+        header: true,
+        complete: (results) => {
+          console.log(`Successfully parsed CSV data from ${url}`);
+          resolve(results.data);
+        },
+        error: (error) => {
+          console.error(`Error parsing CSV data from ${url}:`, error);
+          reject(error);
+        },
+      });
     });
+  } catch (error) {
+    console.error(`Error fetching CSV data from ${url}:`, error);
+    throw error;
+  }
+}
+
+/**
+ * Loads all necessary data required for the dashboard.
+ * @returns {Promise<Object>} - An object containing all fetched data.
+ */
+export async function loadAllData() {
+  try {
+    console.log('Starting to load all data...');
+    const spatialData = await getSpatialData();
+    const combinedMarketData = await fetch('/data/combined_market_data.json').then((res) => res.json());
+    const ecmResults = await fetch('/data/ecm_results.json').then((res) => res.json());
+    const cointegrationResults = await fetch('/data/cointegration_results.json').then((res) => res.json());
+    const ecmDiagnostics = await fetch('/data/ecm_diagnostics.json').then((res) => res.json());
+    const grangerCausalityResults = await fetch('/data/granger_causality_results.json').then((res) => res.json());
+    const stationarityResults = await fetch('/data/stationarity_results.json').then((res) => res.json());
+
+    const priceDifferentialData = await loadPriceDifferentialData();
+
+    console.log('Fetched Data in loadAllData:', {
+      combinedMarketData,
+      ecmResults,
+      priceDifferentialResults: priceDifferentialData,
+      cointegrationResults,
+      ecmDiagnostics,
+      grangerCausalityResults,
+      stationarityResults,
+      spatialData,
+    });
+
+    return {
+      combinedMarketData,
+      ecmResults,
+      priceDifferentialResults: priceDifferentialData,
+      cointegrationResults,
+      ecmDiagnostics,
+      grangerCausalityResults,
+      stationarityResults,
+      spatialData,
+    };
+  } catch (error) {
+    console.error('Error loading all data:', error);
+    throw error;
+  }
+}
+
+/**
+ * Fetches spatial data from various CSV and JSON sources.
+ * @returns {Promise<Object>} - An object containing all spatial data.
+ */
+async function getSpatialData() {
+  try {
+    console.log('Fetching spatial data...');
+    const averagePrices = await fetchCSV('/data/choropleth_data/average_prices.csv');
+    const conflictIntensity = await fetchCSV('/data/choropleth_data/conflict_intensity.csv');
+    const priceChanges = await fetchCSV('/data/choropleth_data/price_changes.csv');
+    const flowMaps = await fetchCSV('/data/network_data/flow_maps.csv');
+    const pricesTimeSeries = await fetchCSV('/data/time_series_data/prices_time_series.csv');
+    const conflictIntensityTimeSeries = await fetchCSV('/data/time_series_data/conflict_intensity_time_series.csv');
+    const residuals = await fetchCSV('/data/residuals_data/residuals.csv');
+    const spatialWeights = await fetch('/data/spatial_weights/spatial_weights.json').then((res) => res.json());
+    const spatialAnalysisResults = await fetch('/data/spatial_analysis_results.json').then((res) => res.json());
+
+    console.log('Successfully fetched spatial data.');
+
+    return {
+      averagePrices,
+      conflictIntensity,
+      priceChanges,
+      flowMaps,
+      pricesTimeSeries,
+      conflictIntensityTimeSeries,
+      residuals,
+      spatialWeights,
+      spatialAnalysisResults,
+    };
+  } catch (error) {
+    console.error('Error fetching spatial data:', error);
+    throw error;
+  }
+}
+
+/**
+ * Loads Price Differential data from the JSON source.
+ * @returns {Promise<Object>} - Parsed Price Differential data.
+ */
+async function loadPriceDifferentialData() {
+  try {
+    console.log('Loading Price Differential data...');
+    const response = await fetch('/data/price_differential_results.json');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Price Differential data: ${response.statusText}`);
+    }
+    const data = await response.json();
+    console.log('Successfully loaded Price Differential data.');
+    return data;
+  } catch (error) {
+    console.error('Error loading Price Differential data:', error);
+    throw error;
+  }
+}
+
+/**
+ * Retrieves Price Differential results based on commodity and regime.
+ * @param {Object} data - The complete data object.
+ * @param {string} commodity - The selected commodity.
+ * @param {string} regime - The selected regime.
+ * @returns {Array<Object>|null} - An array of Price Differential results or null if not found.
+ */
+export function getPriceDifferentialResults(data, commodity, regime) {
+  console.log(`Fetching Price Differentials for Commodity: "${commodity}", Regime: "${regime}"`);
+
+  // Find all keys that start with the regime (e.g., "North_")
+  const regimeKeys = Object.keys(data.priceDifferentialResults).filter((key) => key.startsWith(`${regime}_`));
+
+  if (regimeKeys.length === 0) {
+    console.warn(`No data found for regime: "${regime}"`);
+    return null;
+  }
+
+  // Assuming you want to aggregate data from all base markets under the regime
+  const aggregatedResults = [];
+
+  regimeKeys.forEach((key) => {
+    const regimeData = data.priceDifferentialResults[key];
+    if (regimeData && regimeData.commodity_results && regimeData.commodity_results[commodity]) {
+      console.log(`Processing data for key: "${key}"`);
+      aggregatedResults.push({
+        regime: regimeData.regime,
+        base_market: regimeData.base_market,
+        commodity_results: regimeData.commodity_results[commodity],
+        model_results: regimeData.model_results || {},
+      });
+    } else {
+      console.warn(`No commodity results found for Commodity: "${commodity}" in key: "${key}"`);
+    }
   });
 
-  return mergedResults;
+  if (aggregatedResults.length === 0) {
+    console.warn(`No Price Differential data available for Commodity: "${commodity}" in Regime: "${regime}"`);
+    return null;
+  }
+
+  console.log(`Successfully retrieved Price Differentials for Commodity: "${commodity}", Regime: "${regime}"`);
+  return aggregatedResults;
 }
 
-// Merge the imported price differential data
-const priceDifferentialResults = mergePriceDifferentialData(
-  priceDifferentialNorthSanaa,
-  priceDifferentialSouthAden,
-  priceDifferentialUnifiedAden,
-  priceDifferentialUnifiedSanaa
-);
-
-export function loadAllData() {
-  return {
-    combinedMarketData,
-    ecmResults,
-    priceDifferentialResults,
-    spatialAnalysisResults,
-    cointegrationResults,
-    ecmDiagnostics,
-    grangerCausalityResults,
-    stationarityResults,
-  };
-}
-
-export function getAvailableCommodities() {
-  if (!combinedMarketData || Object.keys(combinedMarketData).length === 0) {
-    console.warn('Combined market data is empty or undefined.');
+/**
+ * Retrieves available commodities from the combined market data.
+ * @param {Object} data - The combined market data.
+ * @returns {Array<string>} - An array of available commodities.
+ */
+export function getAvailableCommodities(data) {
+  if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
+    console.warn('Combined market data is empty or invalid.');
     return [];
   }
+
   const commodities = new Set();
-  Object.values(combinedMarketData).forEach((commoditiesByDate) => {
-    Object.keys(commoditiesByDate || {}).forEach((commodity) => commodities.add(commodity));
+
+  Object.values(data).forEach((dateData) => {
+    if (dateData && typeof dateData === 'object') {
+      Object.keys(dateData).forEach((commodity) => {
+        commodities.add(commodity);
+      });
+    }
   });
+
+  console.log('Available commodities:', Array.from(commodities));
   return Array.from(commodities);
 }
 
+/**
+ * Retrieves available regimes.
+ * @returns {Array<string>} - An array of available regimes.
+ */
 export function getAvailableRegimes() {
-  return ['North', 'South', 'Unified'];
+  const regimes = ['North', 'South', 'Unified'];
+  console.log('Available regimes:', regimes);
+  return regimes;
 }
 
-export function getCombinedMarketData(commodity, regime) {
-  try {
-    if (!combinedMarketData || !commodity || !regime) {
-      console.warn('Invalid parameters or combined market data is undefined.');
-      return [];
-    }
-
-    const data = [];
-
-    Object.entries(combinedMarketData).forEach(([date, commodities]) => {
-      const commodityData = commodities[commodity];
-      if (commodityData) {
-        Object.entries(commodityData).forEach(([city, cityData]) => {
-          const regimeData = cityData[regime];
-          if (Array.isArray(regimeData)) {
-            regimeData.forEach((dataPoint) => {
-              data.push({
-                date,
-                city,
-                price: Number(dataPoint.price),
-                usdPrice: Number(dataPoint.usdprice),
-                conflict: Number(dataPoint.conflict_intensity),
-              });
-            });
-          }
-        });
-      }
-    });
-
-    return data;
-  } catch (error) {
-    console.error('Error in getCombinedMarketData:', error);
+/**
+ * Retrieves combined market data based on commodity and regime.
+ * @param {Object} data - The complete data object.
+ * @param {string} commodity - The selected commodity.
+ * @param {string} regime - The selected regime.
+ * @returns {Array<Object>} - An array of market data objects.
+ */
+export function getCombinedMarketData(data, commodity, regime) {
+  if (!data || !data.combinedMarketData || !commodity || !regime) {
+    console.warn('Invalid parameters or combined market data is undefined.');
     return [];
   }
+
+  const result = [];
+
+  Object.entries(data.combinedMarketData).forEach(([date, commodities]) => {
+    if (commodities[commodity]) {
+      Object.entries(commodities[commodity]).forEach(([city, cityData]) => {
+        if (cityData[regime]) {
+          cityData[regime].forEach((dataPoint) => {
+            result.push({
+              date,
+              city,
+              price: Number(dataPoint.price),
+              usdPrice: Number(dataPoint.usdprice),
+              conflict: Number(dataPoint.conflict_intensity),
+            });
+          });
+        }
+      });
+    }
+  });
+
+  console.log(`Combined market data retrieved for Commodity: "${commodity}", Regime: "${regime}"`, result);
+  return result;
 }
 
-export function getAnalysisResults(commodity, regime, analysisType) {
+/**
+ * Retrieves analysis results based on the specified analysis type.
+ * @param {Object} data - The complete data object.
+ * @param {string} commodity - The selected commodity.
+ * @param {string} regime - The selected regime.
+ * @param {string} analysisType - The type of analysis.
+ * @returns {Object|Array<Object>|null} - The analysis results or null if not found.
+ */
+export function getAnalysisResults(data, commodity, regime, analysisType) {
   try {
     if (!analysisType) {
       console.warn('Invalid parameters for getAnalysisResults.');
       return null;
     }
 
-    const key = commodity && regime ? `('${commodity}', '${regime}')` : null;
-
     switch (analysisType) {
       case 'Cointegration Analysis':
         if (commodity && regime) {
-          const result = cointegrationResults[key];
-          return result ? { [key]: result } : null;
+          const key = `('${commodity}', '${regime}')`;
+          const result = data.cointegrationResults[key];
+          if (result) {
+            console.log(`Cointegration Analysis result found for key: "${key}"`);
+            return { [key]: result };
+          } else {
+            console.warn(`No Cointegration Analysis result found for key: "${key}"`);
+            return null;
+          }
         }
-        return cointegrationResults || {};
+        console.warn('Commodity or Regime not specified for Cointegration Analysis.');
+        return data.cointegrationResults || {};
 
       case 'Error Correction Model':
-        return ecmResults.find(
+        const ecmResult = data.ecmResults.find(
           (item) => item.commodity === commodity && item.regime === regime
-        ) || null;
+        );
+        if (ecmResult) {
+          console.log(`Error Correction Model result found for Commodity: "${commodity}", Regime: "${regime}"`);
+          return ecmResult;
+        } else {
+          console.warn(`No Error Correction Model result found for Commodity: "${commodity}", Regime: "${regime}"`);
+          return null;
+        }
 
       case 'Price Differentials':
-        return priceDifferentialResults[commodity]?.[regime] || null;
+        const priceDiffResults = getPriceDifferentialResults(data, commodity, regime);
+        if (priceDiffResults) {
+          console.log(`Price Differentials data retrieved for Commodity: "${commodity}", Regime: "${regime}"`);
+          return priceDiffResults;
+        } else {
+          console.warn(`No Price Differentials data found for Commodity: "${commodity}", Regime: "${regime}"`);
+          return null;
+        }
 
       case 'Spatial Analysis':
         const spatialKey = `${commodity}_${regime}`;
-        return spatialAnalysisResults[spatialKey] || null;
+        const spatialResult = data.spatialData.spatialAnalysisResults[spatialKey];
+        if (spatialResult) {
+          console.log(`Spatial Analysis result found for key: "${spatialKey}"`);
+          return spatialResult;
+        } else {
+          console.warn(`No Spatial Analysis result found for key: "${spatialKey}"`);
+          return null;
+        }
 
       case 'ECM Diagnostics':
-        return ecmDiagnostics.find(
+        const ecmDiagResult = data.ecmDiagnostics.find(
           (item) => item.commodity === commodity && item.regime === regime
-        ) || null;
+        );
+        if (ecmDiagResult) {
+          console.log(`ECM Diagnostics result found for Commodity: "${commodity}", Regime: "${regime}"`);
+          return ecmDiagResult;
+        } else {
+          console.warn(`No ECM Diagnostics result found for Commodity: "${commodity}", Regime: "${regime}"`);
+          return null;
+        }
 
       case 'Granger Causality':
-        return grangerCausalityResults[key] || null;
+        const grangerKey = `('${commodity}', '${regime}')`;
+        const grangerResult = data.grangerCausalityResults[grangerKey];
+        if (grangerResult) {
+          console.log(`Granger Causality result found for key: "${grangerKey}"`);
+          return grangerResult;
+        } else {
+          console.warn(`No Granger Causality result found for key: "${grangerKey}"`);
+          return null;
+        }
 
       case 'Stationarity':
-        return stationarityResults[key] || null;
+        const stationarityResult = data.stationarityResults[`('${commodity}', '${regime}')`];
+        if (stationarityResult) {
+          console.log(`Stationarity result found for Commodity: "${commodity}", Regime: "${regime}"`);
+          return stationarityResult;
+        } else {
+          console.warn(`No Stationarity result found for Commodity: "${commodity}", Regime: "${regime}"`);
+          return null;
+        }
 
       default:
-        console.error(`Unknown analysis type: ${analysisType}`);
+        console.error(`Unknown analysis type: "${analysisType}"`);
         return null;
     }
   } catch (error) {
-    console.error(`Error in getAnalysisResults for ${analysisType} with commodity: ${commodity}, regime: ${regime}:`, error);
+    console.error(`Error in getAnalysisResults for "${analysisType}" with Commodity: "${commodity}", Regime: "${regime}":`, error);
     return null;
   }
 }

@@ -7,6 +7,7 @@ from libpysal.weights import KNN
 from esda.moran import Moran
 import logging
 import networkx as nx  # For connectivity checks
+from libpysal.weights.spatial_lag import lag_spatial
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -16,6 +17,7 @@ logger = logging.getLogger(__name__)
 RESULTS_DIR = Path("results")
 DATA_DIR = Path("Econometrics/data/processed")
 MODEL_RESULTS_FILE = RESULTS_DIR / "spatial_analysis_results.json"
+GEOJSON_FILE = DATA_DIR / "unified_data_with_region_id.geojson"  # Updated GeoJSON path
 CHOROPLETH_OUTPUT_DIR = RESULTS_DIR / "choropleth_data"
 WEIGHTS_OUTPUT_DIR = RESULTS_DIR / "spatial_weights"
 TIME_SERIES_OUTPUT_DIR = RESULTS_DIR / "time_series_data"
@@ -38,6 +40,12 @@ def load_geojson_data(file_path):
     gdf = gpd.read_file(file_path)
     logger.info(f"Loaded GeoJSON data from {file_path} with {len(gdf)} records")
     
+    # Log GeoDataFrame columns for debugging
+    logger.info(f"GeoDataFrame columns: {gdf.columns.tolist()}")
+    
+    # Ensure 'date' is in datetime format
+    gdf['date'] = pd.to_datetime(gdf['date'], errors='coerce')
+    
     # Apply consistent sorting by region_id, date, commodity, exchange_rate_regime
     gdf = gdf.sort_values(by=['region_id', 'date', 'commodity', 'exchange_rate_regime']).reset_index(drop=True)
     return gdf
@@ -55,6 +63,7 @@ def check_unique_identifier(gdf, identifier='region_id'):
 def prepare_unique_regions_gdf(gdf, identifier='region_id'):
     """
     Create a GeoDataFrame with unique regions based on the specified identifier.
+    Assumes that all entries for a given region_id have the same geometry.
     """
     unique_regions_gdf = gdf.drop_duplicates(subset=[identifier]).copy().reset_index(drop=True)
     logger.info(f"Created unique regions GeoDataFrame with {len(unique_regions_gdf)} records based on '{identifier}'.")
@@ -163,7 +172,8 @@ def prepare_choropleth_data(gdf, model_results):
     Prepare data for choropleth maps: Average prices, Conflict intensity, Price changes, Residuals.
     """
     try:
-        gdf = gdf.sort_values(by=['region_id', 'date']).reset_index(drop=True)
+        # Ensure 'date' is in datetime format
+        gdf['date'] = pd.to_datetime(gdf['date'], errors='coerce')
         
         # 1. Average Prices per Region and Time
         avg_prices = gdf.groupby(['region_id', 'date'])['usdprice'].mean().reset_index().rename(columns={'usdprice': 'avg_usdprice'})
@@ -175,7 +185,7 @@ def prepare_choropleth_data(gdf, model_results):
 
     try:
         # 2. Conflict Intensity per Region and Time
-        conflict_intensity = gdf.groupby(['region_id', 'date'])['conflict_intensity'].mean().reset_index()
+        conflict_intensity = gdf.groupby(['region_id', 'date'])['conflict_intensity'].mean().reset_index().rename(columns={'conflict_intensity': 'avg_conflict_intensity'})
         conflict_intensity.to_csv(CHOROPLETH_OUTPUT_DIR / "conflict_intensity.csv", index=False)
         logger.info("Prepared conflict intensity for choropleth maps.")
     except Exception as e:
@@ -198,7 +208,7 @@ def prepare_choropleth_data(gdf, model_results):
         residuals_list = []
         for result in model_results:
             commodity = result.get('commodity', 'Unknown Commodity')
-            regime = result.get('regime', 'Unknown Regime')
+            regime = result.get('regime', 'Unknown Regime')  # Changed 'exchange_rate_regime' to 'regime'
             residuals = result.get('residuals', [])
             for res in residuals:
                 if 'residual' in res:
@@ -206,7 +216,7 @@ def prepare_choropleth_data(gdf, model_results):
                         'commodity': commodity,
                         'regime': regime,
                         'region_id': res['region_id'],
-                        'date': res['date'],
+                        'date': pd.to_datetime(res['date'], errors='coerce'),
                         'residual': res['residual']
                     })
                 else:
@@ -225,8 +235,12 @@ def prepare_time_series_data(gdf):
     try:
         gdf = gdf.sort_values(by=['region_id', 'date', 'commodity', 'exchange_rate_regime']).reset_index(drop=True)
         
-        # Time series per Commodity and Regime
-        prices_ts = gdf.pivot_table(index=['region_id', 'date'], columns=['commodity', 'exchange_rate_regime'], values='usdprice').reset_index()
+        # Time series per Commodity and Exchange Rate Regime
+        prices_ts = gdf.pivot_table(
+            index=['region_id', 'date'], 
+            columns=['commodity', 'exchange_rate_regime'], 
+            values='usdprice'
+        ).reset_index()
         prices_ts.to_csv(TIME_SERIES_OUTPUT_DIR / "prices_time_series.csv", index=False)
         logger.info("Prepared and saved time series data for prices.")
     except Exception as e:
@@ -235,7 +249,7 @@ def prepare_time_series_data(gdf):
 
     try:
         # Conflict Intensity Time Series
-        conflict_ts = gdf.groupby(['region_id', 'date'])['conflict_intensity'].mean().reset_index()
+        conflict_ts = gdf.groupby(['region_id', 'date'])['conflict_intensity'].mean().reset_index().rename(columns={'conflict_intensity': 'avg_conflict_intensity'})
         conflict_ts.to_csv(TIME_SERIES_OUTPUT_DIR / "conflict_intensity_time_series.csv", index=False)
         logger.info("Prepared and saved time series data for conflict intensity.")
     except Exception as e:
@@ -250,7 +264,7 @@ def export_residuals(model_results):
         residuals_list = []
         for result in model_results:
             commodity = result.get('commodity', 'Unknown Commodity')
-            regime = result.get('regime', 'Unknown Regime')
+            regime = result.get('regime', 'Unknown Regime')  # Changed 'exchange_rate_regime' to 'regime'
             residuals = result.get('residuals', [])
             for res in residuals:
                 if 'residual' in res:
@@ -258,7 +272,7 @@ def export_residuals(model_results):
                         'commodity': commodity,
                         'regime': regime,
                         'region_id': res['region_id'],
-                        'date': res['date'],
+                        'date': pd.to_datetime(res['date'], errors='coerce'),
                         'residual': res['residual']
                     })
                 else:
@@ -270,54 +284,99 @@ def export_residuals(model_results):
         logger.error(f"Failed to export residuals data: {e}")
         raise
 
-def generate_network_data(gdf, unique_gdf, w):
-    """
-    Generate data for spatial network graphs (Flow Maps).
-    """
+def generate_network_data(gdf, unique_regions_gdf, w):
+    """Generate flow maps using the spatial weights matrix and include latitude/longitude."""
+    flow_data = []
     try:
-        if 'spatial_lag_price' not in gdf.columns:
-            latest_prices = gdf.sort_values('date').groupby('region_id')['usdprice'].last()
-            spatial_lag_price = pd.Series(w.sparse.dot(latest_prices), index=latest_prices.index)
-            gdf['spatial_lag_price'] = gdf['region_id'].map(spatial_lag_price)
-            logger.info("Calculated spatial lag of price.")
+        # Get the list of region_ids based on the order in w
+        region_ids_in_order = unique_regions_gdf['region_id'].tolist()
 
-        flow_data = []
-        region_ids = unique_gdf['region_id'].tolist()
-        for region_idx, neighbors in w.neighbors.items():
-            source = region_ids[region_idx]
+        # Map the id_order (numerical index) from w to the corresponding region_ids
+        id_to_region_map = {i: region for i, region in enumerate(region_ids_in_order)}
+
+        # Extract latitude and longitude from unique_regions_gdf
+        unique_gdf = unique_regions_gdf.copy()
+        unique_gdf['latitude'] = unique_gdf['latitude']
+        unique_gdf['longitude'] = unique_gdf['longitude']
+
+        # Calculate average usdprice per region
+        usdprice_avg = gdf.groupby('region_id')['usdprice'].mean().reindex(region_ids_in_order).fillna(0)
+        unique_gdf['avg_usdprice'] = usdprice_avg.values
+
+        # Calculate spatial lag
+        unique_gdf['spatial_lag_usdprice'] = lag_spatial(w, unique_gdf['avg_usdprice'])
+
+        for idx, source_id in enumerate(w.id_order):
+            source = id_to_region_map[idx]
+            neighbors = w.neighbors[idx]
             for neighbor_idx in neighbors:
-                target = region_ids[neighbor_idx]
-                weight = gdf.loc[gdf['region_id'] == target, 'spatial_lag_price'].values
-                if len(weight) > 0:
-                    weight_value = weight[0]
-                else:
-                    weight_value = 0
+                target = id_to_region_map[neighbor_idx]
+                weight = unique_gdf.loc[idx, 'spatial_lag_usdprice']  # Adjusted to use 'avg_usdprice'
+
+                # Retrieve latitude and longitude for both source and target from the unique GeoDataFrame
+                source_coords = unique_gdf.loc[idx, ['latitude', 'longitude']].values
+                target_coords = unique_gdf.loc[neighbor_idx, ['latitude', 'longitude']].values
+
                 flow_data.append({
                     'source': source,
+                    'source_lat': source_coords[0],
+                    'source_lng': source_coords[1],
                     'target': target,
-                    'weight': weight_value
+                    'target_lat': target_coords[0],
+                    'target_lng': target_coords[1],
+                    'weight': weight
                 })
 
+        # Create a DataFrame from the flow data and save it to CSV
         flow_df = pd.DataFrame(flow_data)
         flow_df.to_csv(NETWORK_DATA_OUTPUT_DIR / "flow_maps.csv", index=False)
-        logger.info("Generated and saved flow maps data for network graphs.")
+        logger.info("Generated and saved flow maps data with coordinates for network graphs.")
     except Exception as e:
         logger.error(f"Failed to generate network data: {e}")
         raise
 
+def merge_residuals_with_geojson(gdf, residuals_df):
+    """
+    Merge residuals into GeoDataFrame based on region_id, date, commodity, and regime.
+    """
+    try:
+        # Ensure 'date' in residuals_df is datetime
+        residuals_df['date'] = pd.to_datetime(residuals_df['date'], errors='coerce')
+        
+        # Extract relevant fields for merging
+        geo_df = gdf.copy()
+        # 'regime' is actually 'exchange_rate_regime'
+        geo_df['regime'] = geo_df['exchange_rate_regime']
+        
+        # Merge residuals
+        merged_df = geo_df.merge(
+            residuals_df,
+            on=['region_id', 'date', 'commodity', 'regime'],
+            how='left'
+        )
+
+        # Handle missing residuals
+        merged_df['residual'] = merged_df['residual'].fillna(0)  # You can choose a different default if needed
+
+        # Save the enhanced GeoJSON
+        enhanced_geojson_path = RESULTS_DIR / "enhanced_unified_data_with_residuals.geojson"
+        merged_df.to_file(enhanced_geojson_path, driver='GeoJSON')
+        logger.info(f"Enhanced GeoJSON with residuals saved to {enhanced_geojson_path}")
+    except Exception as e:
+        logger.error(f"Failed to merge residuals with GeoJSON: {e}")
+        raise
+
 def main():
     # Load GeoJSON data
-    geojson_path = DATA_DIR / "unified_data_with_region_id.geojson"
-    gdf = load_geojson_data(geojson_path)
+    gdf = load_geojson_data(GEOJSON_FILE)
 
-    # Check for unique 'region_id's, use region_id + date + commodity + exchange_rate_regime as a composite identifier
-    identifier = ['region_id', 'date', 'commodity', 'exchange_rate_regime']
-    if gdf.duplicated(subset=identifier).any():
-        logger.error(f"Duplicate combinations found for {identifier}. Please ensure uniqueness.")
+    # Prepare unique regions GeoDataFrame
+    unique_regions_gdf = prepare_unique_regions_gdf(gdf, identifier='region_id')
+
+    # Check for unique 'region_id's in unique_regions_gdf
+    if not check_unique_identifier(unique_regions_gdf, identifier='region_id'):
+        logger.error("Non-unique 'region_id's detected in unique regions. Exiting.")
         return
-    else:
-        unique_regions_gdf = gdf.drop_duplicates(subset='region_id').copy()
-        logger.info(f"Prepared unique regions GeoDataFrame with {len(unique_regions_gdf)} records.")
 
     # Load model results
     model_results = load_model_results(MODEL_RESULTS_FILE)
@@ -330,6 +389,15 @@ def main():
 
     # Prepare and export time series data
     prepare_time_series_data(gdf)
+
+    # Export residuals data
+    export_residuals(model_results)
+
+    # Merge residuals with GeoJSON and save enhanced GeoJSON
+    # Load the residuals CSV for merging
+    residuals_csv_path = RESIDUALS_OUTPUT_DIR / "residuals.csv"
+    residuals_df = pd.read_csv(residuals_csv_path)
+    merge_residuals_with_geojson(gdf, residuals_df)
 
     # Generate and export network data for flow maps
     generate_network_data(gdf, unique_regions_gdf, w)

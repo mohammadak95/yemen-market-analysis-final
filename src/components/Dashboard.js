@@ -1,5 +1,3 @@
-// File: src/components/Dashboard.js
-
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
@@ -15,10 +13,13 @@ import {
   applySeasonalAdjustment,
   applySmoothing,
 } from '../lib/dataProcessing';
-import LoadingSpinner from './ui/LoadingSpinner';
-import ErrorBoundary from './ui/ErrorBoundary';
-import QuickGuide from './QuickGuide';
-import GuidedTour from './GuidedTour';
+
+// Dynamically import components with SSR disabled
+const LoadingSpinner = dynamic(() => import('./ui/LoadingSpinner'), { ssr: false });
+const ErrorBoundary = dynamic(() => import('./ui/ErrorBoundary'), { ssr: false });
+const QuickGuide = dynamic(() => import('./QuickGuide'), { ssr: false });
+const GuidedTour = dynamic(() => import('./GuidedTour'), { ssr: false });
+const SpatialResults = dynamic(() => import('./SpatialResults'), { ssr: false });
 
 import {
   AppBar,
@@ -46,6 +47,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 
+// Dynamically import other components
 const DynamicMethodology = dynamic(() => import('./Methodology'), { ssr: false });
 const DynamicLiteratureReview = dynamic(() => import('./LiteratureReview'), { ssr: false });
 const DynamicResultsVisualization = dynamic(() => import('./ResultsVisualization'), { ssr: false });
@@ -72,7 +74,24 @@ const Content = styled('main')(({ theme }) => ({
   padding: theme.spacing(3),
 }));
 
+const tourSteps = [
+  {
+    target: '.tour-sidebar',
+    content: 'This sidebar allows you to select commodities, regimes, and analysis types.',
+    disableBeacon: true,
+  },
+  {
+    target: '.tour-main-chart',
+    content: 'This chart shows price and conflict intensity over time for the selected commodities and regimes.',
+  },
+  {
+    target: '.tour-analysis-section',
+    content: 'This section displays the results of various econometric analyses based on your selections.',
+  },
+];
+
 export default function Dashboard() {
+  // State declarations
   const [allData, setAllData] = useState(null);
   const [commodities, setCommodities] = useState([]);
   const [regimes, setRegimes] = useState([]);
@@ -92,92 +111,124 @@ export default function Dashboard() {
   const [runTour, setRunTour] = useState(false);
   const [tourCompleted, setTourCompleted] = useState(false);
   const [combinedMarketDates, setCombinedMarketDates] = useState([]);
-  const [tourSteps, setTourSteps] = useState([
-    {
-      target: '.tour-sidebar',
-      content: 'Choose your commodity and regime here.',
-      placement: 'right',
-    },
-    {
-      target: '.tour-main-chart',
-      content: 'Watch how prices and conflict interact over time.',
-      placement: 'top',
-    },
-    {
-      target: '.tour-analysis-section',
-      content: 'Dive deep with our econometric analyses.',
-      placement: 'left',
-    },
-  ]);
+  const [isTourReady, setIsTourReady] = useState(false);
 
-  // Synchronize dark mode with the .dark class in CSS
+  // Initial setup and tour handling
   useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-  }, [darkMode]);
-
-  useEffect(() => {
+    console.log('Component mounted: Initializing client-side settings.');
     setIsClient(true);
+
     const storedTourCompleted = localStorage.getItem('tourCompleted');
+    console.log(`Stored tour completed status: ${storedTourCompleted}`);
     if (storedTourCompleted === 'true') {
       setTourCompleted(true);
     } else {
       setShowQuickGuide(true);
+      console.log('Quick guide will be shown to the user.');
     }
+
+    const timer = setTimeout(() => {
+      setIsTourReady(true);
+      console.log('Tour is now ready to run.');
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      console.log('Component unmounted: Cleared tour readiness timer.');
+    };
   }, []);
 
   const handleQuickGuideClose = () => {
+    console.log('Quick guide closed by user.');
     setShowQuickGuide(false);
     setRunTour(true);
   };
 
   const handleTourEnd = () => {
+    console.log('Guided tour ended.');
     setRunTour(false);
     setTourCompleted(true);
     localStorage.setItem('tourCompleted', 'true');
+    console.log('Tour completion status saved to localStorage.');
   };
 
+  // Data loading effect
   useEffect(() => {
-    const fetchData = () => {
+    const fetchData = async () => {
+      console.log('Data fetching started.');
       setIsLoading(true);
+      console.log('Loading spinner shown.');
+
       try {
-        const loadedData = loadAllData();
+        console.log('Calling loadAllData...');
+        const loadedData = await loadAllData();
+        console.log('loadAllData successful:', loadedData);
         setAllData(loadedData);
 
+        console.log('Extracting available commodities...');
         const availableCommodities = getAvailableCommodities(loadedData.combinedMarketData);
+        console.log('Available commodities:', availableCommodities);
+
+        console.log('Extracting available regimes...');
         const availableRegimes = getAvailableRegimes();
+        console.log('Available regimes:', availableRegimes);
 
-        setCommodities(availableCommodities || []);
-        setRegimes(availableRegimes || []);
-
-        if (availableCommodities && availableCommodities.length > 0) {
+        if (availableCommodities?.length > 0) {
+          setCommodities(availableCommodities);
           setSelectedCommodity(availableCommodities[0]);
+          console.log(`Selected default commodity: ${availableCommodities[0]}`);
+        } else {
+          throw new Error('No commodity data available.');
         }
-        if (availableRegimes && availableRegimes.length > 0) {
+
+        if (availableRegimes?.length > 0) {
+          setRegimes(availableRegimes);
           setSelectedRegimes([availableRegimes[0]]);
+          console.log(`Selected default regime: ${availableRegimes[0]}`);
+        } else {
+          throw new Error('No regime data available.');
         }
       } catch (err) {
         console.error('Error loading data:', err);
-        setError('Failed to load data. Please try again later.');
+        setError(`Failed to load data: ${err.message}`);
       } finally {
         setIsLoading(false);
+        console.log('Data fetching completed. Loading spinner hidden.');
       }
     };
 
     fetchData();
   }, []);
 
-  const fetchAnalysisData = useCallback(() => {
-    if (!allData || !selectedCommodity || selectedRegimes.length === 0) return;
-    setIsLoading(true);
-    try {
-      setError(null);
+  // Analysis data fetching with debugging
+  const fetchAnalysisData = useCallback(async () => {
+    console.log('fetchAnalysisData invoked.');
+    if (!allData) {
+      console.log('No allData available. Exiting fetchAnalysisData.');
+      return;
+    }
+    if (!selectedCommodity) {
+      console.log('No selectedCommodity. Exiting fetchAnalysisData.');
+      return;
+    }
+    if (selectedRegimes.length === 0) {
+      console.log('No selectedRegimes. Exiting fetchAnalysisData.');
+      return;
+    }
 
-      const allRegimeData = selectedRegimes.map((regime) =>
-        getCombinedMarketData(selectedCommodity, regime)
+    console.log('Starting analysis data fetching.');
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      console.log('Fetching combined market data for selected regimes...');
+      const allRegimeData = await Promise.all(
+        selectedRegimes.map(async (regime) => {
+          console.log(`Fetching combined market data for regime: ${regime}`);
+          const data = await getCombinedMarketData(allData, selectedCommodity, regime);
+          console.log(`Data fetched for regime ${regime}:`, data);
+          return data;
+        })
       );
 
       const dataByDate = {};
@@ -185,6 +236,7 @@ export default function Dashboard() {
 
       selectedRegimes.forEach((regime, regimeIndex) => {
         const regimeData = allRegimeData[regimeIndex] || [];
+        console.log(`Processing data for regime: ${regime}`);
         regimeData.forEach((item) => {
           const date = item.date;
           dates.add(date);
@@ -198,49 +250,48 @@ export default function Dashboard() {
       });
 
       let processedData = Object.values(dataByDate);
+      console.log('Initial processed data:', processedData);
 
       processedData.sort((a, b) => new Date(a.date) - new Date(b.date));
+      console.log('Sorted processed data by date:', processedData);
 
       if (seasonalAdjustment) {
-        processedData = applySeasonalAdjustment(
-          processedData,
-          selectedRegimes,
-          12,
-          !showUSDPrice
-        );
+        console.log('Applying seasonal adjustment.');
+        processedData = applySeasonalAdjustment(processedData, selectedRegimes, 12, !showUSDPrice);
+        console.log('Data after seasonal adjustment:', processedData);
       }
 
       if (dataSmoothing) {
-        processedData = applySmoothing(
-          processedData,
-          selectedRegimes,
-          6,
-          !showUSDPrice
-        );
+        console.log('Applying data smoothing.');
+        processedData = applySmoothing(processedData, selectedRegimes, 6, !showUSDPrice);
+        console.log('Data after smoothing:', processedData);
       }
 
       setMarketData(processedData);
       setCombinedMarketDates(Array.from(dates).sort());
+      console.log('Final market data set:', processedData);
+      console.log('Combined market dates:', Array.from(dates).sort());
 
       const results = {};
       for (const regime of selectedRegimes) {
-        if (selectedAnalysis === 'Cointegration Analysis') {
-          // Use the ('Commodity', 'Regime') key format
-          const key = `('${selectedCommodity}', '${regime}')`;
-          const analysisData = getAnalysisResults(selectedCommodity, regime, selectedAnalysis);
-          results[key] = analysisData || {};
+        console.log(`Fetching analysis results for regime: ${regime}, analysis type: ${selectedAnalysis}`);
+        const analysisData = getAnalysisResults(allData, selectedCommodity, regime, selectedAnalysis);
+        if (analysisData) {
+          results[regime] = analysisData;
+          console.log(`Analysis data for regime ${regime}:`, analysisData);
         } else {
-          // Use the regime as the key
-          const analysisData = getAnalysisResults(selectedCommodity, regime, selectedAnalysis);
-          results[regime] = analysisData || {};
+          console.warn(`No analysis data found for regime ${regime} and analysis type ${selectedAnalysis}.`);
+          results[regime] = {};
         }
       }
       setAnalysisResults(results);
+      console.log('All analysis results set:', results);
     } catch (err) {
       console.error('Error fetching analysis data:', err);
-      setError('An error occurred while fetching analysis data.');
+      setError(`An error occurred while fetching analysis data: ${err.message}`);
     } finally {
       setIsLoading(false);
+      console.log('Analysis data fetching completed. Loading spinner hidden.');
     }
   }, [
     allData,
@@ -250,21 +301,21 @@ export default function Dashboard() {
     seasonalAdjustment,
     dataSmoothing,
     showUSDPrice,
-    setCombinedMarketDates,
   ]);
-  
 
+  // Trigger analysis data fetching when dependencies change
   useEffect(() => {
     fetchAnalysisData();
   }, [fetchAnalysisData]);
 
+  // Handler for regime selection changes with debugging
   const handleRegimeChange = (event) => {
     const {
       target: { value },
     } = event;
-    setSelectedRegimes(
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    const newSelectedRegimes = typeof value === 'string' ? value.split(',') : value;
+    console.log('Regimes changed:', newSelectedRegimes);
+    setSelectedRegimes(newSelectedRegimes);
   };
 
   const colorPalette = [
@@ -280,7 +331,10 @@ export default function Dashboard() {
     '#a3e635',
   ];
 
-  const memoizedMarketData = useMemo(() => marketData, [marketData]);
+  const memoizedMarketData = useMemo(() => {
+    console.log('Memoizing market data.');
+    return marketData;
+  }, [marketData]);
 
   const customizedTheme = createTheme({
     palette: {
@@ -326,13 +380,15 @@ export default function Dashboard() {
       <ToolbarStyled />
       <Divider />
       <List>
-        {/* Dark Mode Toggle */}
         <ListItem>
           <FormControlLabel
             control={
               <MuiSwitch
                 checked={darkMode}
-                onChange={() => setDarkMode(!darkMode)}
+                onChange={() => {
+                  console.log(`Dark mode toggled to: ${!darkMode}`);
+                  setDarkMode(!darkMode);
+                }}
                 name="darkModeSwitch"
                 color="secondary"
               />
@@ -341,7 +397,6 @@ export default function Dashboard() {
           />
         </ListItem>
         <Divider />
-        {/* Commodity Selector */}
         <ListItem>
           <FormControl fullWidth>
             <InputLabel id="commodity-label">Commodity</InputLabel>
@@ -349,6 +404,7 @@ export default function Dashboard() {
               labelId="commodity-label"
               value={selectedCommodity}
               onChange={(e) => {
+                console.log(`Commodity changed to: ${e.target.value}`);
                 setSelectedCommodity(e.target.value);
                 setSelectedRegimes([]);
                 setAnalysisResults({});
@@ -362,7 +418,6 @@ export default function Dashboard() {
             </Select>
           </FormControl>
         </ListItem>
-        {/* Regimes Selector */}
         <ListItem>
           <FormControl fullWidth>
             <InputLabel id="regime-label">Regimes</InputLabel>
@@ -383,7 +438,6 @@ export default function Dashboard() {
           </FormControl>
         </ListItem>
         <Divider />
-        {/* Analysis Options */}
         {analysisOptions.map((category) => (
           <Accordion key={category.category}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -396,7 +450,10 @@ export default function Dashboard() {
                     key={analysis}
                     disablePadding
                     selected={selectedAnalysis === analysis}
-                    onClick={() => setSelectedAnalysis(analysis)}
+                    onClick={() => {
+                      console.log(`Selected analysis type: ${analysis}`);
+                      setSelectedAnalysis(analysis);
+                    }}
                   >
                     <ListItemButton>
                       <ListItemText primary={analysis} />
@@ -417,15 +474,12 @@ export default function Dashboard() {
         <CssBaseline />
         <AppBarStyled position="fixed">
           <ToolbarStyled>
-            {/* Removed the Menu Button */}
             <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
               Yemen Market Analysis Dashboard
             </Typography>
-            {/* Removed the Dark Mode toggle from AppBar */}
           </ToolbarStyled>
         </AppBarStyled>
 
-        {/* Permanent Drawer */}
         <Drawer
           variant="permanent"
           sx={{
@@ -440,14 +494,16 @@ export default function Dashboard() {
         <Content>
           <ToolbarStyled />
           {isClient && showQuickGuide && !tourCompleted && (
-            <QuickGuide onClose={handleQuickGuideClose} />
+            <>
+              <p>Debug: QuickGuide component is about to render.</p>
+              <QuickGuide onClose={handleQuickGuideClose} />
+            </>
           )}
-          {isClient && (
-            <GuidedTour
-              run={runTour}
-              steps={tourSteps}
-              onEnd={handleTourEnd}
-            />
+          {isClient && isTourReady && (
+            <>
+              <p>Debug: GuidedTour component is about to render.</p>
+              <GuidedTour run={runTour} steps={tourSteps} onEnd={handleTourEnd} />
+            </>
           )}
           {error && (
             <div
@@ -468,57 +524,69 @@ export default function Dashboard() {
           {isLoading && (
             <div style={{ textAlign: 'center', marginBottom: '16px' }}>
               <LoadingSpinner />
+              <p>Debug: LoadingSpinner is displayed because isLoading is true.</p>
             </div>
           )}
 
           {isClient && memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
-            <div style={{ marginBottom: '24px' }} className="tour-main-chart">
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: '16px',
-                }}
-              >
-                <Typography variant="h5" color="primary">
-                  Price and Conflict Intensity Over Time
-                </Typography>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-                  <FormControlLabel
-                    control={
-                      <MuiSwitch
-                        checked={showUSDPrice}
-                        onChange={() => setShowUSDPrice(!showUSDPrice)}
-                        name="currencySwitch"
-                        color="primary"
-                      />
-                    }
-                    label={`Display in ${showUSDPrice ? 'USD' : 'Local Currency'}`}
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={seasonalAdjustment}
-                        onChange={() => setSeasonalAdjustment(!seasonalAdjustment)}
-                        name="seasonalAdjustment"
-                        color="primary"
-                      />
-                    }
-                    label="Seasonal Adjustment"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={dataSmoothing}
-                        onChange={() => setDataSmoothing(!dataSmoothing)}
-                        name="dataSmoothing"
-                        color="primary"
-                      />
-                    }
-                    label="Data Smoothing"
-                  />
+            <>
+              <div style={{ marginBottom: '24px' }} className="tour-main-chart">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '16px',
+                  }}
+                >
+                  <Typography variant="h5" color="primary">
+                    Price and Conflict Intensity Over Time
+                  </Typography>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+                    <FormControlLabel
+                      control={
+                        <MuiSwitch
+                          checked={showUSDPrice}
+                          onChange={() => {
+                            console.log(`Show USD Price toggled to: ${!showUSDPrice}`);
+                            setShowUSDPrice(!showUSDPrice);
+                          }}
+                          name="currencySwitch"
+                          color="primary"
+                        />
+                      }
+                      label={`Display in ${showUSDPrice ? 'USD' : 'Local Currency'}`}
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={seasonalAdjustment}
+                          onChange={() => {
+                            console.log(`Seasonal Adjustment toggled to: ${!seasonalAdjustment}`);
+                            setSeasonalAdjustment(!seasonalAdjustment);
+                          }}
+                          name="seasonalAdjustment"
+                          color="primary"
+                        />
+                      }
+                      label="Seasonal Adjustment"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={dataSmoothing}
+                          onChange={() => {
+                            console.log(`Data Smoothing toggled to: ${!dataSmoothing}`);
+                            setDataSmoothing(!dataSmoothing);
+                          }}
+                          name="dataSmoothing"
+                          color="primary"
+                        />
+                      }
+                      label="Data Smoothing"
+                    />
+                  </div>
                 </div>
               </div>
               <DynamicCharts
@@ -528,7 +596,8 @@ export default function Dashboard() {
                 colorPalette={colorPalette}
                 theme={customizedTheme}
               />
-            </div>
+              <p>Debug: DynamicCharts component rendered with selectedRegimes: {selectedRegimes.join(', ')}</p>
+            </>
           )}
 
           {isClient && !isLoading && Object.keys(analysisResults).length > 0 && selectedAnalysis !== 'Methodology' && selectedAnalysis !== 'Literature Review' && (
@@ -542,13 +611,24 @@ export default function Dashboard() {
                     selectedRegimes={selectedRegimes}
                     combinedMarketDates={combinedMarketDates}
                   />
+                  <p>Debug: DynamicResultsVisualization component rendered with analysis type: {selectedAnalysis}</p>
                 </Box>
               </React.Suspense>
             </ErrorBoundary>
           )}
 
-          {isClient && selectedAnalysis === 'Methodology' && <DynamicMethodology />}
-          {isClient && selectedAnalysis === 'Literature Review' && <DynamicLiteratureReview />}
+          {isClient && selectedAnalysis === 'Methodology' && (
+            <>
+              <p>Debug: DynamicMethodology component is about to render.</p>
+              <DynamicMethodology />
+            </>
+          )}
+          {isClient && selectedAnalysis === 'Literature Review' && (
+            <>
+              <p>Debug: DynamicLiteratureReview component is about to render.</p>
+              <DynamicLiteratureReview />
+            </>
+          )}
         </Content>
       </Root>
     </ThemeProvider>

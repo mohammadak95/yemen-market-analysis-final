@@ -1,0 +1,13 @@
+/* src/styles/SpatialResults.css */
+
+.spatial-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .spatial-results {
+      grid-template-columns: 1fr;
+    }
+  }

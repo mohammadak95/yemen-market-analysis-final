@@ -6,7 +6,7 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.stats.diagnostic import het_breuschpagan
 from statsmodels.stats.stattools import durbin_watson
 import statsmodels.api as sm
-from scipy.stats import pearsonr
+from scipy.stats import pearsonr, jarque_bera
 import logging
 from pathlib import Path
 import multiprocessing as mp
@@ -113,6 +113,9 @@ def analyze_market_pair(args):
             (other_data['longitude'], other_data['latitude'])
         )
         
+        # Extract p-value from ADF test for significance
+        p_value = stationarity_results['ADF']['p-value'] if stationarity_results and 'ADF' in stationarity_results and 'p-value' in stationarity_results['ADF'] else None
+        
         return {
             'base_market': base_market,
             'other_market': other_market,
@@ -121,7 +124,8 @@ def analyze_market_pair(args):
             'stationarity': stationarity_results,
             'conflict_correlation': float(correlation),
             'common_dates': int(len(common_dates)),
-            'distance': distance
+            'distance': distance,
+            'p_value': p_value  # Added p_value at the root level
         }
     except Exception as e:
         logger.error(f"Error in analyze_market_pair: {str(e)}")
@@ -206,26 +210,42 @@ def run_price_differential_model(data):
             reset_test_pvalue = None
             f_statistic = None  # Ensure it's defined even if RESET fails
 
+        # Perform Jarque-Bera test for normality
+        try:
+            jb_stat, jb_pvalue = jarque_bera(fgls_model.resid)
+            logger.info(f"Jarque-Bera test p-value: {jb_pvalue}")
+        except Exception as e:
+            logger.warning(f"Failed to perform Jarque-Bera test: {str(e)}")
+            jb_stat, jb_pvalue = None, None
+
         results = {
             'regression': {
-                'coefficients': fgls_model.params.to_dict(),
-                'std_errors': fgls_model.bse.to_dict(),
-                't_statistics': fgls_model.tvalues.to_dict(),
-                'p_values': fgls_model.pvalues.to_dict(),
-                'r_squared': fgls_model.rsquared,
-                'adj_r_squared': fgls_model.rsquared_adj,
-                'f_statistic': fgls_model.fvalue,
-                'f_pvalue': fgls_model.f_pvalue,
-                'aic': fgls_model.aic,
-                'bic': fgls_model.bic,
-                'log_likelihood': fgls_model.llf
+                'coefficients': {k: round(v, 2) for k, v in fgls_model.params.to_dict().items()},
+                'std_errors': {k: round(v, 2) for k, v in fgls_model.bse.to_dict().items()},
+                't_statistics': {k: round(v, 2) for k, v in fgls_model.tvalues.to_dict().items()},
+                'p_values': {k: round(v, 2) for k, v in fgls_model.pvalues.to_dict().items()},
+                'r_squared': round(fgls_model.rsquared, 2),
+                'adj_r_squared': round(fgls_model.rsquared_adj, 2),
+                'f_statistic': round(fgls_model.fvalue, 2),
+                'f_pvalue': round(fgls_model.f_pvalue, 2),
+                'aic': round(fgls_model.aic, 2),
+                'bic': round(fgls_model.bic, 2),
+                'log_likelihood': round(fgls_model.llf, 2)
             },
             'diagnostics': {
                 'vif': vif.to_dict(orient='records'),
-                'reset_test_statistic': f_statistic,
-                'reset_test_pvalue': reset_test_pvalue,
-                'heteroskedasticity_pvalue': bp_test[1],
-                'durbin_watson': dw_statistic
+                'breuschPaganTest': {
+                    'statistic': round(bp_test[0], 2) if bp_test and len(bp_test) > 1 else None,
+                    'pValue': round(bp_test[1], 2) if bp_test and len(bp_test) > 1 else None
+                },
+                'normalityTest': {
+                    'statistic': round(jb_stat, 2) if jb_stat else None,
+                    'pValue': round(jb_pvalue, 2) if jb_pvalue else None
+                },
+                'reset_test_statistic': round(f_statistic, 2) if f_statistic else None,
+                'reset_test_pvalue': round(reset_test_pvalue, 2) if reset_test_pvalue else None,
+                'heteroskedasticity_pvalue': round(bp_test[1], 2) if bp_test and len(bp_test) > 1 else None,
+                'durbin_watson': round(dw_statistic, 2)
             }
         }
         
@@ -244,11 +264,13 @@ def main(file_path):
     
     # Define the four specific runs
     runs = [
-        ("South", "Aden City_Aden"),
         ("North", "Sana'a City_Amanat Al Asimah"),
+        ("South", "Aden City_Aden"),
         ("Unified", "Aden City_Aden"),
         ("Unified", "Sana'a City_Amanat Al Asimah")
     ]
+    
+    all_results = {}
     
     for regime, base_market in runs:
         logger.info(f"Processing {regime} regime with base market {base_market}")
@@ -258,10 +280,13 @@ def main(file_path):
         other_market_data = {k: v for k, v in market_data.items() if k[0] != base_market}
         
         analysis_args = [
-            (base_market, base_market_data[(base_market, commodity)], other_market, other_data, commodity)
+            (base_market, base_market_data.get((base_market, commodity)), other_market, other_data, commodity)
             for (other_market, commodity), other_data in other_market_data.items()
             if (base_market, commodity) in base_market_data
         ]
+        
+        # Remove any None entries in analysis_args
+        analysis_args = [arg for arg in analysis_args if arg[1] is not None]
         
         # Use all available cores
         num_cores = mp.cpu_count()
@@ -278,13 +303,27 @@ def main(file_path):
         # Run price differential model
         model_results = run_price_differential_model(results)
         
-        # Save results
-        output_file = RESULTS_DIR / f"price_differential_results_{regime}_{base_market.replace(' ', '_')}.json"
-        with open(output_file, "w") as f:
-            json.dump({"market_pairs": results, "model_results": model_results}, f, indent=4)
+        # Organize results by commodity
+        commodity_results = {}
+        for result in results:
+            commodity = result['commodity']
+            if commodity not in commodity_results:
+                commodity_results[commodity] = []
+            commodity_results[commodity].append(result)
         
-        logger.info(f"Results saved to {output_file}")
+        all_results[f"{regime}_{base_market}"] = {
+            "regime": regime,
+            "base_market": base_market,
+            "commodity_results": commodity_results,
+            "model_results": model_results
+        }
     
+    # Save all results in a single file
+    output_file = RESULTS_DIR / "price_differential_results.json"
+    with open(output_file, "w") as f:
+        json.dump(all_results, f, indent=4)
+    
+    logger.info(f"All results saved to {output_file}")
     logger.info("Price Differential Analysis completed")
 
 if __name__ == "__main__":
