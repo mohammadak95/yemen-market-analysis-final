@@ -11,77 +11,89 @@ import GrangerCausalityChart from './GrangerCausalityChart';
 import StationarityTable from './StationarityTable';
 import CointegrationResults from './CointegrationResults';
 
-// Utility to conditionally log based on environment
-const isDevelopment = process.env.NODE_ENV === 'development';
-const debugLog = (...args) => {
-  if (isDevelopment) {
-    console.log(...args);
-  }
-};
-const debugError = (...args) => {
-  if (isDevelopment) {
-    console.error(...args);
-  }
-};
-
-// Mapping of analysis types to their respective components
-const analysisComponentMap = {
-  'Price Differentials': PriceDifferentialsChart,
-  'Error Correction Model': ECMTable,
-  'Spatial Analysis': SpatialResults,
-  'ECM Diagnostics': ECMDiagnosticsTable,
-  'Granger Causality': GrangerCausalityChart,
-  'Stationarity': StationarityTable,
-  'Cointegration Analysis': CointegrationResults,
-  'Literature Review': () => <Typography>Literature Review content goes here.</Typography>, // Fully implemented content
-  'Methodology': () => <Typography>Methodology content goes here.</Typography>, // Fully implemented content
-};
-
+/**
+ * ResultsVisualization Component
+ * 
+ * This component is responsible for rendering the appropriate visualization based on the selected analysis type and regime.
+ * It supports multiple regimes and dynamically displays the corresponding analysis results.
+ *
+ * Props:
+ * - results: Object containing analysis results structured as { [regime]: { /* analysis data * / } }
+ * - analysisType: String indicating the selected analysis type.
+ * - commodity: String indicating the selected commodity.
+ * - selectedRegimes: Array of strings indicating the selected regimes.
+ * - combinedMarketDates: Array of strings representing market dates (used for certain visualizations).
+ */
 const ResultsVisualization = React.memo(({ results, analysisType, commodity, selectedRegimes, combinedMarketDates }) => {
   const [activeRegime, setActiveRegime] = useState(selectedRegimes[0]);
 
-  if (!results) {
-    return <Typography>No results available for the selected analysis.</Typography>;
-  }
-
-  // Event handler for regime tab change
+  // Handler for regime tab change
   const handleRegimeChange = (event, newValue) => {
     setActiveRegime(newValue);
-    debugLog(`Active regime changed to: ${newValue}`);
+    console.log(`Active regime changed to: ${newValue}`);
   };
 
-  // Function to render content based on analysis type and regime
+  /**
+   * Determines the data to pass to visualization components based on the analysis type and active regime.
+   * For each analysis type, it ensures that the data structure matches the component's expectations.
+   */
   const renderContent = useMemo(() => {
-    // Determine the appropriate key based on analysis type
     let regimeData;
+
+    // Extract the relevant data for the active regime
     if (analysisType === 'Cointegration Analysis') {
-      const key = `('${commodity}', '${activeRegime}')`;
-      regimeData = results[key];
+      regimeData = results[activeRegime];
     } else if (analysisType === 'Price Differentials') {
       // Assuming results[regime] is an array for Price Differentials
       regimeData = results[activeRegime] ? results[activeRegime][0] : null; // Taking first entry if array
     } else {
+      // For other analysis types, results[activeRegime] should be directly usable
       regimeData = results[activeRegime];
     }
 
-    if (!regimeData) {
+    // If no data is available for the active regime, inform the user
+    if (!regimeData || Object.keys(regimeData).length === 0) {
       return <Typography>No data available for the {activeRegime} regime.</Typography>;
     }
 
-    const AnalysisComponent = analysisComponentMap[analysisType];
-
-    if (!AnalysisComponent) {
-      return <Typography>Unsupported analysis type: {analysisType}</Typography>;
+    // Render the appropriate component based on the selected analysis type
+    switch (analysisType) {
+      case 'Price Differentials':
+        return (
+          <PriceDifferentialsChart
+            data={regimeData}
+            commodity={commodity}
+            regime={activeRegime}
+            combinedMarketDates={combinedMarketDates}
+          />
+        );
+      case 'Error Correction Model':
+        return <ECMTable data={regimeData} />;
+      case 'Spatial Analysis':
+        return <SpatialResults data={regimeData} />;
+      case 'ECM Diagnostics':
+        return <ECMDiagnosticsTable data={regimeData} />;
+      case 'Granger Causality':
+        return (
+          <GrangerCausalityChart
+            data={regimeData}
+            commodity={commodity}
+            regime={activeRegime}
+          />
+        );
+      case 'Stationarity':
+        return <StationarityTable data={regimeData} />;
+      case 'Cointegration Analysis':
+        return (
+          <CointegrationResults
+            data={regimeData} // Passing regimeData directly
+            selectedCommodity={commodity}
+            selectedRegime={activeRegime}
+          />
+        );
+      default:
+        return <Typography>Unsupported analysis type: {analysisType}</Typography>;
     }
-
-    return (
-      <AnalysisComponent
-        data={regimeData}
-        commodity={commodity}
-        regime={activeRegime}
-        combinedMarketDates={combinedMarketDates}
-      />
-    );
   }, [analysisType, commodity, activeRegime, results, combinedMarketDates]);
 
   return (
@@ -99,6 +111,8 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
                 centered
                 variant="scrollable"
                 scrollButtons="auto"
+                aria-label="Regime Selection Tabs"
+                sx={{ borderBottom: 1, borderColor: 'divider' }}
               >
                 {selectedRegimes.map((regime) => (
                   <Tab key={regime} label={regime} value={regime} />
@@ -120,7 +134,7 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
 ResultsVisualization.displayName = 'ResultsVisualization';
 
 ResultsVisualization.propTypes = {
-  results: PropTypes.object.isRequired,
+  results: PropTypes.object.isRequired, // Expected to be { [regime]: { /* analysis data */ } }
   analysisType: PropTypes.string.isRequired,
   commodity: PropTypes.string.isRequired,
   selectedRegimes: PropTypes.arrayOf(PropTypes.string).isRequired,

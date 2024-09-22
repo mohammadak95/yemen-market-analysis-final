@@ -19,6 +19,8 @@ const LoadingSpinner = dynamic(() => import('./ui/LoadingSpinner'), { ssr: false
 const ErrorBoundary = dynamic(() => import('./ui/ErrorBoundary'), { ssr: false });
 const QuickGuide = dynamic(() => import('./QuickGuide'), { ssr: false });
 const GuidedTour = dynamic(() => import('./GuidedTour'), { ssr: false });
+const GrangerCausalityChart = dynamic(() => import('./GrangerCausalityChart'), { ssr: false });
+const CointegrationResults = dynamic(() => import('./CointegrationResults'), { ssr: false });
 const SpatialResults = dynamic(() => import('./SpatialResults'), { ssr: false });
 
 import {
@@ -215,11 +217,11 @@ export default function Dashboard() {
       console.log('No selectedRegimes. Exiting fetchAnalysisData.');
       return;
     }
-
+  
     console.log('Starting analysis data fetching.');
     setIsLoading(true);
     setError(null);
-
+  
     try {
       console.log('Fetching combined market data for selected regimes...');
       const allRegimeData = await Promise.all(
@@ -230,10 +232,10 @@ export default function Dashboard() {
           return data;
         })
       );
-
+  
       const dataByDate = {};
       const dates = new Set();
-
+  
       selectedRegimes.forEach((regime, regimeIndex) => {
         const regimeData = allRegimeData[regimeIndex] || [];
         console.log(`Processing data for regime: ${regime}`);
@@ -248,37 +250,44 @@ export default function Dashboard() {
           dataByDate[date][`conflict_${regime}`] = item.conflict;
         });
       });
-
+  
       let processedData = Object.values(dataByDate);
       console.log('Initial processed data:', processedData);
-
+  
       processedData.sort((a, b) => new Date(a.date) - new Date(b.date));
       console.log('Sorted processed data by date:', processedData);
-
+  
       if (seasonalAdjustment) {
         console.log('Applying seasonal adjustment.');
         processedData = applySeasonalAdjustment(processedData, selectedRegimes, 12, !showUSDPrice);
         console.log('Data after seasonal adjustment:', processedData);
       }
-
+  
       if (dataSmoothing) {
         console.log('Applying data smoothing.');
         processedData = applySmoothing(processedData, selectedRegimes, 6, !showUSDPrice);
         console.log('Data after smoothing:', processedData);
       }
-
+  
       setMarketData(processedData);
       setCombinedMarketDates(Array.from(dates).sort());
       console.log('Final market data set:', processedData);
       console.log('Combined market dates:', Array.from(dates).sort());
-
+  
       const results = {};
       for (const regime of selectedRegimes) {
         console.log(`Fetching analysis results for regime: ${regime}, analysis type: ${selectedAnalysis}`);
-        const analysisData = getAnalysisResults(allData, selectedCommodity, regime, selectedAnalysis);
+        let analysisData = getAnalysisResults(allData, selectedCommodity, regime, selectedAnalysis);
+        
         if (analysisData) {
-          results[regime] = analysisData;
-          console.log(`Analysis data for regime ${regime}:`, analysisData);
+          if (selectedAnalysis === 'Cointegration Analysis') {
+            const key = `('${selectedCommodity}', '${regime}')`;
+            results[regime] = { cointegration_results: analysisData[key] } || {};
+            console.log(`Analysis data for regime ${regime}:`, results[regime]);
+          } else {
+            results[regime] = analysisData;
+            console.log(`Analysis data for regime ${regime}:`, analysisData);
+          }
         } else {
           console.warn(`No analysis data found for regime ${regime} and analysis type ${selectedAnalysis}.`);
           results[regime] = {};
@@ -610,6 +619,7 @@ export default function Dashboard() {
                     commodity={selectedCommodity}
                     selectedRegimes={selectedRegimes}
                     combinedMarketDates={combinedMarketDates}
+                    allData={allData} 
                   />
                   <p>Debug: DynamicResultsVisualization component rendered with analysis type: {selectedAnalysis}</p>
                 </Box>

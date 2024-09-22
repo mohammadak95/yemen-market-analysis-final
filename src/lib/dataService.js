@@ -51,6 +51,13 @@ export async function loadAllData() {
 
     const priceDifferentialData = await loadPriceDifferentialData();
 
+    // ======= Start of Applied Fix =======
+    // Fetch ecm_analysis_results.json
+    const ecmAnalysisResults = await fetch('/Data/ecm_analysis_results.json').then((res) => res.json());
+    // Fetch summary_report.json
+    const summaryReport = await fetch('/Data/summary_report.json').then((res) => res.json());
+    // ======= End of Applied Fix =======
+
     console.log('Fetched Data in loadAllData:', {
       combinedMarketData,
       ecmResults,
@@ -60,6 +67,10 @@ export async function loadAllData() {
       grangerCausalityResults,
       stationarityResults,
       spatialData,
+      // ======= Start of Applied Fix =======
+      ecmAnalysisResults,
+      summaryReport,
+      // ======= End of Applied Fix =======
     });
 
     return {
@@ -71,6 +82,10 @@ export async function loadAllData() {
       grangerCausalityResults,
       stationarityResults,
       spatialData,
+      // ======= Start of Applied Fix =======
+      ecmAnalysisResults,
+      summaryReport,
+      // ======= End of Applied Fix =======
     };
   } catch (error) {
     console.error('Error loading all data:', error);
@@ -357,3 +372,31 @@ export function getAnalysisResults(data, commodity, regime, analysisType) {
     return null;
   }
 }
+
+// ======= Start of Applied Fix =======
+
+/**
+ * Retrieves Granger Causality results based on commodity and regime.
+ * @param {Object} data - The complete data object.
+ * @param {string} commodity - The selected commodity.
+ * @param {string} regime - The selected regime.
+ * @returns {Array<Object>|null} - An array of Granger Causality results or null if not found.
+ */
+export function getGrangerCausalityResults(data, commodity, regime) {
+  const key = `${commodity}_${regime}`;
+  return data.ecmAnalysisResults[key]?.granger_causality || null;
+}
+
+/**
+ * Retrieves Cointegration results based on commodity and regime.
+ * @param {Object} data - The complete data object.
+ * @param {string} commodity - The selected commodity.
+ * @param {string} regime - The selected regime.
+ * @returns {Array<Object>|null} - An array of Cointegration results or null if not found.
+ */
+export function getCointegrationResults(data, commodity, regime) {
+  const key = `${commodity}_${regime}`;
+  return data.ecmAnalysisResults[key]?.cointegration_results || null;
+}
+
+// ======= End of Applied Fix =======
