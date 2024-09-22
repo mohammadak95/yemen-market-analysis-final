@@ -1,459 +1,640 @@
-import os
-import json
-import pandas as pd
-import geopandas as gpd
-from pathlib import Path
-from libpysal.weights import KNN
-from esda.moran import Moran
 import logging
-import networkx as nx
-from libpysal.weights.spatial_lag import lag_spatial
+import json
+import yaml
 import warnings
-from urllib3.exceptions import NotOpenSSLWarning
+import pandas as pd
+import numpy as np
+from statsmodels.tsa.api import VECM
+from statsmodels.tsa.vector_ar.vecm import select_order
+from statsmodels.stats.diagnostic import acorr_ljungbox, het_arch, het_breuschpagan
+from statsmodels.stats.stattools import durbin_watson, jarque_bera
+from statsmodels.tsa.stattools import grangercausalitytests, adfuller, kpss, acf, pacf
+from arch.unitroot import engle_granger
+import statsmodels.api as sm
+from datetime import datetime
+from pathlib import Path
+import sys
 
-# Suppress specific urllib3 warnings (Optional)
-warnings.simplefilter('ignore', NotOpenSSLWarning)
+# Suppress warnings
+warnings.simplefilter('ignore')
 
 # Setup logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+script_dir = Path(__file__).resolve().parent
+project_dir = script_dir
+log_dir = project_dir / 'logs'
+log_dir.mkdir(parents=True, exist_ok=True)
+timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+results_dir = Path(project_dir) / 'results' / f'results_{timestamp}'
+results_dir.mkdir(parents=True, exist_ok=True)
+log_file = log_dir / 'ecm_analysis.log'
+logging.basicConfig(
+    level=logging.INFO, 
+    format='%(asctime)s - %(levelname)s - %(message)s', 
+    handlers=[
+        logging.FileHandler(log_file),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 logger = logging.getLogger(__name__)
 
-# Constants
-RESULTS_DIR = Path("results")
-DATA_DIR = Path("Econometrics/data/processed")
-MODEL_RESULTS_FILE = RESULTS_DIR / "spatial_analysis_results.json"
-GEOJSON_FILE = DATA_DIR / "unified_data_with_region_id.geojson"
-CHOROPLETH_OUTPUT_DIR = RESULTS_DIR / "choropleth_data"
-WEIGHTS_OUTPUT_DIR = RESULTS_DIR / "spatial_weights"
-TIME_SERIES_OUTPUT_DIR = RESULTS_DIR / "time_series_data"
-RESIDUALS_OUTPUT_DIR = RESULTS_DIR / "residuals_data"
-NETWORK_DATA_OUTPUT_DIR = RESULTS_DIR / "network_data"
+# Import configurations from project_config.py
+try:
+    from project_config import (
+        UNIFIED_DATA_FILE, MIN_OBSERVATIONS, ECM_LAGS, COINTEGRATION_MAX_LAGS,
+        COMMODITIES, EXCHANGE_RATE_REGIMES
+    )
+except ImportError as e:
+    logger.error(f"Error importing project_config.py: {e}")
+    raise
 
-# Create output directories
-for directory in [CHOROPLETH_OUTPUT_DIR, WEIGHTS_OUTPUT_DIR, TIME_SERIES_OUTPUT_DIR, RESIDUALS_OUTPUT_DIR, NETWORK_DATA_OUTPUT_DIR]:
-    directory.mkdir(parents=True, exist_ok=True)
-
-def load_model_results(file_path: Path) -> list:
+def load_data():
     """
-    Load model results from a JSON file.
-
-    Parameters:
-        file_path (Path): Path to the JSON file containing model results.
-
-    Returns:
-        list: List of model result dictionaries.
-    """
-    with open(file_path, 'r') as f:
-        results = json.load(f)
-    logger.info(f"Loaded model results from {file_path}")
-    return results
-
-def load_geojson_data(file_path: Path) -> gpd.GeoDataFrame:
-    """
-    Load GeoJSON data and apply consistent sorting.
-
-    Parameters:
-        file_path (Path): Path to the GeoJSON file.
-
-    Returns:
-        gpd.GeoDataFrame: Loaded and sorted GeoDataFrame.
-    """
-    gdf = gpd.read_file(file_path)
-    logger.info(f"Loaded GeoJSON data from {file_path} with {len(gdf)} records")
-    
-    # Log GeoDataFrame columns for debugging
-    logger.info(f"GeoDataFrame columns: {gdf.columns.tolist()}")
-    
-    # Ensure 'date' is in datetime format
-    gdf['date'] = pd.to_datetime(gdf['date'], errors='coerce')
-    
-    # Apply consistent sorting by region_id, date, commodity, exchange_rate_regime
-    gdf = gdf.sort_values(by=['region_id', 'date', 'commodity', 'exchange_rate_regime']).reset_index(drop=True)
-    return gdf
-
-def check_unique_identifier(gdf: gpd.GeoDataFrame, identifier: str = 'region_id') -> bool:
-    """
-    Check if the specified identifier is unique in the GeoDataFrame.
-
-    Parameters:
-        gdf (gpd.GeoDataFrame): The GeoDataFrame to check.
-        identifier (str): The column name to check for uniqueness.
-
-    Returns:
-        bool: True if unique, False otherwise.
-    """
-    if gdf[identifier].is_unique:
-        logger.info(f"All '{identifier}'s are unique.")
-        return True
-    else:
-        duplicate_ids = gdf[identifier][gdf[identifier].duplicated()].unique()
-        logger.warning(f"Duplicate '{identifier}'s found: {duplicate_ids}")
-        return False
-
-def prepare_unique_regions_gdf(gdf: gpd.GeoDataFrame, identifier: str = 'region_id') -> gpd.GeoDataFrame:
-    """
-    Create a GeoDataFrame with unique regions based on the specified identifier.
-    Assumes that all entries for a given region_id have the same geometry.
-
-    Parameters:
-        gdf (gpd.GeoDataFrame): The original GeoDataFrame.
-        identifier (str): The column name to identify unique regions.
-
-    Returns:
-        gpd.GeoDataFrame: GeoDataFrame with unique regions.
-    """
-    unique_regions_gdf = gdf.drop_duplicates(subset=[identifier]).copy().reset_index(drop=True)
-    logger.info(f"Created unique regions GeoDataFrame with {len(unique_regions_gdf)} records based on '{identifier}'.")
-    return unique_regions_gdf
-
-def is_fully_connected(w: KNN) -> bool:
-    """
-    Check if the spatial weights matrix is fully connected.
-
-    Parameters:
-        w (KNN): Spatial weights object.
-
-    Returns:
-        bool: True if fully connected, False otherwise.
+    Load and preprocess data from the unified JSON file.
     """
     try:
-        G = w.to_networkx()
-        G_undirected = G.to_undirected()
-        connected = nx.is_connected(G_undirected)
-        logger.info(f"Spatial weights matrix is {'fully connected' if connected else 'NOT fully connected'}.")
-        return connected
-    except Exception as e:
-        logger.error(f"Error checking connectivity: {e}")
-        return False
-
-def inspect_neighbors(w: KNN, unique_gdf: gpd.GeoDataFrame, sample_size: int = 5) -> None:
-    """
-    Inspect a sample of neighbors to ensure no region includes itself.
-
-    Parameters:
-        w (KNN): Spatial weights object.
-        unique_gdf (gpd.GeoDataFrame): GeoDataFrame with unique regions.
-        sample_size (int): Number of samples to inspect.
-    """
-    region_ids = unique_gdf['region_id'].tolist()
-    sample_indices = range(min(sample_size, len(region_ids)))
-
-    for idx in sample_indices:
-        region = region_ids[idx]
-        neighbors = [region_ids[n] for n in w.neighbors[idx]]
-        if region in neighbors:
-            logger.warning(f"Region '{region}' includes itself as a neighbor.")
+        data_path = project_dir / 'data' / 'processed' / UNIFIED_DATA_FILE
+        with open(data_path, 'r') as f:
+            raw_data = json.load(f)
+        df = pd.DataFrame(raw_data)
+        required_columns = {'date', 'commodity', 'exchange_rate_regime', 'usdprice', 'conflict_intensity'}
+        missing_columns = required_columns - set(df.columns)
+        if missing_columns:
+            raise ValueError(f"Missing required columns: {missing_columns}")
+        initial_length = len(df)
+        df = df.drop_duplicates()
+        logger.info(f"Dropped {initial_length - len(df)} duplicate rows.")
+        if 'date' in df.columns:
+            df['date'] = pd.to_datetime(df['date'])
         else:
-            logger.info(f"Region '{region}' neighbors: {neighbors}")
-
-def verify_spatial_weights(w: KNN, unique_gdf: gpd.GeoDataFrame, sample_size: int = 5) -> None:
-    """
-    Verify that no region includes itself as a neighbor and that neighbors are distinct.
-
-    Parameters:
-        w (KNN): Spatial weights object.
-        unique_gdf (gpd.GeoDataFrame): GeoDataFrame with unique regions.
-        sample_size (int): Number of samples to verify.
-    """
-    region_ids = unique_gdf['region_id'].tolist()
-    sample_indices = range(min(sample_size, len(region_ids)))
-
-    for idx in sample_indices:
-        region = region_ids[idx]
-        neighbors = [region_ids[n] for n in w.neighbors[idx]]
-        if region in neighbors:
-            logger.error(f"Region '{region}' includes itself as a neighbor.")
-        else:
-            logger.info(f"Region '{region}' neighbors: {neighbors}")
-
-from typing import Tuple
-
-def export_spatial_weights(unique_gdf: gpd.GeoDataFrame, initial_k: int = 5, max_k: int = 20, identifier: str = 'region_id') -> Tuple[KNN, dict]:
-    """
-    Export spatial weights matrix as JSON, automatically increasing k until connected.
-
-    Parameters:
-        unique_gdf (gpd.GeoDataFrame): GeoDataFrame with unique regions.
-        initial_k (int): Initial number of neighbors for KNN.
-        max_k (int): Maximum number of neighbors to attempt.
-        identifier (str): Column name to identify regions.
-
-    Returns:
-        tuple: Spatial weights object and weights dictionary.
-    """
-    try:
-        # Ensure the GeoDataFrame is sorted by the identifier for consistent indexing
-        unique_gdf = unique_gdf.sort_values(by=[identifier]).reset_index(drop=True)
-        region_ids = unique_gdf[identifier].tolist()
-        k = initial_k
-
-        while k <= max_k:
-            logger.info(f"Attempting to create KNN weights with k={k}...")
-            w = KNN.from_dataframe(unique_gdf, k=k)
-            
-            logger.info("Checking if the weights matrix is fully connected...")
-            if is_fully_connected(w):
-                logger.info(f"Spatial weights matrix is fully connected with k={k}.")
-                break
-            else:
-                logger.warning(f"Spatial weights matrix is NOT fully connected with k={k}.")
-                k += 1
-
-        if k > max_k:
-            logger.error(f"Failed to create a fully connected spatial weights matrix with k up to {max_k}.")
-            k_final = k-1
-            logger.warning(f"Proceeding with k={k_final} which may have disconnected components.")
-            w = KNN.from_dataframe(unique_gdf, k=k_final)
-
-        neighbors_dict = w.neighbors
-        weights_dict = {}
-
-        for region_idx, neighbors in neighbors_dict.items():
-            if region_idx >= len(region_ids):
-                logger.error(f"Region index {region_idx} exceeds the number of unique regions.")
-                continue
-            
-            region = region_ids[region_idx]
-            neighbor_regions = [region_ids[n] for n in neighbors if n != region_idx and n < len(region_ids)]
-
-            if not neighbor_regions:
-                logger.warning(f"Region '{region}' has no valid neighbors.")
-            else:
-                weights_dict[region] = neighbor_regions
-
-        with open(WEIGHTS_OUTPUT_DIR / "spatial_weights.json", 'w') as f:
-            json.dump(weights_dict, f, indent=2)
-
-        logger.info("Spatial weights matrix exported to JSON.")
-        inspect_neighbors(w, unique_gdf)
-        verify_spatial_weights(w, unique_gdf)
-
-        return w, weights_dict
+            logger.warning("No 'date' column found in data.")
+        grouped_data = {
+            (commodity, regime): group_df.sort_values('date').reset_index(drop=True)
+            for (commodity, regime), group_df in df.groupby(['commodity', 'exchange_rate_regime'])
+        }
+        logger.info(f"Loaded data for {len(grouped_data)} (commodity, regime) groups.")
+        return grouped_data
     except Exception as e:
-        logger.error(f"Failed to export spatial weights matrix: {e}")
+        logger.error(f"Error loading data: {e}")
         raise
 
-def prepare_residuals(model_results: list) -> pd.DataFrame:
+def run_stationarity_tests(series, variable):
     """
-    Prepare residuals DataFrame from model results.
-
-    Parameters:
-        model_results (list): List of model result dictionaries.
-
-    Returns:
-        pd.DataFrame: DataFrame containing residuals.
+    Run ADF and KPSS tests to check stationarity of a series.
     """
-    residuals_list = []
-    for result in model_results:
-        commodity = result.get('commodity', 'Unknown')
-        regime = result.get('regime', 'Unknown')
-        for res in result.get('residuals', []):
-            if 'residual' in res:
-                residuals_list.append({
+    logger.info(f"Running stationarity tests for {variable}")
+    if series.isnull().any() or np.isinf(series).any():
+        logger.error(f"Data for {variable} contains NaNs or inf values. Please clean the data before running tests.")
+        return None
+    transformations = {'original': series, 'diff': series.diff().dropna()}
+    if (series > 0).all():
+        transformations['log'] = np.log(series)
+        transformations['log_diff'] = np.log(series).diff().dropna()
+    results = {}
+    selected_transformation = None
+    for transform_name, transformed_series in transformations.items():
+        try:
+            adf_result = adfuller(transformed_series, autolag='AIC')
+            kpss_result = kpss(transformed_series, regression='c', nlags='auto')
+            adf_stationary = adf_result[1] < 0.05
+            kpss_stationary = kpss_result[1] > 0.05
+            results[transform_name] = {
+                'ADF': {
+                    'Statistic': adf_result[0],
+                    'p-value': adf_result[1],
+                    'Stationary': adf_stationary
+                },
+                'KPSS': {
+                    'Statistic': kpss_result[0],
+                    'p-value': kpss_result[1],
+                    'Stationary': kpss_stationary
+                }
+            }
+            if adf_stationary and kpss_stationary:
+                selected_transformation = transform_name
+                break
+        except Exception as e:
+            logger.error(f"Error testing stationarity with {transform_name}: {str(e)}")
+    if not selected_transformation:
+        selected_transformation = 'original'
+        logger.warning(f"No transformation made the series stationary for {variable}. Using 'original'.")
+    return {
+        'transformation': selected_transformation,
+        'series': transformations[selected_transformation].tolist(),
+        'results': results
+    }
+
+def run_cointegration_tests(price_series, conflict_series, stationarity_results):
+    """
+    Run Engle-Granger cointegration test.
+    """
+    logger.info("Running cointegration tests")
+    combined_df = pd.concat([price_series, conflict_series], axis=1, join='inner').dropna().reset_index(drop=True)
+    if combined_df.empty or len(combined_df) < 2:
+        logger.error("Insufficient data after alignment. Cannot run cointegration tests.")
+        return None
+    price_transformed = pd.Series(combined_df.iloc[:, 0])
+    conflict_transformed = pd.Series(combined_df.iloc[:, 1])
+    results = {
+        'engle_granger': None,
+        'price_transformation': stationarity_results.get('usdprice', {}).get('transformation', 'original'),
+        'conflict_transformation': stationarity_results.get('conflict_intensity', {}).get('transformation', 'original')
+    }
+    try:
+        eg_result = engle_granger(price_transformed, conflict_transformed)
+        results['engle_granger'] = {
+            'cointegration_statistic': eg_result.stat,
+            'p_value': eg_result.pvalue,
+            'critical_values': eg_result.critical_values,
+            'cointegrated': eg_result.pvalue < 0.05,
+            'rho': eg_result.rho
+        }
+        logger.info("Cointegration tests completed successfully")
+    except Exception as e:
+        logger.error(f"Error running Engle-Granger test: {str(e)}")
+    return results if results['engle_granger'] else None
+
+def estimate_ecm(y, x, max_lags=12, ecm_lags=2):
+    """
+    Estimate the Error Correction Model (ECM) using VECM.
+    """
+    try:
+        endog = pd.concat([y, x], axis=1).dropna()
+        endog.columns = ['y'] + list(x.columns)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            lag_order = select_order(endog, maxlags=max_lags, deterministic='ci')
+        optimal_lags = lag_order.aic if lag_order.aic is not None else ecm_lags
+        optimal_lags = max(1, min(optimal_lags, ecm_lags))
+        model = VECM(endog, k_ar_diff=optimal_lags, coint_rank=1, deterministic='ci')
+        results = model.fit()
+        logger.info(f"ECM estimated with {optimal_lags} lags.")
+        return model, results
+    except Exception as e:
+        logger.error(f"Error in estimating ECM: {e}")
+        raise
+
+def compute_model_criteria(results, model):
+    """
+    Compute AIC, BIC, and HQIC for the VECM model.
+    """
+    try:
+        n_obs = model.neqs * (results.nobs - model.k_ar_diff)
+        llf = results.llf  # Log-likelihood
+        k_params = model.neqs * (model.k_ar_diff + 1) + results.coint_rank  # Number of parameters
+        aic = -2 * llf + 2 * k_params
+        bic = -2 * llf + np.log(n_obs) * k_params
+        hqic = -2 * llf + 2 * np.log(np.log(n_obs)) * k_params
+        return aic, bic, hqic
+    except Exception as e:
+        logger.error(f"Error computing model criteria: {e}")
+        return None, None, None
+
+def run_ecm_analysis(data, stationarity_results, cointegration_results):
+    """
+    Run ECM analysis for each (commodity, regime) group.
+    """
+    all_results, all_diagnostics, all_summaries, all_irfs, all_fevds = [], [], [], [], []
+    for (commodity, regime), df in data.items():
+        try:
+            logger.info(f"Running ECM analysis for {commodity} in {regime} regime")
+            if len(df) < MIN_OBSERVATIONS:
+                logger.warning(f"Insufficient data for {commodity} in {regime} regime. Skipping ECM analysis.")
+                continue
+            stationarity_result = stationarity_results.get(f"{commodity}_{regime}")
+            if not stationarity_result:
+                logger.warning(f"No stationarity results for {commodity} in {regime}. Skipping.")
+                continue
+            cointegration_result = cointegration_results.get(f"{commodity}_{regime}")
+            if not cointegration_result or not cointegration_result.get('engle_granger', {}).get('cointegrated', False):
+                logger.warning(f"No cointegration for {commodity} in {regime}. Skipping ECM analysis.")
+                continue
+            y, x = df['usdprice'], df[['conflict_intensity']]
+            y, x = y.align(x, join='inner').dropna()
+            if len(y) < MIN_OBSERVATIONS:
+                logger.warning(f"Not enough data after alignment for {commodity} in {regime}. Skipping.")
+                continue
+            model, results = estimate_ecm(y, x, max_lags=COINTEGRATION_MAX_LAGS, ecm_lags=ECM_LAGS)
+            regression_results = {
+                'coefficients': {
+                    'alpha': results.alpha.tolist(),
+                    'beta': results.beta.tolist(),
+                    'gamma': results.gamma.tolist(),
+                    'const': results.const.tolist() if hasattr(results, 'const') else [],
+                    'det_coef': results.det_coef.tolist() if hasattr(results, 'det_coef') else []
+                },
+                'coint_rank': results.coint_rank,
+                'k_ar_diff': model.k_ar_diff,
+                'sigma_u': results.sigma_u.tolist(),
+                'llf': results.llf
+            }
+            aic, bic, hqic = compute_model_criteria(results, model)
+            if aic is None:
+                aic, bic, hqic = float('nan'), float('nan'), float('nan')
+            model_summary = results.summary().as_text()
+            all_summaries.append({
+                'commodity': commodity,
+                'regime': regime,
+                'summary': model_summary
+            })
+            logger.info(f"Computed model criteria for {commodity} in {regime}. AIC: {aic}, BIC: {bic}, HQIC: {hqic}")
+            resid = results.resid
+            resid_y = resid.iloc[:, 0]
+            if resid_y.empty:
+                logger.warning(f"Residuals are empty for {commodity} in {regime}. Skipping diagnostics.")
+                continue
+            x_diagnostic = x.iloc[-len(resid_y):].reset_index(drop=True)
+            if len(x_diagnostic) != len(resid_y):
+                logger.error(f"x_diagnostic and residuals have different lengths for {commodity} in {regime}. Skipping diagnostics.")
+                continue
+            # Diagnostics
+            try:
+                bg_test = acorr_ljungbox(resid_y, lags=[ECM_LAGS], return_df=True)
+                arch_test = het_arch(resid_y)
+                jb_stat, jb_pvalue, skew, kurtosis = jarque_bera(resid_y)
+                dw_stat = durbin_watson(resid_y)
+                bp_test = het_breuschpagan(resid_y, sm.add_constant(x_diagnostic))
+                acf_vals = acf(resid_y, nlags=20).tolist()
+                pacf_vals = pacf(resid_y, nlags=20).tolist()
+                diagnostic = {
                     'commodity': commodity,
                     'regime': regime,
-                    'region_id': res['region_id'],
-                    'date': pd.to_datetime(res['date'], errors='coerce'),
-                    'residual': res['residual']
+                    'breusch_godfrey_pvalue': float(bg_test['lb_pvalue'].values[0]),
+                    'arch_test_pvalue': float(arch_test[1]),
+                    'jarque_bera_pvalue': float(jb_pvalue),
+                    'breusch_pagan_lm_stat': float(bp_test[0]),
+                    'breusch_pagan_pvalue': float(bp_test[1]),
+                    'durbin_watson_stat': float(dw_stat),
+                    'skewness': float(skew),
+                    'kurtosis': float(kurtosis),
+                    'acf': acf_vals,
+                    'pacf': pacf_vals
+                }
+                all_diagnostics.append(diagnostic)
+                logger.info(f"Diagnostics completed for {commodity} in {regime}.")
+            except Exception as e:
+                logger.error(f"Diagnostic tests failed for {commodity} in {regime}: {str(e)}")
+                diagnostic = {
+                    'commodity': commodity,
+                    'regime': regime,
+                    'breusch_godfrey_pvalue': None,
+                    'arch_test_pvalue': None,
+                    'jarque_bera_pvalue': None,
+                    'breusch_pagan_lm_stat': None,
+                    'breusch_pagan_pvalue': None,
+                    'durbin_watson_stat': None,
+                    'skewness': None,
+                    'kurtosis': None,
+                    'acf': [],
+                    'pacf': []
+                }
+                all_diagnostics.append(diagnostic)
+            # Granger Causality
+            try:
+                max_lag = min(COINTEGRATION_MAX_LAGS, max(int(len(y) / 5), 1))
+                gc_results = {}
+                for col in x.columns:
+                    try:
+                        gc_test_result = grangercausalitytests(
+                            pd.concat([y, x[col]], axis=1).dropna(), 
+                            maxlag=max_lag, 
+                            verbose=False
+                        )
+                        gc_metrics = {}
+                        for lag, test_result in gc_test_result.items():
+                            test_stats = test_result[0]
+                            gc_metrics[lag] = {
+                                'ssr_ftest_pvalue': test_stats['ssr_ftest'][1],
+                                'ssr_ftest_stat': test_stats['ssr_ftest'][0],
+                                'ssr_chi2test_pvalue': test_stats['ssr_chi2test'][1],
+                                'ssr_chi2test_stat': test_stats['ssr_chi2test'][0],
+                                'lrtest_pvalue': test_stats['lrtest'][1],
+                                'lrtest_stat': test_stats['lrtest'][0],
+                                'params_ftest_pvalue': test_stats['params_ftest'][1],
+                                'params_ftest_stat': test_stats['params_ftest'][0]
+                            }
+                        gc_results[col] = gc_metrics
+                        logger.info(f"Granger causality tests completed for {col} in {commodity} - {regime}.")
+                    except Exception as e:
+                        logger.error(f"Granger causality test failed for {col} in {commodity} - {regime}: {str(e)}")
+                        gc_results[col] = {}
+                logger.info(f"Granger causality results gathered for {commodity} in {regime}.")
+            except Exception as e:
+                logger.error(f"Error running Granger causality tests for {commodity} in {regime}: {str(e)}")
+                gc_results = {}
+            # Impulse Response Functions (IRF)
+            try:
+                irf = results.irf(10)
+                irf_data = {
+                    'irf': irf.irfs.tolist(),
+                    'lower': irf.irfs_ci['lower'].tolist(),
+                    'upper': irf.irfs_ci['upper'].tolist()
+                }
+                all_irfs.append({
+                    'commodity': commodity,
+                    'regime': regime,
+                    'impulse_response': irf_data
                 })
-            else:
-                logger.warning(f"Missing 'residual' in residual entry: {res}")
-    residuals_df = pd.DataFrame(residuals_list)
-    residuals_df.to_csv(RESIDUALS_OUTPUT_DIR / "residuals.csv", index=False)
-    logger.info("Exported residuals data.")
-    return residuals_df
+                logger.info(f"IRF computed for {commodity} in {regime}.")
+            except Exception as e:
+                logger.error(f"IRF computation failed for {commodity} in {regime}: {str(e)}")
+                all_irfs.append({
+                    'commodity': commodity,
+                    'regime': regime,
+                    'impulse_response': {
+                        'irf': [],
+                        'lower': [],
+                        'upper': []
+                    }
+                })
+            # Forecast Error Variance Decomposition (FEVD)
+            try:
+                if hasattr(results, 'fevd'):
+                    fevd = results.fevd(10)
+                    fevd_data = fevd.decomp.tolist()
+                else:
+                    # Alternative computation if fevd is not available
+                    ma_rep = results.ma_rep(maxn=10)
+                    omega = np.dot(results.sigma_u, results.sigma_u.T)
+                    fevd_data = []
+                    for i in range(ma_rep.shape[2]):
+                        variance = np.zeros((ma_rep.shape[0], ma_rep.shape[0]))
+                        for j in range(i + 1):
+                            variance += np.dot(np.dot(ma_rep[:, :, j], omega), ma_rep[:, :, j].T)
+                        fevd_step = np.diag(variance) / np.sum(np.diag(variance))
+                        fevd_data.append(fevd_step.tolist())
+                all_fevds.append({
+                    'commodity': commodity,
+                    'regime': regime,
+                    'forecast_error_variance_decomposition': fevd_data
+                })
+                logger.info(f"FEVD computed for {commodity} in {regime}.")
+            except Exception as e:
+                logger.error(f"FEVD computation failed for {commodity} in {regime}: {str(e)}")
+                all_fevds.append({
+                    'commodity': commodity,
+                    'regime': regime,
+                    'forecast_error_variance_decomposition': []
+                })
+            # Fitted Values and Residuals
+            try:
+                fitted = results.fittedvalues
+                residuals = results.resid
+                residuals_list = residuals.tolist()
+                fitted_list = fitted.tolist()
+            except Exception as e:
+                logger.error(f"Residuals/Fitted values extraction failed for {commodity} in {regime}: {str(e)}")
+                residuals_list, fitted_list = [], []
+            # Compile final result
+            fit_metrics = {
+                'AIC': float(aic) if aic is not None else None,
+                'BIC': float(bic) if bic is not None else None,
+                'HQIC': float(hqic) if hqic is not None else None,
+                'Log_Likelihood': float(results.llf) if results.llf is not None else None
+            }
+            result = {
+                'commodity': commodity,
+                'regime': regime,
+                'coefficients': regression_results['coefficients'],
+                'speed_of_adjustment': regression_results['coefficients']['alpha'],
+                'cointegration_vector': regression_results['coefficients']['beta'],
+                'short_run_coefficients': regression_results['coefficients']['gamma'],
+                'granger_causality': gc_results,
+                'optimal_lags': int(model.k_ar_diff),
+                'fit_metrics': fit_metrics,
+                'residuals': residuals_list,
+                'fitted_values': fitted_list,
+                'regression': regression_results
+            }
+            all_results.append(result)
+        except Exception as e:
+            logger.error(f"Error in ECM analysis for {commodity} in {regime}: {str(e)}", exc_info=True)
+    return all_results, all_diagnostics, all_summaries, all_irfs, all_fevds
 
-def prepare_choropleth_data(gdf: gpd.GeoDataFrame, model_results: list) -> None:
+def convert_keys(obj):
     """
-    Prepare data for choropleth maps and export to CSV.
-
-    Parameters:
-        gdf (gpd.GeoDataFrame): Original GeoDataFrame.
-        model_results (list): List of model result dictionaries.
+    Convert numpy types and Pandas objects to native Python types for JSON serialization.
     """
-    # Prepare average prices
-    avg_prices = gdf.groupby(['region_id', 'date'])['usdprice'].mean().reset_index()
-    avg_prices.to_csv(CHOROPLETH_OUTPUT_DIR / "average_prices.csv", index=False)
-    logger.info("Exported average prices data for choropleth.")
+    if isinstance(obj, pd.Series):
+        return obj.tolist()
+    elif isinstance(obj, pd.DataFrame):
+        return obj.to_dict(orient='list')
+    elif isinstance(obj, np.bool_):
+        return bool(obj)
+    elif isinstance(obj, (np.int64, np.int32, np.float64, np.float32)):
+        return obj.item()
+    elif isinstance(obj, dict):
+        return {str(k) if isinstance(k, (np.int64, np.float64)) else k: convert_keys(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_keys(i) for i in obj]
+    return obj
 
-    # Prepare conflict intensity
-    conflict_intensity = gdf.groupby(['region_id', 'date'])['conflict_intensity'].mean().reset_index()
-    conflict_intensity.to_csv(CHOROPLETH_OUTPUT_DIR / "conflict_intensity.csv", index=False)
-    logger.info("Exported conflict intensity data for choropleth.")
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        return convert_keys(obj)
 
-    # Prepare price changes
-    gdf_sorted = gdf.sort_values(['region_id', 'date'])
-    gdf_sorted['price_change_pct'] = gdf_sorted.groupby('region_id')['usdprice'].pct_change() * 100
-    price_changes = gdf_sorted.groupby(['region_id', 'date'])['price_change_pct'].mean().reset_index()
-    price_changes.to_csv(CHOROPLETH_OUTPUT_DIR / "price_changes.csv", index=False)
-    logger.info("Exported price changes data for choropleth.")
-
-    # Prepare residuals
-    residuals_df = prepare_residuals(model_results)
-    logger.info("Prepared residuals for choropleth.")
-
-def prepare_time_series_data(gdf: gpd.GeoDataFrame) -> None:
+def save_results(ecm_results, diagnostics, summaries, irfs, fevds, stationarity_results, cointegration_results, summary_report):
     """
-    Prepare time series data for visualization and export to CSV.
-
-    Parameters:
-        gdf (gpd.GeoDataFrame): Original GeoDataFrame.
-    """
-    # Prepare price time series
-    prices_ts = gdf.pivot_table(
-        index=['region_id', 'date'], 
-        columns=['commodity', 'exchange_rate_regime'], 
-        values='usdprice'
-    ).reset_index()
-    prices_ts.to_csv(TIME_SERIES_OUTPUT_DIR / "prices_time_series.csv", index=False)
-    logger.info("Exported prices time series data.")
-
-    # Prepare conflict intensity time series
-    conflict_ts = gdf.groupby(['region_id', 'date'])['conflict_intensity'].mean().reset_index()
-    conflict_ts.to_csv(TIME_SERIES_OUTPUT_DIR / "conflict_intensity_time_series.csv", index=False)
-    logger.info("Exported conflict intensity time series data.")
-
-def merge_residuals_with_geojson(gdf: gpd.GeoDataFrame, residuals_df: pd.DataFrame) -> None:
-    """
-    Merge residuals into GeoDataFrame based on region_id, date, commodity, and regime.
-
-    Parameters:
-        gdf (gpd.GeoDataFrame): Original GeoDataFrame.
-        residuals_df (pd.DataFrame): DataFrame containing residuals.
+    Save all analysis results into a consolidated JSON file.
     """
     try:
-        # Ensure 'date' in residuals_df is datetime
-        residuals_df['date'] = pd.to_datetime(residuals_df['date'], errors='coerce')
-        
-        # Extract relevant fields for merging
-        geo_df = gdf.copy()
-        geo_df['regime'] = geo_df['exchange_rate_regime']
-        
-        # Merge residuals
-        merged_df = geo_df.merge(
-            residuals_df,
-            on=['region_id', 'date', 'commodity', 'regime'],
-            how='left'
-        )
+        # Convert all data to native Python types
+        ecm_results = convert_keys(ecm_results)
+        diagnostics = convert_keys(diagnostics)
+        summaries = convert_keys(summaries)
+        irfs = convert_keys(irfs)
+        fevds = convert_keys(fevds)
+        stationarity_results = convert_keys(stationarity_results)
+        cointegration_results = convert_keys(cointegration_results)
+        summary_report = convert_keys(summary_report)
 
-        # Handle missing residuals
-        merged_df['residual'] = merged_df['residual'].fillna(0)  # You can choose a different default if needed
+        # Initialize consolidated results dictionary
+        consolidated_results = {}
 
-        # Save the enhanced GeoJSON
-        enhanced_geojson_path = RESULTS_DIR / "enhanced_unified_data_with_residuals.geojson"
-        merged_df.to_file(enhanced_geojson_path, driver='GeoJSON')
-        logger.info(f"Enhanced GeoJSON with residuals saved to {enhanced_geojson_path}")
+        # Organize results by commodity and regime
+        for result in ecm_results:
+            commodity = result.get('commodity')
+            regime = result.get('regime')
+            if not commodity or not regime:
+                continue
+            if commodity not in consolidated_results:
+                consolidated_results[commodity] = {}
+            consolidated_results[commodity][regime] = {
+                'ecm_results': result,
+                'diagnostics': next((d for d in diagnostics if d['commodity'] == commodity and d['regime'] == regime), {}),
+                'summaries': next((s for s in summaries if s['commodity'] == commodity and s['regime'] == regime), {}),
+                'irfs': next((i for i in irfs if i['commodity'] == commodity and i['regime'] == regime), {'impulse_response': {'irf': [], 'lower': [], 'upper': []}}),
+                'fevds': next((f for f in fevds if f['commodity'] == commodity and f['regime'] == regime), {'forecast_error_variance_decomposition': []}),
+                'stationarity_results': stationarity_results.get(f"{commodity}_{regime}", {}),
+                'cointegration_results': cointegration_results.get(f"{commodity}_{regime}", {}),
+                'granger_causality': result.get('granger_causality', {})
+            }
+
+        # Ensure all required fields are present
+        required_fields = ['ecm_results', 'diagnostics', 'summaries', 'irfs', 'fevds', 'stationarity_results', 'cointegration_results', 'granger_causality']
+        for commodity, regimes in consolidated_results.items():
+            for regime, fields in regimes.items():
+                for field in required_fields:
+                    if field not in fields or fields[field] is None:
+                        if field == 'granger_causality':
+                            fields[field] = {}
+                        elif field in ['ecm_results', 'diagnostics', 'summaries', 'irfs', 'fevds']:
+                            fields[field] = {} if field != 'ecm_results' else {
+                                'commodity': commodity,
+                                'regime': regime,
+                                'coefficients': {
+                                    'alpha': [],
+                                    'beta': [],
+                                    'gamma': [],
+                                    'const': [],
+                                    'det_coef': []
+                                },
+                                'speed_of_adjustment': [],
+                                'cointegration_vector': [],
+                                'short_run_coefficients': [],
+                                'granger_causality': {},
+                                'optimal_lags': 0,
+                                'fit_metrics': {
+                                    'AIC': None,
+                                    'BIC': None,
+                                    'HQIC': None,
+                                    'Log_Likelihood': None
+                                },
+                                'residuals': [],
+                                'fitted_values': [],
+                                'regression': {
+                                    'coefficients': {
+                                        'alpha': [],
+                                        'beta': [],
+                                        'gamma': [],
+                                        'const': [],
+                                        'det_coef': []
+                                    },
+                                    'coint_rank': 0,
+                                    'k_ar_diff': 0,
+                                    'sigma_u': [],
+                                    'llf': None
+                                }
+                            }
+                        else:
+                            fields[field] = {}
+        # Save consolidated results
+        ecm_output_path = results_dir / 'ecm_analysis_results.json'
+        with open(ecm_output_path, 'w') as f:
+            json.dump(consolidated_results, f, indent=4, cls=NumpyEncoder)
+        logger.info(f"All consolidated results saved to {ecm_output_path}")
+
+        # Optionally, save summary report separately
+        summary_output_path = results_dir / 'summary_report.json'
+        with open(summary_output_path, 'w') as f:
+            json.dump(summary_report, f, indent=4, cls=NumpyEncoder)
+        logger.info(f"Summary report saved to {summary_output_path}")
     except Exception as e:
-        logger.error(f"Failed to merge residuals with GeoJSON: {e}")
+        logger.error(f"Error while saving results: {str(e)}")
         raise
 
-def generate_network_data(gdf: gpd.GeoDataFrame, unique_regions_gdf: gpd.GeoDataFrame, w: KNN, weights_dict: dict) -> None:
+def create_summary_report(ecm_results, diagnostics, summaries, irfs, fevds):
     """
-    Generate network data based on spatial weights and export to CSV.
-
-    Parameters:
-        gdf (gpd.GeoDataFrame): Original GeoDataFrame.
-        unique_regions_gdf (gpd.GeoDataFrame): GeoDataFrame with unique regions.
-        w (KNN): Spatial weights object.
-        weights_dict (dict): Dictionary mapping regions to their neighbors.
+    Create a summary report of the analysis.
     """
-    flow_data = []
-    
-    # Calculate average usdprice per region
-    usdprice_avg = gdf.groupby('region_id')['usdprice'].mean()
-    unique_regions_gdf['avg_usdprice'] = unique_regions_gdf['region_id'].map(usdprice_avg)
-
-    # Ensure 'geometry' is present and extract latitude and longitude
-    if 'geometry' in unique_regions_gdf.columns:
-        unique_regions_gdf['latitude'] = unique_regions_gdf.geometry.y
-        unique_regions_gdf['longitude'] = unique_regions_gdf.geometry.x
-    else:
-        logger.error("'geometry' column is missing in unique_regions_gdf.")
-        raise ValueError("'geometry' column is missing.")
-
-    # Compute spatial lag of usdprice
-    unique_regions_gdf['spatial_lag_usdprice'] = lag_spatial(w, unique_regions_gdf['avg_usdprice'])
-
-    for source, neighbors in weights_dict.items():
-        source_data = unique_regions_gdf[unique_regions_gdf['region_id'] == source]
-        if source_data.empty:
-            logger.error(f"No data found for source region '{source}'.")
-            continue
-        source_data = source_data.iloc[0]
-        for target in neighbors:
-            target_data = unique_regions_gdf[unique_regions_gdf['region_id'] == target]
-            if target_data.empty:
-                logger.error(f"No data found for target region '{target}'.")
-                continue
-            target_data = target_data.iloc[0]
-            weight = source_data['spatial_lag_usdprice']
-            
-            flow_data.append({
-                'source': source,
-                'source_lat': source_data['latitude'],
-                'source_lng': source_data['longitude'],
-                'target': target,
-                'target_lat': target_data['latitude'],
-                'target_lng': target_data['longitude'],
-                'weight': weight
-            })
-    
-    flow_df = pd.DataFrame(flow_data)
-    flow_df.to_csv(NETWORK_DATA_OUTPUT_DIR / "flow_maps.csv", index=False)
-    logger.info(f"Generated flow map data with {len(flow_data)} connections")
-
-def validate_unique_regions_gdf(unique_regions_gdf: gpd.GeoDataFrame, required_columns: set = {'region_id', 'latitude', 'longitude', 'geometry'}) -> None:
-    """
-    Validate that the unique_regions_gdf contains all required columns.
-
-    Parameters:
-        unique_regions_gdf (gpd.GeoDataFrame): GeoDataFrame with unique regions.
-        required_columns (set): Set of required column names.
-
-    Raises:
-        ValueError: If any required columns are missing.
-    """
-    if not required_columns.issubset(unique_regions_gdf.columns):
-        missing = required_columns - set(unique_regions_gdf.columns)
-        logger.error(f"unique_regions_gdf is missing required columns: {missing}")
-        raise ValueError(f"Missing columns in unique_regions_gdf: {missing}")
-    else:
-        logger.info("unique_regions_gdf contains all required columns.")
+    try:
+        total_datasets = len(ecm_results)
+        successful_ecm_estimations = len(ecm_results)
+        diagnostics_passed = len([d for d in diagnostics if d.get('jarque_bera_pvalue', 0) > 0.05])
+        summary_report = {
+            'timestamp': timestamp,
+            'total_datasets': total_datasets,
+            'successful_ecm_estimations': successful_ecm_estimations,
+            'diagnostics_passed': diagnostics_passed,
+            'datasets': []
+        }
+        for result, diagnostic in zip(ecm_results, diagnostics):
+            dataset_summary = {
+                'commodity': result.get('commodity'),
+                'regime': result.get('regime'),
+                'AIC': result.get('fit_metrics', {}).get('AIC'),
+                'BIC': result.get('fit_metrics', {}).get('BIC'),
+                'Log_Likelihood': result.get('fit_metrics', {}).get('Log_Likelihood'),
+                'breusch_godfrey_pvalue': diagnostic.get('breusch_godfrey_pvalue'),
+                'arch_test_pvalue': diagnostic.get('arch_test_pvalue'),
+                'jarque_bera_pvalue': diagnostic.get('jarque_bera_pvalue'),
+                'breusch_pagan_pvalue': diagnostic.get('breusch_pagan_pvalue'),
+                'durbin_watson_stat': diagnostic.get('durbin_watson_stat'),
+                'granger_causality_tests': result.get('granger_causality'),
+                'optimal_lags': result.get('optimal_lags'),
+            }
+            summary_report['datasets'].append(dataset_summary)
+        logger.info("Summary report created successfully.")
+        return summary_report
+    except Exception as e:
+        logger.error(f"Error creating summary report: {str(e)}")
+        raise
 
 def main():
     """
-    Main function to execute the spatial data analysis workflow.
+    Main function to orchestrate the ECM analysis workflow.
     """
+    logger.info("Starting ECM analysis workflow")
     try:
         # Load data
-        gdf = load_geojson_data(GEOJSON_FILE)
-        model_results = load_model_results(MODEL_RESULTS_FILE)
-        
-        # Prepare unique regions GeoDataFrame
-        unique_regions_gdf = prepare_unique_regions_gdf(gdf, identifier='region_id')
-        logger.info(f"Unique regions: {len(unique_regions_gdf)}")
-        
-        # Validate unique_regions_gdf
-        validate_unique_regions_gdf(unique_regions_gdf)
-        
-        # Generate all required data
-        prepare_choropleth_data(gdf, model_results)
-        prepare_time_series_data(gdf)
-        
-        # Export spatial weights
-        w, weights_dict = export_spatial_weights(unique_regions_gdf)
-        
-        # Generate network data
-        generate_network_data(gdf, unique_regions_gdf, w, weights_dict)
-        
-        # Merge residuals with GeoJSON (Optional)
-        residuals_df = pd.read_csv(RESIDUALS_OUTPUT_DIR / "residuals.csv")
-        merge_residuals_with_geojson(gdf, residuals_df)
-        
-        logger.info("All data files generated successfully.")
-    except Exception as e:
-        logger.error(f"An error occurred in the main function: {e}")
-        raise
+        data = load_data()
+        logger.info(f"Data loaded. Number of datasets: {len(data)}")
 
-if __name__ == "__main__":
+        # Initialize dictionaries to store stationarity and cointegration results
+        stationarity_results, cointegration_results = {}, {}
+
+        # Run stationarity and cointegration tests
+        for (commodity, regime), df in data.items():
+            logger.info(f"Processing {commodity} in {regime} regime")
+            if len(df) < MIN_OBSERVATIONS:
+                logger.warning(f"Insufficient data for {commodity} in {regime} regime. Skipping ECM analysis.")
+                continue
+            stationarity_result_usdprice = run_stationarity_tests(df['usdprice'], 'usdprice')
+            stationarity_result_conflict = run_stationarity_tests(df['conflict_intensity'], 'conflict_intensity')
+            if stationarity_result_usdprice is None or stationarity_result_conflict is None:
+                logger.warning(f"Stationarity tests failed for {commodity} in {regime}. Skipping.")
+                continue
+            commodity_regime_key = f"{commodity}_{regime}"
+            stationarity_results[commodity_regime_key] = {
+                'usdprice': stationarity_result_usdprice,
+                'conflict_intensity': stationarity_result_conflict
+            }
+            cointegration_result = run_cointegration_tests(
+                df['usdprice'], 
+                df['conflict_intensity'], 
+                stationarity_results[commodity_regime_key]
+            )
+            if cointegration_result:
+                cointegration_results[commodity_regime_key] = cointegration_result
+            else:
+                logger.warning(f"Cointegration test failed for {commodity} in {regime} regime. Skipping ECM analysis.")
+                continue
+
+        # Run ECM analysis
+        ecm_results, diagnostics, summaries, irfs, fevds = run_ecm_analysis(
+            data, 
+            stationarity_results, 
+            cointegration_results
+        )
+
+        # Create summary report
+        summary_report = create_summary_report(ecm_results, diagnostics, summaries, irfs, fevds)
+
+        # Save all results
+        save_results(
+            ecm_results, 
+            diagnostics, 
+            summaries, 
+            irfs, 
+            fevds, 
+            stationarity_results, 
+            cointegration_results, 
+            summary_report
+        )
+
+        logger.info("ECM analysis workflow completed successfully")
+    except Exception as e:
+        logger.error(f"An error occurred during the ECM analysis: {str(e)}")
+        logger.exception("Traceback:")
+
+if __name__ == '__main__':
     main()

@@ -1,7 +1,6 @@
 // src/components/ECMResults.js
 
-import React, { useState, useMemo, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useMemo } from 'react';
 import {
   Typography,
   Paper,
@@ -12,21 +11,26 @@ import {
   TableHead,
   TableRow,
   Chip,
-  Tooltip as MuiTooltip,
+  Tooltip,
   Box,
   Tabs,
   Tab,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Tooltip as RechartsTooltip, LineChart, Line } from 'recharts';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import PropTypes from 'prop-types';
 
-// Styled components for consistent and responsive design
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
   marginTop: theme.spacing(3),
@@ -36,12 +40,6 @@ const StyledTable = styled(Table)(({ theme }) => ({
   minWidth: 250,
 }));
 
-const ChipContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing(1),
-  marginTop: theme.spacing(1),
-}));
-
 const IncreasedTypography = styled(Typography)(({ theme }) => ({
   fontSize: '1.1rem',
   [theme.breakpoints.up('sm')]: {
@@ -49,11 +47,6 @@ const IncreasedTypography = styled(Typography)(({ theme }) => ({
   },
 }));
 
-/**
- * Helper function to format numbers to two decimal places
- * @param {number} num - The number to format
- * @returns {string} - Formatted number as a string
- */
 const formatNumber = (num) => {
   if (typeof num === 'number') {
     return num.toFixed(2);
@@ -61,11 +54,6 @@ const formatNumber = (num) => {
   return num;
 };
 
-/**
- * Helper function to determine significance level based on p-value
- * @param {number} pValue - The p-value to assess
- * @returns {React.Element|string} - A Chip indicating significance or 'N/A'
- */
 const getSignificance = (pValue) => {
   if (typeof pValue !== 'number') return 'N/A';
   if (pValue < 0.01) return <Chip label="***" color="error" size="small" />;
@@ -74,9 +62,6 @@ const getSignificance = (pValue) => {
   return <Chip label="NS" color="default" size="small" />;
 };
 
-/**
- * Reusable Table Row Component for displaying results
- */
 const ResultTableRow = React.memo(({ label, value, tooltip }) => (
   <TableRow>
     <TableCell component="th" scope="row">
@@ -84,15 +69,11 @@ const ResultTableRow = React.memo(({ label, value, tooltip }) => (
     </TableCell>
     <TableCell align="right">
       {tooltip ? (
-        <MuiTooltip title={tooltip}>
-          <IncreasedTypography>
-            {value}
-          </IncreasedTypography>
-        </MuiTooltip>
+        <Tooltip title={tooltip}>
+          <IncreasedTypography>{value}</IncreasedTypography>
+        </Tooltip>
       ) : (
-        <IncreasedTypography>
-          {value}
-        </IncreasedTypography>
+        <IncreasedTypography>{value}</IncreasedTypography>
       )}
     </TableCell>
   </TableRow>
@@ -104,13 +85,17 @@ ResultTableRow.propTypes = {
   tooltip: PropTypes.string,
 };
 
-/**
- * Custom Tooltip for Recharts
- */
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div style={{ backgroundColor: 'white', padding: '10px', border: '1px solid #ccc' }}>
+      <div
+        style={{
+          backgroundColor: 'white',
+          padding: '10px',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+        }}
+      >
         <Typography variant="subtitle2">{`Period: ${label}`}</Typography>
         {payload.map((entry) => (
           <Typography key={entry.name} variant="body2" color={entry.color}>
@@ -127,88 +112,98 @@ const CustomTooltip = ({ active, payload, label }) => {
 CustomTooltip.propTypes = {
   active: PropTypes.bool,
   payload: PropTypes.array,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-/**
- * ECMResults Component
- * Displays comprehensive results of the Error Correction Model, including regression coefficients,
- * diagnostic tests, impulse response functions, and Granger causality.
- *
- * Props:
- * - data: Object containing all ECM-related results.
- * - selectedCommodity: String indicating the selected commodity.
- * - selectedRegime: String indicating the selected regime.
- */
 const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
-  const [activeTab, setActiveTab] = useState(0); // Active tab index
+  console.log('ECM Results Component - Received data:', data);
 
-  // Event handler for tab change
-  const handleTabChange = useCallback((event, newValue) => {
+  if (!data || !data.regression || !data.regression.coefficients) {
+    return <Typography>No ECM data available for {selectedCommodity} in {selectedRegime} regime.</Typography>;
+  }
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
     console.log(`Active ECM tab changed to: ${newValue}`);
-  }, []);
-
-  // Memoize Regression Coefficients Data
+  };
+ 
   const regressionData = useMemo(() => {
-    if (!data || !data.regression_results || !data.regression_results.coefficients) return [];
-    const { coefficients, std_errors, t_statistics, p_values } = data.regression_results;
-    return Object.keys(coefficients).map((key) => ({
+    if (!data.regression || !data.regression.coefficients) {
+      console.warn('Invalid or missing coefficient data');
+      return [];
+    }
+    return Object.entries(data.regression.coefficients).map(([key, value]) => ({
       variable: key,
-      coefficient: coefficients[key],
-      std_error: std_errors[key],
-      t_statistic: t_statistics[key],
-      p_value: p_values[key],
+      coefficient: value,
+      std_error: data.regression.std_errors[key],
+      t_statistic: data.regression.t_statistics[key],
+      p_value: data.regression.p_values[key],
     }));
   }, [data]);
 
-  // Memoize Diagnostic Tests Data
+  console.log('Processed regression data:', regressionData);
+
   const diagnosticData = useMemo(() => {
-    if (!data || !data.diagnostic_tests) return [];
-    const { breusch_pagan, durbin_watson, jarque_bera } = data.diagnostic_tests;
+    if (!data.diagnostics) {
+      console.warn('Invalid or missing diagnostic data');
+      return [];
+    }
+    const { diagnostics } = data;
     return [
       {
-        test: 'Breusch-Pagan Test',
-        statistic: breusch_pagan.statistic,
-        p_value: breusch_pagan.p_value,
-        result: breusch_pagan.p_value < 0.05 ? 'Heteroscedasticity' : 'Homoscedasticity',
+        test: 'Breusch-Godfrey Test',
+        statistic: diagnostics.breusch_godfrey_pvalue,
+        result: diagnostics.breusch_godfrey_pvalue < 0.05 ? 'Autocorrelation Detected' : 'No Autocorrelation',
+      },
+      {
+        test: 'ARCH Test',
+        statistic: diagnostics.arch_test_pvalue,
+        result: diagnostics.arch_test_pvalue < 0.05 ? 'Heteroskedasticity Detected' : 'No Heteroskedasticity',
       },
       {
         test: 'Durbin-Watson Statistic',
-        statistic: durbin_watson,
-        p_value: null,
-        result: durbin_watson < 2 ? 'Positive Autocorrelation' : 'No Autocorrelation',
+        statistic: diagnostics.durbin_watson_stat,
+        result: diagnostics.durbin_watson_stat < 2 ? 'Positive Autocorrelation' : 'No Autocorrelation',
       },
       {
         test: 'Jarque-Bera Test',
-        statistic: jarque_bera.statistic,
-        p_value: jarque_bera.p_value,
-        result: jarque_bera.p_value < 0.05 ? 'Non-Normal Residuals' : 'Normal Residuals',
+        statistic: diagnostics.jarque_bera_pvalue,
+        result: diagnostics.jarque_bera_pvalue < 0.05 ? 'Non-Normal Residuals' : 'Normal Residuals',
       },
     ];
   }, [data]);
 
-  // Memoize Impulse Response Functions Data
+  console.log('Processed diagnostic data:', diagnosticData);
+
   const irfData = useMemo(() => {
-    if (!data || !data.impulse_response) return [];
-    return data.impulse_response.map((entry) => ({
-      period: entry.period,
-      response: entry.response,
+    if (!data.irfs || !data.irfs.impulse_response || !data.irfs.impulse_response.irf) {
+      console.warn('Invalid or missing IRF data');
+      return [];
+    }
+    return data.irfs.impulse_response.irf.map((entry, index) => ({
+      period: index,
+      response1: entry[0][0],
+      response2: entry[0][1],
     }));
   }, [data]);
 
-  // Memoize Granger Causality Data
+  console.log('Processed IRF data:', irfData);
+
   const grangerData = useMemo(() => {
-    if (!data || !data.granger_causality) return [];
-    return data.granger_causality.map((entry) => ({
-      cause: entry.cause,
-      effect: entry.effect,
-      statistic: entry.statistic,
-      p_value: entry.p_value,
+    if (!data.granger_causality || !data.granger_causality.conflict_intensity) {
+      console.warn('Invalid or missing Granger causality data');
+      return [];
+    }
+    return Object.entries(data.granger_causality.conflict_intensity).map(([lag, tests]) => ({
+      lag: parseInt(lag),
+      ssr_ftest_statistic: tests.ssr_ftest_stat,
+      ssr_ftest_pvalue: tests.ssr_ftest_pvalue,
     }));
   }, [data]);
 
-  // Render Regression Coefficients Tab Content
+  console.log('Processed Granger causality data:', grangerData);
+
   const renderRegressionTab = () => (
     <Box mt={2}>
       <Typography variant="h6" gutterBottom>
@@ -218,12 +213,24 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
         <StyledTable size="small">
           <TableHead>
             <TableRow>
-              <TableCell><strong>Variable</strong></TableCell>
-              <TableCell align="right"><strong>Coefficient</strong></TableCell>
-              <TableCell align="right"><strong>Std. Error</strong></TableCell>
-              <TableCell align="right"><strong>t-Statistic</strong></TableCell>
-              <TableCell align="right"><strong>P-Value</strong></TableCell>
-              <TableCell align="right"><strong>Significance</strong></TableCell>
+              <TableCell>
+                <strong>Variable</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Coefficient</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Std. Error</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>t-Statistic</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>P-Value</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Significance</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -232,10 +239,18 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
                 <TableCell component="th" scope="row">
                   {row.variable}
                 </TableCell>
-                <TableCell align="right">{formatNumber(row.coefficient)}</TableCell>
-                <TableCell align="right">{formatNumber(row.std_error)}</TableCell>
-                <TableCell align="right">{formatNumber(row.t_statistic)}</TableCell>
-                <TableCell align="right">{formatNumber(row.p_value)}</TableCell>
+                <TableCell align="right">
+                  {formatNumber(row.coefficient)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(row.std_error)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(row.t_statistic)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(row.p_value)}
+                </TableCell>
                 <TableCell align="right">
                   {getSignificance(row.p_value)}
                 </TableCell>
@@ -245,7 +260,6 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
         </StyledTable>
       </TableContainer>
 
-      {/* Model Summary */}
       <Box mt={4}>
         <Typography variant="h6" gutterBottom>
           Model Summary
@@ -255,28 +269,24 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
             <TableBody>
               <ResultTableRow
                 label="R-Squared"
-                value={formatNumber(data.regression_results.r_squared)}
+                value={formatNumber(data.r_squared)}
               />
               <ResultTableRow
                 label="Adjusted R-Squared"
-                value={formatNumber(data.regression_results.adj_r_squared)}
+                value={formatNumber(data.adj_r_squared)}
               />
               <ResultTableRow
                 label="F-Statistic"
-                value={formatNumber(data.regression_results.f_statistic)}
-                tooltip={`F-Statistic: ${formatNumber(data.regression_results.f_statistic)} (p-value: ${formatNumber(data.regression_results.f_pvalue)})`}
+                value={formatNumber(data.f_statistic)}
+                tooltip={`F-Statistic: ${formatNumber(
+                  data.f_statistic
+                )} (p-value: ${formatNumber(data.f_pvalue)})`}
               />
-              <ResultTableRow
-                label="AIC"
-                value={formatNumber(data.regression_results.aic)}
-              />
-              <ResultTableRow
-                label="BIC"
-                value={formatNumber(data.regression_results.bic)}
-              />
+              <ResultTableRow label="AIC" value={formatNumber(data.aic)} />
+              <ResultTableRow label="BIC" value={formatNumber(data.bic)} />
               <ResultTableRow
                 label="Log-Likelihood"
-                value={formatNumber(data.regression_results.log_likelihood)}
+                value={formatNumber(data.log_likelihood)}
               />
             </TableBody>
           </StyledTable>
@@ -285,7 +295,6 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
     </Box>
   );
 
-  // Render Diagnostic Tests Tab Content
   const renderDiagnosticsTab = () => (
     <Box mt={2}>
       <Typography variant="h6" gutterBottom>
@@ -295,10 +304,18 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
         <StyledTable size="small">
           <TableHead>
             <TableRow>
-              <TableCell><strong>Test</strong></TableCell>
-              <TableCell align="right"><strong>Statistic</strong></TableCell>
-              <TableCell align="right"><strong>P-Value</strong></TableCell>
-              <TableCell align="right"><strong>Result</strong></TableCell>
+              <TableCell>
+                <strong>Test</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Statistic</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>P-Value</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Result</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -307,8 +324,12 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
                 <TableCell component="th" scope="row">
                   {row.test}
                 </TableCell>
-                <TableCell align="right">{row.statistic !== null ? formatNumber(row.statistic) : 'N/A'}</TableCell>
-                <TableCell align="right">{row.p_value !== null ? formatNumber(row.p_value) : 'N/A'}</TableCell>
+                <TableCell align="right">
+                  {row.statistic !== null ? formatNumber(row.statistic) : 'N/A'}
+                </TableCell>
+                <TableCell align="right">
+                  {row.p_value !== null ? formatNumber(row.p_value) : 'N/A'}
+                </TableCell>
                 <TableCell align="right">{row.result}</TableCell>
               </TableRow>
             ))}
@@ -318,7 +339,6 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
     </Box>
   );
 
-  // Render Impulse Response Functions Tab Content
   const renderIRFTab = () => (
     <Box mt={2}>
       <Typography variant="h6" gutterBottom>
@@ -327,17 +347,25 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={irfData}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="period" label={{ value: 'Periods', position: 'insideBottom', offset: -5 }} />
+          <XAxis
+            dataKey="period"
+            label={{ value: 'Periods', position: 'insideBottom', offset: -5 }}
+          />
           <YAxis label={{ value: 'Response', angle: -90, position: 'insideLeft' }} />
           <RechartsTooltip content={<CustomTooltip />} />
           <Legend />
-          <Line type="monotone" dataKey="response" stroke="#82ca9d" activeDot={{ r: 8 }} />
+          <Line
+            type="monotone"
+            dataKey="response"
+            stroke="#82ca9d"
+            name="Response"
+            activeDot={{ r: 8 }}
+          />
         </LineChart>
       </ResponsiveContainer>
     </Box>
   );
 
-  // Render Granger Causality Tab Content
   const renderGrangerTab = () => (
     <Box mt={2}>
       <Typography variant="h6" gutterBottom>
@@ -346,37 +374,31 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
       <ResponsiveContainer width="100%" height={400}>
         <BarChart data={grangerData}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="effect" label={{ value: 'Effect Variable', position: 'insideBottom', offset: -5 }} />
-          <YAxis label={{ value: 'Causality Statistic', angle: -90, position: 'insideLeft' }} />
+          <XAxis dataKey="lag" label={{ value: 'Lag', position: 'insideBottom', offset: -5 }} />
+          <YAxis label={{ value: 'F-Statistic', angle: -90, position: 'insideLeft' }} />
           <RechartsTooltip content={<CustomTooltip />} />
           <Legend />
-          <Bar dataKey="statistic" fill="#8884d8" />
+          <Bar dataKey="ssr_ftest_statistic" fill="#8884d8" name="F-Statistic" />
         </BarChart>
       </ResponsiveContainer>
-
+  
       <TableContainer component={Paper} sx={{ mt: 4 }}>
         <StyledTable size="small">
           <TableHead>
             <TableRow>
-              <TableCell><strong>Cause</strong></TableCell>
-              <TableCell><strong>Effect</strong></TableCell>
-              <TableCell align="right"><strong>Statistic</strong></TableCell>
+              <TableCell><strong>Lag</strong></TableCell>
+              <TableCell align="right"><strong>F-Statistic</strong></TableCell>
               <TableCell align="right"><strong>P-Value</strong></TableCell>
               <TableCell align="right"><strong>Significance</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {grangerData.map((row, index) => (
-              <TableRow key={`${row.cause}-${row.effect}-${index}`}>
-                <TableCell component="th" scope="row">
-                  {row.cause}
-                </TableCell>
-                <TableCell>{row.effect}</TableCell>
-                <TableCell align="right">{formatNumber(row.statistic)}</TableCell>
-                <TableCell align="right">{formatNumber(row.p_value)}</TableCell>
-                <TableCell align="right">
-                  {getSignificance(row.p_value)}
-                </TableCell>
+            {grangerData.map((row) => (
+              <TableRow key={row.lag}>
+                <TableCell component="th" scope="row">{row.lag}</TableCell>
+                <TableCell align="right">{formatNumber(row.ssr_ftest_statistic)}</TableCell>
+                <TableCell align="right">{formatNumber(row.ssr_ftest_pvalue)}</TableCell>
+                <TableCell align="right">{getSignificance(row.ssr_ftest_pvalue)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -385,13 +407,22 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
     </Box>
   );
 
+  if (!data || Object.keys(data).length === 0) {
+    return (
+      <StyledPaper elevation={3}>
+        <Typography variant="h6" color="error">
+          No ECM data available for {selectedCommodity} in the {selectedRegime} regime.
+        </Typography>
+      </StyledPaper>
+    );
+  }
+
   return (
     <StyledPaper elevation={3}>
       <Typography variant="h4" gutterBottom>
         Error Correction Model (ECM) Results for {selectedCommodity} - {selectedRegime}
       </Typography>
 
-      {/* Tabs for Different ECM Analyses */}
       <Tabs value={activeTab} onChange={handleTabChange} centered>
         <Tab label="Regression Coefficients" />
         <Tab label="Diagnostic Tests" />
@@ -399,7 +430,6 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
         <Tab label="Granger Causality" />
       </Tabs>
 
-      {/* Render Content Based on Active Tab */}
       {activeTab === 0 && renderRegressionTab()}
       {activeTab === 1 && renderDiagnosticsTab()}
       {activeTab === 2 && renderIRFTab()}
@@ -410,44 +440,16 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
 
 ECMResults.propTypes = {
   data: PropTypes.shape({
-    regression_results: PropTypes.shape({
+    regression: PropTypes.shape({
       coefficients: PropTypes.object.isRequired,
       std_errors: PropTypes.object.isRequired,
       t_statistics: PropTypes.object.isRequired,
       p_values: PropTypes.object.isRequired,
-      r_squared: PropTypes.number.isRequired,
-      adj_r_squared: PropTypes.number.isRequired,
-      f_statistic: PropTypes.number.isRequired,
-      f_pvalue: PropTypes.number.isRequired,
-      aic: PropTypes.number.isRequired,
-      bic: PropTypes.number.isRequired,
-      log_likelihood: PropTypes.number.isRequired,
     }).isRequired,
-    diagnostic_tests: PropTypes.shape({
-      breusch_pagan: PropTypes.shape({
-        statistic: PropTypes.number.isRequired,
-        p_value: PropTypes.number.isRequired,
-      }).isRequired,
-      durbin_watson: PropTypes.number.isRequired,
-      jarque_bera: PropTypes.shape({
-        statistic: PropTypes.number.isRequired,
-        p_value: PropTypes.number.isRequired,
-      }).isRequired,
-    }).isRequired,
-    impulse_response: PropTypes.arrayOf(
-      PropTypes.shape({
-        period: PropTypes.number.isRequired,
-        response: PropTypes.number.isRequired,
-      })
-    ).isRequired,
-    granger_causality: PropTypes.arrayOf(
-      PropTypes.shape({
-        cause: PropTypes.string.isRequired,
-        effect: PropTypes.string.isRequired,
-        statistic: PropTypes.number.isRequired,
-        p_value: PropTypes.number.isRequired,
-      })
-    ).isRequired,
+    diagnostics: PropTypes.object.isRequired,
+    irfs: PropTypes.object.isRequired,
+    granger_causality: PropTypes.object.isRequired,
+    fit_metrics: PropTypes.object.isRequired,
   }).isRequired,
   selectedCommodity: PropTypes.string.isRequired,
   selectedRegime: PropTypes.string.isRequired,

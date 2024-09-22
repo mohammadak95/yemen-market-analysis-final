@@ -2,6 +2,9 @@
 
 import Papa from 'papaparse';
 
+let dataCache = null;          // Stores the fetched data
+let loadingPromise = null;     // Stores the ongoing fetch promise
+
 /**
  * Fetches and parses a CSV file from the given URL.
  * @param {string} url - The URL of the CSV file.
@@ -36,61 +39,75 @@ async function fetchCSV(url) {
 
 /**
  * Loads all necessary data required for the dashboard.
+ * Implements caching to prevent multiple fetches.
  * @returns {Promise<Object>} - An object containing all fetched data.
  */
 export async function loadAllData() {
-  try {
-    console.log('Starting to load all data...');
-    const spatialData = await getSpatialData();
-    const combinedMarketData = await fetch('/data/combined_market_data.json').then((res) => res.json());
-    const ecmResults = await fetch('/data/ecm_results.json').then((res) => res.json());
-    const cointegrationResults = await fetch('/data/cointegration_results.json').then((res) => res.json());
-    const ecmDiagnostics = await fetch('/data/ecm_diagnostics.json').then((res) => res.json());
-    const grangerCausalityResults = await fetch('/data/granger_causality_results.json').then((res) => res.json());
-    const stationarityResults = await fetch('/data/stationarity_results.json').then((res) => res.json());
-
-    const priceDifferentialData = await loadPriceDifferentialData();
-
-    // ======= Start of Applied Fix =======
-    // Fetch ecm_analysis_results.json
-    const ecmAnalysisResults = await fetch('/Data/ecm_analysis_results.json').then((res) => res.json());
-    // Fetch summary_report.json
-    const summaryReport = await fetch('/Data/summary_report.json').then((res) => res.json());
-    // ======= End of Applied Fix =======
-
-    console.log('Fetched Data in loadAllData:', {
-      combinedMarketData,
-      ecmResults,
-      priceDifferentialResults: priceDifferentialData,
-      cointegrationResults,
-      ecmDiagnostics,
-      grangerCausalityResults,
-      stationarityResults,
-      spatialData,
-      // ======= Start of Applied Fix =======
-      ecmAnalysisResults,
-      summaryReport,
-      // ======= End of Applied Fix =======
-    });
-
-    return {
-      combinedMarketData,
-      ecmResults,
-      priceDifferentialResults: priceDifferentialData,
-      cointegrationResults,
-      ecmDiagnostics,
-      grangerCausalityResults,
-      stationarityResults,
-      spatialData,
-      // ======= Start of Applied Fix =======
-      ecmAnalysisResults,
-      summaryReport,
-      // ======= End of Applied Fix =======
-    };
-  } catch (error) {
-    console.error('Error loading all data:', error);
-    throw error;
+  if (dataCache) {
+    console.log('Returning cached data.');
+    return dataCache;
   }
+
+  if (loadingPromise) {
+    console.log('Data is currently loading. Awaiting existing promise.');
+    return loadingPromise;
+  }
+
+  // Start loading data and cache the promise
+  loadingPromise = (async () => {
+    try {
+      console.log('Starting to load all data...');
+      const spatialData = await getSpatialData();
+      const combinedMarketData = await fetch('/data/combined_market_data.json').then((res) => res.json());
+      const cointegrationResults = await fetch('/data/cointegration_results.json').then((res) => res.json());
+      const grangerCausalityResults = await fetch('/data/granger_causality_results.json').then((res) => res.json());
+      const stationarityResults = await fetch('/data/stationarity_results.json').then((res) => res.json());
+
+      const priceDifferentialData = await loadPriceDifferentialData();
+
+      // Load ECM analysis results with error handling
+      console.log('Loading ECM analysis results...');
+      let ecmAnalysisResults;
+      try {
+        const ecmResponse = await fetch('/data/ecm_analysis_results.json');
+        if (!ecmResponse.ok) {
+          throw new Error(`Failed to fetch ECM analysis results: ${ecmResponse.statusText}`);
+        }
+        let ecmText = await ecmResponse.text();
+        console.log('Raw ECM data length:', ecmText.length);
+
+        // Replace 'NaN' with 'null' in the text
+        ecmText = ecmText.replace(/\bNaN\b/g, 'null');
+
+        ecmAnalysisResults = JSON.parse(ecmText);
+        console.log('ECM analysis results loaded successfully.');
+      } catch (error) {
+        console.error('Error fetching or parsing ECM analysis results:', error);
+        // Handle the error (e.g., set ecmAnalysisResults to an empty object or default value)
+        ecmAnalysisResults = {};
+      }
+
+      dataCache = {
+        combinedMarketData,
+        ecmAnalysisResults,
+        priceDifferentialResults: priceDifferentialData,
+        cointegrationResults,
+        grangerCausalityResults,
+        stationarityResults,
+        spatialData,
+      };
+
+      return dataCache;
+    } catch (error) {
+      console.error('Error loading all data:', error);
+      throw error;
+    } finally {
+      // Reset loadingPromise after data is loaded or if an error occurs
+      loadingPromise = null;
+    }
+  })();
+
+  return loadingPromise;
 }
 
 /**
@@ -196,18 +213,18 @@ export function getPriceDifferentialResults(data, commodity, regime) {
 
 /**
  * Retrieves available commodities from the combined market data.
- * @param {Object} data - The combined market data.
+ * @param {Object} combinedMarketData - The combined market data.
  * @returns {Array<string>} - An array of available commodities.
  */
-export function getAvailableCommodities(data) {
-  if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
+export function getAvailableCommodities(combinedMarketData) {
+  if (!combinedMarketData || typeof combinedMarketData !== 'object' || Object.keys(combinedMarketData).length === 0) {
     console.warn('Combined market data is empty or invalid.');
     return [];
   }
 
   const commodities = new Set();
 
-  Object.values(data).forEach((dateData) => {
+  Object.values(combinedMarketData).forEach((dateData) => {
     if (dateData && typeof dateData === 'object') {
       Object.keys(dateData).forEach((commodity) => {
         commodities.add(commodity);
@@ -283,41 +300,16 @@ export function getAnalysisResults(data, commodity, regime, analysisType) {
 
     switch (analysisType) {
       case 'Cointegration Analysis':
-        if (commodity && regime) {
-          const key = `('${commodity}', '${regime}')`;
-          const result = data.cointegrationResults[key];
-          if (result) {
-            console.log(`Cointegration Analysis result found for key: "${key}"`);
-            return { [key]: result };
-          } else {
-            console.warn(`No Cointegration Analysis result found for key: "${key}"`);
-            return null;
-          }
-        }
-        console.warn('Commodity or Regime not specified for Cointegration Analysis.');
-        return data.cointegrationResults || {};
+        const cointegrationResults = getCointegrationResults(data, commodity, regime);
+        return cointegrationResults;
 
       case 'Error Correction Model':
-        const ecmResult = data.ecmResults.find(
-          (item) => item.commodity === commodity && item.regime === regime
-        );
-        if (ecmResult) {
-          console.log(`Error Correction Model result found for Commodity: "${commodity}", Regime: "${regime}"`);
-          return ecmResult;
-        } else {
-          console.warn(`No Error Correction Model result found for Commodity: "${commodity}", Regime: "${regime}"`);
-          return null;
-        }
+        const ecmResults = getECMResults(data, commodity, regime);
+        return ecmResults;
 
       case 'Price Differentials':
         const priceDiffResults = getPriceDifferentialResults(data, commodity, regime);
-        if (priceDiffResults) {
-          console.log(`Price Differentials data retrieved for Commodity: "${commodity}", Regime: "${regime}"`);
-          return priceDiffResults;
-        } else {
-          console.warn(`No Price Differentials data found for Commodity: "${commodity}", Regime: "${regime}"`);
-          return null;
-        }
+        return priceDiffResults;
 
       case 'Spatial Analysis':
         const spatialKey = `${commodity}_${regime}`;
@@ -330,38 +322,13 @@ export function getAnalysisResults(data, commodity, regime, analysisType) {
           return null;
         }
 
-      case 'ECM Diagnostics':
-        const ecmDiagResult = data.ecmDiagnostics.find(
-          (item) => item.commodity === commodity && item.regime === regime
-        );
-        if (ecmDiagResult) {
-          console.log(`ECM Diagnostics result found for Commodity: "${commodity}", Regime: "${regime}"`);
-          return ecmDiagResult;
-        } else {
-          console.warn(`No ECM Diagnostics result found for Commodity: "${commodity}", Regime: "${regime}"`);
-          return null;
-        }
-
       case 'Granger Causality':
-        const grangerKey = `('${commodity}', '${regime}')`;
-        const grangerResult = data.grangerCausalityResults[grangerKey];
-        if (grangerResult) {
-          console.log(`Granger Causality result found for key: "${grangerKey}"`);
-          return grangerResult;
-        } else {
-          console.warn(`No Granger Causality result found for key: "${grangerKey}"`);
-          return null;
-        }
+        const grangerResults = getGrangerCausalityResults(data, commodity, regime);
+        return grangerResults;
 
       case 'Stationarity':
-        const stationarityResult = data.stationarityResults[`('${commodity}', '${regime}')`];
-        if (stationarityResult) {
-          console.log(`Stationarity result found for Commodity: "${commodity}", Regime: "${regime}"`);
-          return stationarityResult;
-        } else {
-          console.warn(`No Stationarity result found for Commodity: "${commodity}", Regime: "${regime}"`);
-          return null;
-        }
+        const stationarityResult = getStationarityResults(data, commodity, regime);
+        return stationarityResult;
 
       default:
         console.error(`Unknown analysis type: "${analysisType}"`);
@@ -373,30 +340,95 @@ export function getAnalysisResults(data, commodity, regime, analysisType) {
   }
 }
 
-// ======= Start of Applied Fix =======
-
-/**
- * Retrieves Granger Causality results based on commodity and regime.
- * @param {Object} data - The complete data object.
- * @param {string} commodity - The selected commodity.
- * @param {string} regime - The selected regime.
- * @returns {Array<Object>|null} - An array of Granger Causality results or null if not found.
- */
-export function getGrangerCausalityResults(data, commodity, regime) {
-  const key = `${commodity}_${regime}`;
-  return data.ecmAnalysisResults[key]?.granger_causality || null;
-}
+// ======= Updated Helper Functions =======
 
 /**
  * Retrieves Cointegration results based on commodity and regime.
  * @param {Object} data - The complete data object.
  * @param {string} commodity - The selected commodity.
  * @param {string} regime - The selected regime.
- * @returns {Array<Object>|null} - An array of Cointegration results or null if not found.
+ * @returns {Object|null} - The Cointegration results or null if not found.
  */
 export function getCointegrationResults(data, commodity, regime) {
-  const key = `${commodity}_${regime}`;
-  return data.ecmAnalysisResults[key]?.cointegration_results || null;
+  console.log(`Fetching Cointegration results for Commodity: "${commodity}", Regime: "${regime}"`);
+  
+  const key = `('${commodity}', '${regime}')`;
+  if (!data.cointegrationResults || !data.cointegrationResults[key]) {
+    console.warn(`No Cointegration data found for key: "${key}"`);
+    return null;
+  }
+
+  const cointegrationResults = data.cointegrationResults[key];
+  console.log('Cointegration results:', cointegrationResults);
+  return cointegrationResults;
 }
 
-// ======= End of Applied Fix =======
+/**
+ * Retrieves Granger Causality results based on commodity and regime.
+ * @param {Object} data - The complete data object.
+ * @param {string} commodity - The selected commodity.
+ * @param {string} regime - The selected regime.
+ * @returns {Object|null} - The Granger Causality results or null if not found.
+ */
+export function getGrangerCausalityResults(data, commodity, regime) {
+  console.log(`Fetching Granger Causality results for Commodity: "${commodity}", Regime: "${regime}"`);
+  
+  const key = `('${commodity}', '${regime}')`;
+  if (!data.grangerCausalityResults || !data.grangerCausalityResults[key]) {
+    console.warn(`No Granger Causality data found for key: "${key}"`);
+    return null;
+  }
+
+  const grangerResults = data.grangerCausalityResults[key];
+  console.log('Granger Causality results:', grangerResults);
+  return grangerResults;
+}
+
+/**
+ * Retrieves Stationarity results based on commodity and regime.
+ * @param {Object} data - The complete data object.
+ * @param {string} commodity - The selected commodity.
+ * @param {string} regime - The selected regime.
+ * @returns {Object|null} - The Stationarity results or null if not found.
+ */
+export function getStationarityResults(data, commodity, regime) {
+  console.log(`Fetching Stationarity results for Commodity: "${commodity}", Regime: "${regime}"`);
+  
+  const key = `('${commodity}', '${regime}')`;
+  if (!data.stationarityResults || !data.stationarityResults[key]) {
+    console.warn(`No Stationarity data found for key: "${key}"`);
+    return null;
+  }
+
+  const stationarityResults = data.stationarityResults[key];
+  console.log('Stationarity results:', stationarityResults);
+  return stationarityResults;
+}
+
+/**
+ * Retrieves ECM results based on commodity and regime.
+ * @param {Object} data - The complete data object.
+ * @param {string} commodity - The selected commodity.
+ * @param {string} regime - The selected regime.
+ * @returns {Object|null} - The ECM results or null if not found.
+ */
+export function getECMResults(data, commodity, regime) {
+  console.log(`Fetching ECM results for Commodity: "${commodity}", Regime: "${regime}"`);
+  
+  if (!data.ecmAnalysisResults) {
+    console.warn(`No ECM analysis results found in data.`);
+    return null;
+  }
+
+  const ecmResults = data.ecmAnalysisResults.find(result => 
+    result.commodity === commodity && result.regime === regime
+  );
+
+  if (!ecmResults) {
+    console.warn(`No ECM data found for commodity: "${commodity}" and regime: "${regime}"`);
+    return null;
+  }
+
+  console.log('ECM results:', ecmResults);
+  return ecmResults.ecm_results; // Return only the ECM results part
+}
