@@ -1,6 +1,7 @@
 import React from 'react';
 import localFont from "next/font/local";
 import "./globals.css";
+import Navigation from '../components/Navigation';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,7 +20,7 @@ export const metadata = {
   description: "Comprehensive market analysis dashboard for Yemen",
 };
 
-const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+const isProduction = process.env.NODE_ENV === 'production';
 const basePath = isProduction ? '/yemen-market-analysis-final' : '';
 
 export default function RootLayout({ children }) {
@@ -28,13 +29,13 @@ export default function RootLayout({ children }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          rel="icon"
-          href={`${basePath}/favicon.ico`}
-        />
+        <link rel="icon" href={`${basePath}/favicon.ico`} />
       </head>
       <body className="antialiased">
-        {children}
+        <Navigation />
+        <main className="container mx-auto px-4 py-8">
+          {children}
+        </main>
       </body>
     </html>
   );
