@@ -18,7 +18,6 @@ const nextConfig = {
       '@': path.resolve(__dirname, './src'),
     };
     
-    // Add this new rule for CSV files
     config.module.rules.push({
       test: /\.csv$/,
       loader: 'csv-loader',
@@ -29,7 +28,6 @@ const nextConfig = {
       },
     });
     
-    // Add this new rule for GeoJSON files
     config.module.rules.push({
       test: /\.geojson$/,
       use: ['json-loader'],

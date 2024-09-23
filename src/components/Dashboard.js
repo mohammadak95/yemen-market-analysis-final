@@ -37,9 +37,12 @@ import {
   ListItemButton,
   Box,
   ListSubheader,
+  IconButton,
 } from '@mui/material';
 
-import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
+import MenuIcon from '@mui/icons-material/Menu';
+import { ThemeProvider, createTheme, styled, useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const LoadingSpinner = dynamic(() => import('./ui/LoadingSpinner'), { ssr: false });
 const ErrorBoundary = dynamic(() => import('./ui/ErrorBoundary'), { ssr: false });
@@ -69,6 +72,9 @@ const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
 const Content = styled('main')(({ theme }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(2),
+  },
 }));
 
 const tourSteps = [
@@ -108,6 +114,10 @@ export default function Dashboard() {
   const [tourCompleted, setTourCompleted] = useState(false);
   const [combinedMarketDates, setCombinedMarketDates] = useState([]);
   const [isTourReady, setIsTourReady] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false); // State for mobile drawer
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screens
 
   // Initialize client-side state and tour settings
   useEffect(() => {
@@ -320,6 +330,15 @@ export default function Dashboard() {
             main: '#10b981',
           },
         },
+        breakpoints: {
+          values: {
+            xs: 0,
+            sm: 600,
+            md: 900,
+            lg: 1200,
+            xl: 1536,
+          },
+        },
       }),
     [darkMode]
   );
@@ -372,6 +391,7 @@ export default function Dashboard() {
                 console.log('Selected commodity changed to:', e.target.value);
                 setSelectedCommodity(e.target.value);
               }}
+              label="Commodity"
             >
               {commodities.map((commodity) => (
                 <MenuItem key={commodity} value={commodity}>
@@ -391,6 +411,7 @@ export default function Dashboard() {
               value={selectedRegimes}
               onChange={handleRegimeChange}
               renderValue={(selected) => selected.join(', ')}
+              label="Regimes"
             >
               {regimes.map((regime) => (
                 <MenuItem key={regime} value={regime}>
@@ -429,30 +450,67 @@ export default function Dashboard() {
     </div>
   );
 
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
     <ThemeProvider theme={customizedTheme}>
       <Root>
         <CssBaseline />
         {/* Top App Bar */}
         <AppBarStyled position="fixed">
-          <ToolbarStyled>
+          <Toolbar>
+            {isMobile && (
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
             <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
               Yemen Market Analysis Dashboard
             </Typography>
-          </ToolbarStyled>
+          </Toolbar>
         </AppBarStyled>
 
         {/* Sidebar Drawer */}
-        <Drawer
-          variant="permanent"
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-          }}
+        <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          aria-label="mailbox folders"
         >
-          {drawerContent}
-        </Drawer>
+          {/* Temporary Drawer for Mobile */}
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+          >
+            {drawerContent}
+          </Drawer>
+          {/* Permanent Drawer for Desktop */}
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+            open
+          >
+            {drawerContent}
+          </Drawer>
+        </Box>
 
         {/* Main Content Area */}
         <Content>
@@ -489,7 +547,15 @@ export default function Dashboard() {
           {/* Market Data Charts */}
           {isClient && memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
             <>
-              <div style={{ marginBottom: '24px' }} className="tour-main-chart">
+              <Box
+                sx={{
+                  marginBottom: '24px',
+                  display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  gap: 2,
+                }}
+                className="tour-main-chart"
+              >
                 {/* Chart Controls */}
                 <FormControlLabel
                   control={
@@ -533,7 +599,7 @@ export default function Dashboard() {
                   }
                   label="Data Smoothing"
                 />
-              </div>
+              </Box>
               {/* Render Charts */}
               <ErrorBoundary>
                 <Suspense fallback={<LoadingSpinner />}>
