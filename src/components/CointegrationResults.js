@@ -17,17 +17,6 @@ import {
   Skeleton,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-  Legend,
-  Tooltip as RechartsTooltip,
-  ReferenceLine,
-} from 'recharts';
 
 // Styled components for consistent and responsive design
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -107,7 +96,7 @@ ResultTableRow.propTypes = {
  * Displays the results of the Cointegration Analysis, specifically the Engle-Granger test.
  *
  * Props:
- * - data: Object containing the cointegration results for a specific (commodity, regime) group.
+ * - data: Object containing the cointegration_results for a specific (commodity, regime) group.
  * - selectedCommodity: String indicating the selected commodity.
  * - selectedRegime: String indicating the selected regime.
  * - isLoading: Boolean indicating if data is still being loaded.
@@ -115,11 +104,9 @@ ResultTableRow.propTypes = {
 const CointegrationResults = ({ data, selectedCommodity, selectedRegime, isLoading }) => {
   console.log('CointegrationResults received data:', data);
 
-  // Destructure the necessary parts of the data prop
-  const { cointegration } = data;
-
-  if (!cointegration || !cointegration.engle_granger) {
-    console.warn('CointegrationResults: Missing cointegration or engle_granger in data.');
+  // Consolidated data validation
+  if (!data || !data.engle_granger) {
+    console.warn('CointegrationResults: Missing engle_granger in data.');
     return (
       <StyledPaper elevation={3}>
         <Typography variant="h4" gutterBottom>
@@ -132,18 +119,16 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime, isLoadi
     );
   }
 
-  const { engle_granger, price_transformation, conflict_transformation } = cointegration;
-  const { cointegration_statistic, p_value, critical_values, rho } = engle_granger;
+  // Destructure the necessary parts of the data prop
+  const { engle_granger, price_transformation, conflict_transformation } = data;
+  const { cointegration_statistic, p_value, critical_values, cointegrated, rho } = engle_granger;
 
-  const indicatesCointegration = p_value < 0.10;
+  // Determine if cointegration is present based on p-value < 0.05
+  const indicatesCointegration = p_value < 0.05;
   console.log('CointegrationResults: Indicates Cointegration:', indicatesCointegration);
 
-  // Define significance levels
+  // Define significance levels corresponding to critical values
   const significanceLevels = ['10%', '5%', '1%'];
-
-  // Prepare chart data
-  const chartData = [{ name: 'Test Statistic', value: cointegration_statistic }];
-  console.log('CointegrationResults: Prepared chartData:', chartData);
 
   return (
     <StyledPaper elevation={3}>
@@ -159,29 +144,11 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime, isLoadi
         {isLoading ? (
           <Skeleton variant="rectangular" height={300} />
         ) : (
-          <ResponsiveContainer width="100%" height={300} aria-label="Engle-Granger Test Results Chart">
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <RechartsTooltip formatter={(value) => formatNumber(value)} />
-              <Legend />
-              <Line type="monotone" dataKey="value" stroke="#8884d8" name="Test Statistic" />
-              {critical_values &&
-                critical_values.map((value, index) => (
-                  <ReferenceLine
-                    key={index}
-                    y={value}
-                    label={{
-                      value: `Critical Value ${significanceLevels[index]}`,
-                      position: 'insideTopLeft',
-                    }}
-                    stroke="red"
-                    strokeDasharray="3 3"
-                  />
-                ))}
-            </LineChart>
-          </ResponsiveContainer>
+          // Removed the LineChart component
+          // You can add alternative visualizations here if desired
+          <Typography variant="body1" color="textSecondary" gutterBottom>
+            (Chart Removed)
+          </Typography>
         )}
         <TableContainer>
           <StyledTable size="small">
@@ -213,11 +180,6 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime, isLoadi
                   <ResultTableRow
                     label="Cointegration Statistic"
                     value={formatNumber(cointegration_statistic)}
-                  />
-                  <ResultTableRow
-                    label="Rho (ρ)"
-                    value={formatNumber(rho)}
-                    tooltip="Rho is the estimated coefficient of the lagged residual in the Engle-Granger test."
                   />
                   <ResultTableRow
                     label="Critical Values"
@@ -253,6 +215,12 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime, isLoadi
                         <Chip label="No" color="error" size="small" sx={{ fontWeight: 'bold' }} />
                       )
                     }
+                  />
+                  {/* Optionally display rho and other metrics if needed */}
+                  <ResultTableRow
+                    label="Rho (Cointegration Vector)"
+                    value={indicatesCointegration ? formatNumber(rho) : 'N/A'}
+                    tooltip="The rho value represents the cointegration vector coefficient."
                   />
                 </>
               )}
@@ -309,17 +277,16 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime, isLoadi
 
 CointegrationResults.propTypes = {
   data: PropTypes.shape({
-    cointegration: PropTypes.shape({
-      engle_granger: PropTypes.shape({
-        cointegration_statistic: PropTypes.number.isRequired,
-        p_value: PropTypes.number.isRequired,
-        critical_values: PropTypes.arrayOf(PropTypes.number).isRequired,
-        rho: PropTypes.number,
-      }).isRequired,
-      price_transformation: PropTypes.string,
-      conflict_transformation: PropTypes.string,
+    engle_granger: PropTypes.shape({
+      cointegration_statistic: PropTypes.number.isRequired,
+      p_value: PropTypes.number.isRequired,
+      critical_values: PropTypes.arrayOf(PropTypes.number).isRequired,
+      cointegrated: PropTypes.bool.isRequired,
+      rho: PropTypes.number, // Optional if not always present
     }).isRequired,
-  }).isRequired,
+    price_transformation: PropTypes.string,
+    conflict_transformation: PropTypes.string,
+  }),
   selectedCommodity: PropTypes.string.isRequired,
   selectedRegime: PropTypes.string.isRequired,
   isLoading: PropTypes.bool, // Optional prop to indicate loading state

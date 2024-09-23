@@ -352,13 +352,22 @@ export function getAnalysisResults(data, commodity, regime, analysisType) {
 export function getCointegrationResults(data, commodity, regime) {
   console.log(`Fetching Cointegration results for Commodity: "${commodity}", Regime: "${regime}"`);
   
-  const key = `('${commodity}', '${regime}')`;
-  if (!data.cointegrationResults || !data.cointegrationResults[key]) {
-    console.warn(`No Cointegration data found for key: "${key}"`);
+  if (!data.ecmAnalysisResults || !Array.isArray(data.ecmAnalysisResults)) {
+    console.warn('No ECM analysis results found in data or data is not an array.');
     return null;
   }
 
-  const cointegrationResults = data.cointegrationResults[key];
+  // Find the specific result object matching the commodity and regime
+  const result = data.ecmAnalysisResults.find(
+    (entry) => entry.commodity === commodity && entry.regime === regime
+  );
+
+  if (!result || !result.cointegration) {
+    console.warn(`No Cointegration data found for Commodity: "${commodity}", Regime: "${regime}"`);
+    return null;
+  }
+
+  const cointegrationResults = result.cointegration;
   console.log('Cointegration results:', cointegrationResults);
   return cointegrationResults;
 }
