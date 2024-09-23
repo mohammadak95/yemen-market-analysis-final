@@ -215,11 +215,14 @@ export function getAnalysisResults(data, commodity, regime, analysisType) {
     switch (analysisType) {
       case 'Cointegration Analysis':
         return getCointegrationResults(data, commodity, regime);
+
       case 'Error Correction Model':
         return getECMResults(data, commodity, regime);
+
       case 'Price Differentials':
         return getPriceDifferentialResults(data, commodity, regime);
-      case 'Spatial Analysis':
+
+      case 'Spatial Analysis': {
         console.log('Fetching Spatial Analysis results...');
         if (!data.spatialData || !data.spatialData.spatialAnalysisResults) {
           console.warn('No Spatial Analysis data found in data.');
@@ -232,7 +235,7 @@ export function getAnalysisResults(data, commodity, regime, analysisType) {
         const availableCommodities = new Set();
         const availableRegimes = new Set();
 
-        spatialResultsArray.forEach(entry => {
+        spatialResultsArray.forEach((entry) => {
           availableCommodities.add(entry.commodity);
           availableRegimes.add(entry.regime);
         });
@@ -251,23 +254,30 @@ export function getAnalysisResults(data, commodity, regime, analysisType) {
           console.warn(`No Spatial Analysis result found for Commodity: "${commodity}", Regime: "${regime}"`);
           return null;
         }
+      }
+
       case 'Granger Causality':
         return getGrangerCausalityResults(data, commodity, regime);
+
       case 'Stationarity':
         return getStationarityResults(data, commodity, regime);
+
       default:
         console.error(`Unknown analysis type: "${analysisType}"`);
         return null;
     }
   } catch (error) {
-    console.error(`Error in getAnalysisResults for "${analysisType}" with Commodity: "${commodity}", Regime: "${regime}":`, error);
+    console.error(
+      `Error in getAnalysisResults for "${analysisType}" with Commodity: "${commodity}", Regime: "${regime}":`,
+      error
+    );
     return null;
   }
 }
 
 function getCointegrationResults(data, commodity, regime) {
   console.log(`Fetching Cointegration results for Commodity: "${commodity}", Regime: "${regime}"`);
-  
+
   if (!data.ecmAnalysisResults || !Array.isArray(data.ecmAnalysisResults)) {
     console.warn('No ECM analysis results found in data or data is not an array.');
     return null;
@@ -288,7 +298,7 @@ function getCointegrationResults(data, commodity, regime) {
 
 function getGrangerCausalityResults(data, commodity, regime) {
   console.log(`Fetching Granger Causality results for Commodity: "${commodity}", Regime: "${regime}"`);
-  
+
   const key = `('${commodity}', '${regime}')`;
   if (!data.grangerCausalityResults || !data.grangerCausalityResults[key]) {
     console.warn(`No Granger Causality data found for key: "${key}"`);
@@ -301,7 +311,7 @@ function getGrangerCausalityResults(data, commodity, regime) {
 
 function getStationarityResults(data, commodity, regime) {
   console.log(`Fetching Stationarity results for Commodity: "${commodity}", Regime: "${regime}"`);
-  
+
   const key = `('${commodity}', '${regime}')`;
   if (!data.stationarityResults || !data.stationarityResults[key]) {
     console.warn(`No Stationarity data found for key: "${key}"`);
@@ -314,14 +324,14 @@ function getStationarityResults(data, commodity, regime) {
 
 function getECMResults(data, commodity, regime) {
   console.log(`Fetching ECM results for Commodity: "${commodity}", Regime: "${regime}"`);
-  
+
   if (!data.ecmAnalysisResults) {
     console.warn(`No ECM analysis results found in data.`);
     return null;
   }
 
-  const ecmResults = data.ecmAnalysisResults.find(result => 
-    result.commodity === commodity && result.regime === regime
+  const ecmResults = data.ecmAnalysisResults.find(
+    (result) => result.commodity === commodity && result.regime === regime
   );
 
   if (!ecmResults) {
@@ -336,7 +346,9 @@ function getECMResults(data, commodity, regime) {
 function getPriceDifferentialResults(data, commodity, regime) {
   console.log(`Fetching Price Differentials for Commodity: "${commodity}", Regime: "${regime}"`);
 
-  const regimeKeys = Object.keys(data.priceDifferentialResults).filter((key) => key.startsWith(`${regime}_`));
+  const regimeKeys = Object.keys(data.priceDifferentialResults).filter((key) =>
+    key.startsWith(`${regime}_`)
+  );
 
   if (regimeKeys.length === 0) {
     console.warn(`No data found for regime: "${regime}"`);
@@ -361,7 +373,9 @@ function getPriceDifferentialResults(data, commodity, regime) {
   });
 
   if (aggregatedResults.length === 0) {
-    console.warn(`No Price Differential data available for Commodity: "${commodity}" in Regime: "${regime}"`);
+    console.warn(
+      `No Price Differential data available for Commodity: "${commodity}" in Regime: "${regime}"`
+    );
     return null;
   }
 

@@ -1,6 +1,6 @@
 // src/components/FlowMap.js
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-polylinedecorator';
@@ -30,21 +30,7 @@ const FlowMap = ({ data, selectedMarket, title, description }) => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log('FlowMap data or selectedMarket updated:', { dataLength: data?.length, selectedMarket });
-
-    if (mapRef.current && Array.isArray(data) && data.length > 0) {
-      const filteredFlows = data.filter(flow => {
-        if (!selectedMarket) return true;
-        return flow.source === selectedMarket || flow.target === selectedMarket;
-      });
-
-      console.log('Filtered flows:', filteredFlows.length);
-      createFlowArrows(filteredFlows);
-    }
-  }, [data, selectedMarket]);
-
-  const createFlowArrows = flows => {
+  const createFlowArrows = useCallback((flows) => {
     console.log('Creating flow arrows...');
 
     if (flowsLayerRef.current) {
@@ -102,7 +88,21 @@ const FlowMap = ({ data, selectedMarket, title, description }) => {
         console.warn('Invalid coordinates:', flow);
       }
     });
-  };
+  }, [selectedMarket]);
+
+  useEffect(() => {
+    console.log('FlowMap data or selectedMarket updated:', { dataLength: data?.length, selectedMarket });
+
+    if (mapRef.current && Array.isArray(data) && data.length > 0) {
+      const filteredFlows = data.filter(flow => {
+        if (!selectedMarket) return true;
+        return flow.source === selectedMarket || flow.target === selectedMarket;
+      });
+
+      console.log('Filtered flows:', filteredFlows.length);
+      createFlowArrows(filteredFlows);
+    }
+  }, [data, selectedMarket, createFlowArrows]);
 
   const isValidLatLng = (lat, lng) => {
     const parsedLat = parseFloat(lat);

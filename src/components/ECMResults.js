@@ -28,12 +28,12 @@ import {
 import PropTypes from 'prop-types';
 
 // Styled components
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
-  marginTop: theme.spacing(3),
+const StyledPaper = styled(Paper)(() => ({
+  padding: 16,
+  marginTop: 24,
 }));
 
-const StyledTable = styled(Table)(({ theme }) => ({
+const StyledTable = styled(Table)(() => ({
   minWidth: 250,
 }));
 
@@ -91,16 +91,6 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
     console.log(`Active ECM tab changed to: ${newValue}`);
   }, []);
 
-  if (!data || !data.regression || !data.regression.coefficients) {
-    return (
-      <StyledPaper elevation={3}>
-        <Typography variant="h6" color="error">
-          No ECM data available for {selectedCommodity} in the {selectedRegime} regime.
-        </Typography>
-      </StyledPaper>
-    );
-  }
-
   // Data processing hooks
   const regressionData = useMemo(() => {
     if (!data?.regression?.coefficients) {
@@ -118,7 +108,7 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
   }, [data]);
 
   const diagnosticData = useMemo(() => {
-    if (!data.diagnostics) {
+    if (!data?.diagnostics) {
       console.warn('Invalid or missing diagnostic data');
       return [];
     }
@@ -169,30 +159,19 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
   }, [data]);
 
   const irfData = useMemo(() => {
-    if (!data.irfs || !data.irfs.impulse_response || !data.irfs.impulse_response.irf) {
+    if (!data?.irfs?.impulse_response?.irf) {
       console.warn('Invalid or missing IRF data');
       return [];
     }
 
-    const periods = data.irfs.impulse_response.irf.length;
-    const irfDataArray = [];
-
-    for (let i = 0; i < periods; i++) {
-      const irfAtTime = data.irfs.impulse_response.irf[i];
-      // irfAtTime is [[a,b],[c,d]]
-      const responseUsdpriceToConflict = irfAtTime[0][1];
-
-      irfDataArray.push({
-        period: i,
-        responseUsdpriceToConflict,
-      });
-    }
-
-    return irfDataArray;
+    return data.irfs.impulse_response.irf.map((irfAtTime, i) => ({
+      period: i,
+      responseUsdpriceToConflict: irfAtTime[0][1],
+    }));
   }, [data]);
 
   const residualsData = useMemo(() => {
-    if (!data.residuals || !data.fitted_values) {
+    if (!data?.residuals || !data?.fitted_values) {
       console.warn('Invalid or missing residuals data');
       return [];
     }
@@ -204,7 +183,7 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
   }, [data]);
 
   const summary = useMemo(() => {
-    if (!data.regression || !data.regression.coefficients || !data.regression.p_values) {
+    if (!data?.regression?.coefficients || !data?.regression?.p_values) {
       return '';
     }
     const impactDirection = data.regression.coefficients[1] > 0 ? 'positive' : 'negative';

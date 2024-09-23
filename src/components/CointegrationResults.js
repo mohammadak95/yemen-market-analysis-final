@@ -24,7 +24,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   marginTop: theme.spacing(3),
 }));
 
-const StyledTable = styled(Table)(({ theme }) => ({
+const StyledTable = styled(Table)(() => ({
   minWidth: 250,
 }));
 
@@ -84,6 +84,8 @@ const ResultTableRow = React.memo(({ label, value, tooltip }) => (
     </TableCell>
   </TableRow>
 ));
+
+ResultTableRow.displayName = 'ResultTableRow';
 
 ResultTableRow.propTypes = {
   label: PropTypes.string.isRequired,

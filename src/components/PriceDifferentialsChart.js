@@ -152,7 +152,7 @@ const PriceDifferentialsChart = React.memo(({ data, commodity, regime, combinedM
         <Line
           type="monotone"
           dataKey="differential"
-          stroke="#8884d8"
+          stroke={significanceColor(selectedData?.p_value)}
           name="Price Differential"
           strokeWidth={2}
         />

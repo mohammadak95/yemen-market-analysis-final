@@ -1,5 +1,3 @@
-// src/components/GrangerCausalityChart.js
-
 'use client';
 
 import React, { useMemo } from 'react';
@@ -20,7 +18,8 @@ import { Box, Typography, Chip } from '@mui/material';
 
 const GrangerCausalityChart = ({ data, commodity, regime }) => {
   const variableName = 'conflict_intensity';
-  const conflictData = data[variableName] || {};
+
+  const conflictData = useMemo(() => data[variableName] || {}, [data, variableName]);
 
   const chartData = useMemo(() => {
     return Object.keys(conflictData)

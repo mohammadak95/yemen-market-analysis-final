@@ -19,7 +19,7 @@ export function applySeasonalAdjustment(
     const priceKey = showLocalCurrency ? `price_${regime}` : `usdPrice_${regime}`;
 
     // Check if the price key exists in the data
-    if (!adjustedData[0].hasOwnProperty(priceKey)) {
+    if (!Object.prototype.hasOwnProperty.call(adjustedData[0], priceKey)) {
       console.warn(`Price key "${priceKey}" not found in data.`);
       return;
     }
@@ -108,7 +108,7 @@ export function applySmoothing(
     const priceKey = showLocalCurrency ? `price_${regime}` : `usdPrice_${regime}`;
 
     // Check if the price key exists in the data
-    if (!smoothedData[0].hasOwnProperty(priceKey)) {
+    if (!Object.prototype.hasOwnProperty.call(smoothedData[0], priceKey)) {
       console.warn(`Price key "${priceKey}" not found in data.`);
       return;
     }

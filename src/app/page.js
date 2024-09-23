@@ -4,8 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import Dashboard from '@/components/Dashboard';
 
+
 export default function Home() {
-  const pathname = usePathname();
   const basePath = process.env.NODE_ENV === 'production' ? '/yemen-market-analysis-final' : '';
 
   return (

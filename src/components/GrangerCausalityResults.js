@@ -23,7 +23,7 @@ const GrangerCausalityResults = ({ data }) => {
           <YAxis label={{ value: 'p-value', angle: -90, position: 'insideLeft' }} />
           <Tooltip />
           <Legend />
-          {Object.keys(chartData[0]).filter(key => key !== 'lag').map((key, index) => (
+          {Object.keys(chartData[0]).filter(key => key !== 'lag').map((key) => (
             <Line key={key} type="monotone" dataKey={key} stroke={`#${Math.floor(Math.random()*16777215).toString(16)}`} />
           ))}
         </LineChart>

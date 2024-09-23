@@ -1,6 +1,4 @@
-// src/components/ModelDiagnostics.js
-
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography,
@@ -27,11 +25,6 @@ const formatNumber = (num) => (num !== null && num !== undefined ? num.toFixed(2
 // Function to determine significance color
 const significanceColor = (pValue) => {
   return pValue < 0.05 ? '#FF0000' : '#8884d8'; // Red for significant, default blue otherwise
-};
-
-// Function to determine significance icon
-const significanceIcon = (pValue) => {
-  return pValue < 0.05 ? <ArrowUpwardIcon color="error" /> : <ArrowDownwardIcon color="primary" />;
 };
 
 // Custom Tooltip for ScatterChart
@@ -78,27 +71,54 @@ CustomBarTooltip.propTypes = {
   payload: PropTypes.array,
 };
 
+// Implementing standard normal quantile function (inverse CDF)
+const smppNorm = {
+  ppf: function (p) {
+    if (p < 0 || p > 1) return NaN;
+    if (p === 0) return -Infinity;
+    if (p === 1) return Infinity;
+    const a1 = -39.6968302866538, a2 = 220.946098424521, a3 = -275.928510446969,
+      a4 = 138.357751867269, a5 = -30.6647980661472, a6 = 2.50662827745924;
+    const b1 = -54.4760987982241, b2 = 161.585836858041, b3 = -155.698979859887,
+      b4 = 66.8013118877197, b5 = -13.2806815528857;
+    const c1 = -0.00778489400243029, c2 = -0.322396458041136, c3 = -2.40075827716184,
+      c4 = -2.54973253934373, c5 = 4.37466414146497, c6 = 2.93816398269878;
+    const d1 = 0.00778469570904146, d2 = 0.32246712907004, d3 = 2.445134137143,
+      d4 = 3.75440866190742;
+    const pLow = 0.02425, pHigh = 1 - pLow;
+    let q, r;
+    if (p < pLow) {
+      q = Math.sqrt(-2 * Math.log(p));
+      return (((((c1 * q + c2) * q + c3) * q + c4) * q + c5) * q + c6) /
+        ((((d1 * q + d2) * q + d3) * q + d4) * q + 1);
+    } else if (p <= pHigh) {
+      q = p - 0.5;
+      r = q * q;
+      return (((((a1 * r + a2) * r + a3) * r + a4) * r + a5) * r + a6) * q /
+        (((((b1 * r + b2) * r + b3) * r + b4) * r + b5) * r + 1);
+    } else {
+      q = Math.sqrt(-2 * Math.log(1 - p));
+      return -(((((c1 * q + c2) * q + c3) * q + c4) * q + c5) * q + c6) /
+        ((((d1 * q + d2) * q + d3) * q + d4) * q + 1);
+    }
+  }
+};
+
 // Main ModelDiagnostics Component
 const ModelDiagnostics = ({ data }) => {
-  if (!data) {
-    return <Typography>No diagnostics available.</Typography>;
-  }
-
   const {
-    residualsPlotData, // Array of { fitted: number, residual: number, pValue: number }
-    breuschPaganTest,
-    durbinWatsonStatistic,
-    normalityTest,
-    jarqueBeraTest, // Assuming you added Jarque-Bera Test in Python script
-  } = data;
+    residualsPlotData = [],
+    breuschPaganTest = {},
+    durbinWatsonStatistic = 0,
+    jarqueBeraTest = {},
+  } = data || {};
 
   // Prepare data for Histogram
   const histogramData = useMemo(() => {
-    if (!residualsPlotData || residualsPlotData.length === 0) return [];
     const residuals = residualsPlotData.map(d => d.residual);
     const bins = 10;
-    const min = Math.min(...residuals);
-    const max = Math.max(...residuals);
+    const min = Math.min(...residuals, 0);
+    const max = Math.max(...residuals, 0);
     const binWidth = (max - min) / bins;
     const histogram = Array(bins).fill(0).map((_, i) => ({
       bin: `${(min + i * binWidth).toFixed(2)} - ${(min + (i + 1) * binWidth).toFixed(2)}`,
@@ -112,81 +132,19 @@ const ModelDiagnostics = ({ data }) => {
   }, [residualsPlotData]);
 
   // Prepare data for QQ Plot
-  const qqPlotData = useMemo(() => {
-    if (!residualsPlotData || residualsPlotData.length === 0) return { x: [], y: [] };
-    const residuals = residualsPlotData.map(d => d.residual).sort((a, b) => a - b);
-    const n = residuals.length;
-    const theoreticalQuantiles = residuals.map((res, i) => {
-      const p = (i + 0.5) / n;
-      return smppNorm.ppf(p); // Using scipy-like ppf, but needs to be implemented in JS or use precomputed values
-    });
-    return { x: theoreticalQuantiles, y: residuals };
-  }, [residualsPlotData]);
-
-  // Placeholder for theoreticalQuantiles calculation
-  // In a real scenario, you'd calculate the theoretical quantiles or use a library
-  // Here, we'll mock it with a simple linear relation for demonstration
-  const mockQQPlotData = useMemo(() => {
-    if (!residualsPlotData || residualsPlotData.length === 0) return { x: [], y: [] };
-    const residuals = residualsPlotData.map(d => d.residual).sort((a, b) => a - b);
-    const n = residuals.length;
-    const quantiles = residuals.map((res, i) => {
-      const p = (i + 0.5) / n;
-      // Approximate normal quantiles
-      return smppNorm.ppf(p); // Implement or replace with actual quantile calculation
-    });
-    return { x: quantiles, y: residuals };
-  }, [residualsPlotData]);
-
-  // Implementing standard normal quantile function (inverse CDF)
-  // Using approximation from https://en.wikipedia.org/wiki/Probit
-  const smppNorm = {
-    ppf: function (p) {
-      // This is a placeholder. For accurate results, use a library like jStat or similar.
-      // Here, we'll return the z-score corresponding to p using a simple approximation.
-      if (p < 0 || p > 1) return NaN;
-      if (p === 0) return -Infinity;
-      if (p === 1) return Infinity;
-      // Approximation formula (Peter John Acklam's approximation)
-      const a1 = -39.6968302866538, a2 = 220.946098424521, a3 = -275.928510446969,
-            a4 = 138.357751867269, a5 = -30.6647980661472, a6 = 2.50662827745924;
-      const b1 = -54.4760987982241, b2 = 161.585836858041, b3 = -155.698979859887,
-            b4 = 66.8013118877197, b5 = -13.2806815528857;
-      const c1 = -0.00778489400243029, c2 = -0.322396458041136, c3 = -2.40075827716184,
-            c4 = -2.54973253934373, c5 = 4.37466414146497, c6 = 2.93816398269878;
-      const d1 = 0.00778469570904146, d2 = 0.32246712907004, d3 = 2.445134137143,
-            d4 = 3.75440866190742;
-      const pLow = 0.02425, pHigh = 1 - pLow;
-    
-      let q, r;
-      if (p < pLow) {
-        // Rational approximation for lower region
-        q = Math.sqrt(-2 * Math.log(p));
-        return (((((c1 * q + c2) * q + c3) * q + c4) * q + c5) * q + c6) /
-               ((((d1 * q + d2) * q + d3) * q + d4) * q + 1);
-      } else if (p <= pHigh) {
-        // Rational approximation for central region
-        q = p - 0.5;
-        r = q * q;
-        return (((((a1 * r + a2) * r + a3) * r + a4) * r + a5) * r + a6) * q /
-               (((((b1 * r + b2) * r + b3) * r + b4) * r + b5) * r + 1);
-      } else {
-        // Rational approximation for upper region
-        q = Math.sqrt(-2 * Math.log(1 - p));
-        return -(((((c1 * q + c2) * q + c3) * q + c4) * q + c5) * q + c6) /
-                ((((d1 * q + d2) * q + d3) * q + d4) * q + 1);
-      }
-    }
-  };
-
-  // Prepare data for QQ Plot using mock quantiles
   const qqData = useMemo(() => {
-    if (!residualsPlotData || residualsPlotData.length === 0) return { x: [], y: [] };
     const residuals = residualsPlotData.map(d => d.residual).sort((a, b) => a - b);
     const n = residuals.length;
-    const theoreticalQuantiles = residuals.map((res, i) => smppNorm.ppf((i + 0.5) / n));
+    const theoreticalQuantiles = residuals.map((_, i) => {
+      const p = (i + 0.5) / n;
+      return smppNorm.ppf(p);
+    });
     return { x: theoreticalQuantiles, y: residuals };
   }, [residualsPlotData]);
+
+  if (!data) {
+    return <Typography>No diagnostics available.</Typography>;
+  }
 
   return (
     <div>
@@ -377,21 +335,17 @@ ModelDiagnostics.propTypes = {
         residual: PropTypes.number.isRequired,
         pValue: PropTypes.number.isRequired,
       })
-    ).isRequired,
+    ),
     breuschPaganTest: PropTypes.shape({
-      statistic: PropTypes.number.isRequired,
-      pValue: PropTypes.number.isRequired,
-    }).isRequired,
-    durbinWatsonStatistic: PropTypes.number.isRequired,
-    normalityTest: PropTypes.shape({
-      statistic: PropTypes.number.isRequired,
-      pValue: PropTypes.number.isRequired,
-    }).isRequired,
-    jarqueBeraTest: PropTypes.shape({ // Added Jarque-Bera Test
-      statistic: PropTypes.number.isRequired,
-      pValue: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
+      statistic: PropTypes.number,
+      pValue: PropTypes.number,
+    }),
+    durbinWatsonStatistic: PropTypes.number,
+    jarqueBeraTest: PropTypes.shape({
+      statistic: PropTypes.number,
+      pValue: PropTypes.number,
+    }),
+  }),
 };
 
 export default ModelDiagnostics;
