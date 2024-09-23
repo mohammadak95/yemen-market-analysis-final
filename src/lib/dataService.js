@@ -1,11 +1,7 @@
 // src/lib/dataService.js
 
 import Papa from 'papaparse';
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig();
-
-const basePath = publicRuntimeConfig.basePath || '';
+import { basePath } from '../config';
 
 console.log('Initializing dataService...');
 
