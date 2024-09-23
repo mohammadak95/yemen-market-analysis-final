@@ -1,6 +1,11 @@
 // src/lib/dataService.js
 
 import Papa from 'papaparse';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+
+const basePath = publicRuntimeConfig.basePath || '';
 
 console.log('Initializing dataService...');
 
@@ -8,9 +13,10 @@ let dataCache = null;
 let loadingPromise = null;
 
 async function fetchCSV(url) {
-  console.log(`Fetching CSV data from: ${url}`);
+  const fullUrl = `${basePath}${url}`;
+  console.log(`Fetching CSV data from: ${fullUrl}`);
   try {
-    const response = await fetch(url);
+    const response = await fetch(fullUrl);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -19,17 +25,17 @@ async function fetchCSV(url) {
       Papa.parse(text, {
         header: true,
         complete: (results) => {
-          console.log(`Successfully parsed CSV data from ${url}`);
+          console.log(`Successfully parsed CSV data from ${fullUrl}`);
           resolve(results.data);
         },
         error: (error) => {
-          console.error(`Error parsing CSV data from ${url}:`, error);
+          console.error(`Error parsing CSV data from ${fullUrl}:`, error);
           reject(error);
         },
       });
     });
   } catch (error) {
-    console.error(`Error fetching CSV data from ${url}:`, error);
+    console.error(`Error fetching CSV data from ${fullUrl}:`, error);
     throw error;
   }
 }
@@ -50,16 +56,16 @@ export async function loadAllData() {
     try {
       console.log('Starting to load all data...');
       const spatialData = await getSpatialData();
-      const combinedMarketData = await fetch('/Data/combined_market_data.json').then((res) => res.json());
-      const cointegrationResults = await fetch('/Data/cointegration_results.json').then((res) => res.json());
-      const grangerCausalityResults = await fetch('/Data/granger_causality_results.json').then((res) => res.json());
-      const stationarityResults = await fetch('/Data/stationarity_results.json').then((res) => res.json());
-      const priceDifferentialResults = await fetch('/Data/price_differential_results.json').then((res) => res.json());
+      const combinedMarketData = await fetch(`${basePath}/Data/combined_market_data.json`).then((res) => res.json());
+      const cointegrationResults = await fetch(`${basePath}/Data/cointegration_results.json`).then((res) => res.json());
+      const grangerCausalityResults = await fetch(`${basePath}/Data/granger_causality_results.json`).then((res) => res.json());
+      const stationarityResults = await fetch(`${basePath}/Data/stationarity_results.json`).then((res) => res.json());
+      const priceDifferentialResults = await fetch(`${basePath}/Data/price_differential_results.json`).then((res) => res.json());
 
       console.log('Loading ECM analysis results...');
       let ecmAnalysisResults;
       try {
-        const ecmResponse = await fetch('/Data/ecm_analysis_results.json');
+        const ecmResponse = await fetch(`${basePath}/Data/ecm_analysis_results.json`);
         if (!ecmResponse.ok) {
           throw new Error(`Failed to fetch ECM analysis results: ${ecmResponse.statusText}`);
         }
@@ -122,10 +128,10 @@ async function getSpatialData() {
     const residuals = await fetchCSV('/Data/choropleth_data/residuals.csv');
     console.log(`residuals data length: ${residuals.length}`);
 
-    const spatialWeights = await fetch('/Data/spatial_weights/spatial_weights.json').then((res) => res.json());
+    const spatialWeights = await fetch(`${basePath}/Data/spatial_weights/spatial_weights.json`).then((res) => res.json());
     console.log(`spatialWeights loaded. Total regions: ${Object.keys(spatialWeights).length}`);
 
-    const spatialAnalysisResults = await fetch('/Data/spatial_analysis_results.json').then((res) => res.json());
+    const spatialAnalysisResults = await fetch(`${basePath}/Data/spatial_analysis_results.json`).then((res) => res.json());
     console.log(`Spatial Analysis Results loaded. Total entries: ${spatialAnalysisResults.length}`);
 
     console.log('Spatial data fetched successfully.');

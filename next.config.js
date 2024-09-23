@@ -6,12 +6,15 @@ const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: isGitHubPages ? 'export' : undefined,
+  output: 'export',
   images: {
-    unoptimized: isGitHubPages,
+    unoptimized: true,
   },
   basePath: isGitHubPages ? `/${repoName}` : '',
   assetPrefix: isGitHubPages ? `/${repoName}/` : '',
+  publicRuntimeConfig: {
+    basePath: isGitHubPages ? `/${repoName}` : '',
+  },
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
