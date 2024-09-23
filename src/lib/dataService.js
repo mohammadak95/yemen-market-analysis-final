@@ -1,7 +1,7 @@
 // src/lib/dataService.js
 
 import Papa from 'papaparse';
-import { basePath } from '../config';
+import { basePath } from './config';
 
 console.log('Initializing dataService...');
 
