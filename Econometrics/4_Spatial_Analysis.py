@@ -1,4 +1,4 @@
-# 4_Spatial_Analysis_v2.py (Fully Updated Script Without Aggregation)
+# 4_Spatial_Analysis_v2.py (Fully Updated Script With Adjustments)
 
 import os
 import sys
@@ -88,6 +88,49 @@ def create_spatial_weights(gdf):
         logger.error(f"Failed to create spatial weights matrix: {e}")
         raise
 
+def save_spatial_weights(gdf, w, output_path):
+    """
+    Save the spatial weights matrix in JSON format.
+    """
+    spatial_weights = {}
+    for region_id, neighbors in w.neighbors.items():
+        spatial_weights[gdf.iloc[region_id]['region_id']] = {
+            gdf.iloc[neighbor]['region_id']: w.weights[region_id][i]
+            for i, neighbor in enumerate(neighbors)
+        }
+
+    with open(output_path, 'w') as f:
+        json.dump(spatial_weights, f, indent=2)
+    logger.info(f"Spatial weights saved to {output_path}.")
+
+def save_flow_map(gdf, w, output_path):
+    """
+    Save flow map data in CSV format.
+    """
+    flow_data = []
+    for region_id, neighbors in w.neighbors.items():
+        for i, neighbor in enumerate(neighbors):
+            flow_data.append({
+                'source': gdf.iloc[region_id]['region_id'],
+                'source_lat': gdf.iloc[region_id].geometry.centroid.y,
+                'source_lng': gdf.iloc[region_id].geometry.centroid.x,
+                'target': gdf.iloc[neighbor]['region_id'],
+                'target_lat': gdf.iloc[neighbor].geometry.centroid.y,
+                'target_lng': gdf.iloc[neighbor].geometry.centroid.x,
+                'weight': w.weights[region_id][i]
+            })
+    
+    pd.DataFrame(flow_data).to_csv(output_path, index=False)
+    logger.info(f"Flow map saved to {output_path}.")
+
+def save_average_prices(gdf, output_path):
+    """
+    Save average prices for each region in CSV format.
+    """
+    average_prices = gdf.groupby('region_id')['usdprice'].mean().reset_index()
+    average_prices.to_csv(output_path, index=False)
+    logger.info(f"Average prices saved to {output_path}.")
+
 def calculate_spatial_lag(gdf, w, variable):
     """
     Calculate the spatial lag of a specified variable.
@@ -116,8 +159,6 @@ def run_ridge_regression(X, y, alpha=1.0):
 def calculate_p_values(model, X, y):
     """
     Calculate p-values for Ridge regression coefficients.
-    Note: Ridge regression does not provide p-values by default.
-    This is an approximation and should be interpreted with caution.
     """
     try:
         mse = mean_squared_error(y, model.predict(X))
@@ -286,6 +327,16 @@ def main():
         logger.info(f"Modified GeoJSON with 'region_id' saved to {FINAL_GEOJSON}.")
     except Exception as e:
         logger.error(f"Failed to save modified GeoJSON: {e}")
+
+    # Step 6: Save spatial weights, flow maps, and average prices
+    spatial_weights_path = RESULTS_DIR / "spatial_weights.json"
+    save_spatial_weights(gdf, create_spatial_weights(gdf), spatial_weights_path)
+
+    flow_map_path = RESULTS_DIR / "flow_maps.csv"
+    save_flow_map(gdf, create_spatial_weights(gdf), flow_map_path)
+
+    average_prices_path = RESULTS_DIR / "average_prices.csv"
+    save_average_prices(gdf, average_prices_path)
 
 if __name__ == "__main__":
     main()

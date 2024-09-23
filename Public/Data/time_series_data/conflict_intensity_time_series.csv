@@ -1,4 +1,4 @@
-region_id,date,conflict_intensity
+region_id,date,avg_conflict_intensity
 Aden City_Aden,2015-01-01,3.295836866004329
 Aden City_Aden,2015-02-01,1.3862943611198906
 Aden City_Aden,2015-03-01,1.0986122886681098

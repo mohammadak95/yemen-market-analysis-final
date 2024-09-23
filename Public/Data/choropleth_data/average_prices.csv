@@ -1,4 +1,4 @@
-region_id,date,usdprice
+region_id,date,avg_usdprice
 Aden City_Aden,2015-01-01,1.00736
 Aden City_Aden,2015-02-01,0.9678333333333333
 Aden City_Aden,2015-03-01,1.0737999999999999

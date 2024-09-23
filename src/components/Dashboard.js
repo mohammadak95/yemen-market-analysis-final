@@ -37,14 +37,12 @@ import {
   Select,
   InputLabel,
   FormControl,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Checkbox,
   ListItemButton,
   Box,
+  ListSubheader,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 
 const DynamicMethodology = dynamic(() => import('./Methodology'), { ssr: false });
@@ -291,33 +289,23 @@ export default function Dashboard() {
 
   const analysisOptions = [
     {
-      category: 'Background',
       analyses: ['Literature Review', 'Methodology'],
     },
     {
-      category: 'Cointegration Analysis',
       analyses: ['Cointegration Analysis'],
     },
     {
-      category: 'Granger Causality Tests',
       analyses: ['Granger Causality'],
     },
     {
-      category: 'Error Correction Models',
       analyses: ['Error Correction Model'],
     },
     {
-      category: 'Spatial Analysis',
       analyses: ['Spatial Analysis'],
     },
     {
-      category: 'Price Differential Analysis',
       analyses: ['Price Differentials'],
-    },
-    {
-      category: 'Stationarity Tests',
-      analyses: ['Stationarity'],
-    },
+    }
   ];
 
   const drawerContent = (
@@ -381,29 +369,25 @@ export default function Dashboard() {
         </ListItem>
         <Divider />
         {/* Analysis Options */}
-        {analysisOptions.map((category) => (
-          <Accordion key={category.category}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="subtitle1">{category.category}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <List>
-                {category.analyses.map((analysis) => (
-                  <ListItem
-                    key={analysis}
-                    disablePadding
-                    selected={selectedAnalysis === analysis}
-                    onClick={() => setSelectedAnalysis(analysis)}
-                  >
-                    <ListItemButton>
-                      <ListItemText primary={analysis} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </List>
-            </AccordionDetails>
-          </Accordion>
-        ))}
+        <List>
+          {analysisOptions.map((category) => (
+            <React.Fragment key={category.category}>
+              <ListSubheader>{category.category}</ListSubheader>
+              {category.analyses.map((analysis) => (
+                <ListItem
+                  key={analysis}
+                  disablePadding
+                  selected={selectedAnalysis === analysis}
+                  onClick={() => setSelectedAnalysis(analysis)}
+                >
+                  <ListItemButton>
+                    <ListItemText primary={analysis} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </React.Fragment>
+          ))}
+        </List>
       </List>
     </div>
   );
