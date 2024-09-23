@@ -1,8 +1,8 @@
 // src/components/Explanation.js
-
+/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 
-const Explanation = ({ analysisType, commodity, regime, results }) => {
+const Explanation = ({ analysisType, commodity, regime }) => {
   const renderECMExplanation = () => {
     return (
       <div className="p-4 bg-gray-800 rounded shadow">

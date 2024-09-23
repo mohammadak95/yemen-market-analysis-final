@@ -1,6 +1,6 @@
 // ChartContainer.js
 import React from 'react';
-import { ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import { ResponsiveContainer } from 'recharts';
 import PropTypes from 'prop-types';
 
 const ChartContainer = ({ children, data, xAxisLabel, yAxisLabel }) => (

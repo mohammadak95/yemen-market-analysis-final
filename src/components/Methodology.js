@@ -1,6 +1,8 @@
 // File: src/components/Methodology.js
 
-'use cl'
+
+'use client'; // Mark this file as a client-side component
+/* eslint-disable react/no-unescaped-entities */
 
 import React, { useState } from 'react';
 import { Box, Typography, Tabs, Tab } from '@mui/material';

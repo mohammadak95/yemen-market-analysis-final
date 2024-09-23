@@ -3,7 +3,7 @@ import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const DataTable = ({ columns, data, title }) => (
+const DataTable = ({ columns, data }) => (
   <TableContainer component={Paper}>
     <Table size="small">
       <TableHead>

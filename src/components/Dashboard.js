@@ -10,6 +10,7 @@ import {
   getAvailableRegimes,
   getCombinedMarketData,
   getAnalysisResults,
+  getSpatialData,
 } from '../lib/dataService';
 import {
   applySeasonalAdjustment,
@@ -331,11 +332,11 @@ export default function Dashboard() {
     {
       category: 'Econometric Analyses',
       analyses: [
+        'Price Differentials',
         'Cointegration Analysis',
         'Granger Causality',
         'Error Correction Model',
         'Spatial Analysis',
-        'Price Differentials',
       ],
     },
   ];

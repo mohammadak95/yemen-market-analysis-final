@@ -1,0 +1,18 @@
+{
+  "ignoreDirs": [
+    "node_modules",
+    ".next",
+    "out",
+    "public",
+    "scripts"
+  ],
+  "ignoreMatches": [
+    "**/*.test.js",
+    "**/*.spec.js",
+    "**/example-*.js"
+  ],
+  "specials": [
+    "depcheck-svelte",
+    "depcheck-webpack"
+  ]
+}

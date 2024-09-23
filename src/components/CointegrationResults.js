@@ -121,7 +121,7 @@ const CointegrationResults = ({ data, selectedCommodity, selectedRegime, isLoadi
 
   // Destructure the necessary parts of the data prop
   const { engle_granger, price_transformation, conflict_transformation } = data;
-  const { cointegration_statistic, p_value, critical_values, cointegrated, rho } = engle_granger;
+  const { cointegration_statistic, p_value, critical_values, rho } = engle_granger;
 
   // Determine if cointegration is present based on p-value < 0.05
   const indicatesCointegration = p_value < 0.05;
@@ -295,5 +295,7 @@ CointegrationResults.propTypes = {
 CointegrationResults.defaultProps = {
   isLoading: false,
 };
+
+CointegrationResults.displayName = 'CointegrationResults';
 
 export default CointegrationResults;

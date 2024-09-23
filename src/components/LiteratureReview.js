@@ -1,8 +1,9 @@
 // src/components/LiteratureReview.js
 
+/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import { Typography, Paper } from '@mui/material';
-import { MathJaxContext, MathJax } from 'better-react-mathjax';
+import { MathJaxContext } from 'better-react-mathjax';
 
 const LiteratureReview = () => {
   return (

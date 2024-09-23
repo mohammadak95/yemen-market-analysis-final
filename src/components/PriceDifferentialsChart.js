@@ -4,7 +4,6 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   LineChart, Line, XAxis, YAxis, Tooltip as RechartsTooltip, Legend, ResponsiveContainer, CartesianGrid,
-  ScatterChart, Scatter, ZAxis, Cell,
 } from 'recharts';
 import {
   Box, Typography, FormControl, InputLabel, Select, MenuItem, Table, TableBody,

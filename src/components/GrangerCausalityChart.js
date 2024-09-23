@@ -16,7 +16,7 @@ import {
   ReferenceLine,
   Brush,
 } from 'recharts';
-import { Box, Typography, Chip, Zoom } from '@mui/material';
+import { Box, Typography, Chip } from '@mui/material';
 
 const GrangerCausalityChart = ({ data, commodity, regime }) => {
   const variableName = 'conflict_intensity';

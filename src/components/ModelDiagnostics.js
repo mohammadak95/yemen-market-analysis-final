@@ -20,7 +20,6 @@ import {
 import Plot from 'react-plotly.js';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { Tooltip as MuiTooltip } from '@mui/material';
 
 // Utility function to format numbers
 const formatNumber = (num) => (num !== null && num !== undefined ? num.toFixed(2) : 'N/A');

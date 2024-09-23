@@ -103,9 +103,8 @@ const ECMResults = ({ data, selectedCommodity, selectedRegime }) => {
 
   // Data processing hooks
   const regressionData = useMemo(() => {
-    if (!data.regression || !data.regression.coefficients) {
-      console.warn('Invalid or missing coefficient data');
-      return [];
+    if (!data?.regression?.coefficients) {
+      return []; // Returning empty array if data is missing
     }
     const variableNames = ['Intercept', 'ΔConflict_Intensity', 'ECT_Lagged'];
     return data.regression.coefficients.map((value, index) => ({

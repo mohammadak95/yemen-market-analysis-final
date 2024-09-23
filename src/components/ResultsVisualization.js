@@ -7,7 +7,6 @@ import { Box, Card, CardContent, Typography, Tabs, Tab } from '@mui/material';
 const PriceDifferentialsChart = React.lazy(() => import('./PriceDifferentialsChart'));
 const SpatialResults = React.lazy(() => import('./SpatialResults'));
 const GrangerCausalityChart = React.lazy(() => import('./GrangerCausalityChart'));
-const StationarityTable = React.lazy(() => import('./StationarityTable'));
 const CointegrationResults = React.lazy(() => import('./CointegrationResults'));
 const ECMResults = React.lazy(() => import('./ECMResults'));
 
@@ -37,6 +36,7 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
 
     switch (analysisType) {
       case 'Price Differentials':
+        console.log('Rendering Price Differentials for regime:', activeRegime);
         return (
           <Suspense fallback={<div>Loading Price Differentials...</div>}>
             <PriceDifferentialsChart
@@ -48,6 +48,7 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
           </Suspense>
         );
       case 'Error Correction Model':
+        console.log('Rendering ECM for regime:', activeRegime);
         if (!regimeData) {
           console.warn('ECM results not found in regime data');
           return <Typography>No ECM results available for this regime.</Typography>;
@@ -62,12 +63,14 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
           </Suspense>
         );
       case 'Spatial Analysis':
+        console.log('Rendering Spatial Analysis for regime:', activeRegime);
         return (
           <Suspense fallback={<div>Loading Spatial Analysis...</div>}>
             <SpatialResults data={regimeData} />
           </Suspense>
         );
       case 'Granger Causality':
+        console.log('Rendering Granger Causality for regime:', activeRegime);
         return (
           <Suspense fallback={<div>Loading Granger Causality...</div>}>
             <GrangerCausalityChart
@@ -77,13 +80,8 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
             />
           </Suspense>
         );
-      case 'Stationarity':
-        return (
-          <Suspense fallback={<div>Loading Stationarity...</div>}>
-            <StationarityTable data={regimeData} />
-          </Suspense>
-        );
       case 'Cointegration Analysis':
+        console.log('Rendering Cointegration Analysis for regime:', activeRegime);
         return (
           <Suspense fallback={<div>Loading Cointegration Analysis...</div>}>
             <CointegrationResults

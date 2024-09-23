@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { Box } from '@mui/material';
 
 const LeafletMap = dynamic(() => import('./LeafletMap'), {
   ssr: false,
@@ -40,10 +41,15 @@ const ChoroplethMap = ({ data, onRegionSelect, title, description }) => {
     return <div className="error-message">{error}</div>;
   }
 
+  if (!Array.isArray(data) || data.length === 0) {
+    console.warn('Data is undefined or empty in ChoroplethMap:', data);
+    return <div className="error-message">No data available for the choropleth map.</div>;
+  }
+
   console.log('Rendering ChoroplethMap component');
 
   return (
-    <div className="choropleth-map">
+    <Box className="choropleth-map">
       <h3>{title}</h3>
       <p>{description}</p>
       {yemenGeoJSON ? (
@@ -56,7 +62,7 @@ const ChoroplethMap = ({ data, onRegionSelect, title, description }) => {
       ) : (
         <div>Loading map...</div>
       )}
-    </div>
+    </Box>
   );
 };
 

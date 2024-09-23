@@ -1,5 +1,7 @@
 // File: src/components/QuickGuide.js
 
+/* eslint-disable react/no-unescaped-entities */
+
 import React from 'react';
 
 const QuickGuide = ({ onClose }) => {
