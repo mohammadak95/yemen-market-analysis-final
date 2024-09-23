@@ -1,7 +1,6 @@
-const path = require('path');
+// next.config.js
 
-const repoName = 'yemen-market-analysis-final';
-const isGitHubPages = process.env.GITHUB_PAGES === 'true';
+const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -10,33 +9,42 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: isGitHubPages ? `/${repoName}` : '',
-  assetPrefix: isGitHubPages ? `/${repoName}/` : '',
-  publicRuntimeConfig: {
-    basePath: isGitHubPages ? `/${repoName}` : '',
-  },
+  basePath: '/yemen-market-analysis-final',
+  assetPrefix: '/yemen-market-analysis-final/',
+  trailingSlash: true, // Ensures URLs end with a slash, aiding static hosting
+
   webpack: (config) => {
+    // Alias for easier imports
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, './src'),
     };
-    
+
+    // Handle CSV files
     config.module.rules.push({
       test: /\.csv$/,
-      loader: 'csv-loader',
-      options: {
-        dynamicTyping: true,
-        header: true,
-        skipEmptyLines: true,
-      },
+      use: [
+        {
+          loader: 'csv-loader',
+          options: {
+            dynamicTyping: true,
+            header: true,
+            skipEmptyLines: true,
+          },
+        },
+      ],
     });
-    
+
+    // Handle GeoJSON files (Next.js can natively handle JSON, so json-loader is unnecessary)
+    // If you still need to process GeoJSON differently, consider using 'json-loader' or similar
     config.module.rules.push({
       test: /\.geojson$/,
-      use: ['json-loader'],
-      type: 'javascript/auto',
+      type: 'json',
+      parser: {
+        parse: JSON.parse,
+      },
     });
-    
+
     return config;
   },
 };
