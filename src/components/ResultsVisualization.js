@@ -1,14 +1,15 @@
 // src/components/ResultsVisualization.js
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Card, CardContent, Typography, Tabs, Tab } from '@mui/material';
-import PriceDifferentialsChart from './PriceDifferentialsChart';
-import SpatialResults from './SpatialResults';
-import GrangerCausalityChart from './GrangerCausalityChart';
-import StationarityTable from './StationarityTable';
-import CointegrationResults from './CointegrationResults';
-import ECMResults from './ECMResults';
+
+const PriceDifferentialsChart = React.lazy(() => import('./PriceDifferentialsChart'));
+const SpatialResults = React.lazy(() => import('./SpatialResults'));
+const GrangerCausalityChart = React.lazy(() => import('./GrangerCausalityChart'));
+const StationarityTable = React.lazy(() => import('./StationarityTable'));
+const CointegrationResults = React.lazy(() => import('./CointegrationResults'));
+const ECMResults = React.lazy(() => import('./ECMResults'));
 
 const ResultsVisualization = React.memo(({ results, analysisType, commodity, selectedRegimes, combinedMarketDates }) => {
   const [activeRegime, setActiveRegime] = useState(selectedRegimes[0]);
@@ -23,7 +24,6 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
     console.log('Active regime:', activeRegime);
     console.log('Full results object:', results);
 
-    // Ensure regimeData is always an object, unwrap if it's an array with a single element
     const regimeData = Array.isArray(results[activeRegime]) && results[activeRegime].length > 0 
       ? results[activeRegime][0] 
       : results[activeRegime];
@@ -37,51 +37,61 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
 
     switch (analysisType) {
       case 'Price Differentials':
-        console.log('Rendering Price Differentials for regime:', activeRegime);
         return (
-          <PriceDifferentialsChart
-            data={regimeData}
-            commodity={commodity}
-            regime={activeRegime}
-            combinedMarketDates={combinedMarketDates}
-          />
+          <Suspense fallback={<div>Loading Price Differentials...</div>}>
+            <PriceDifferentialsChart
+              data={regimeData}
+              commodity={commodity}
+              regime={activeRegime}
+              combinedMarketDates={combinedMarketDates}
+            />
+          </Suspense>
         );
       case 'Error Correction Model':
-        console.log('Rendering ECM for regime:', activeRegime);
         if (!regimeData) {
           console.warn('ECM results not found in regime data');
           return <Typography>No ECM results available for this regime.</Typography>;
         }
         return (
-          <ECMResults
-            data={regimeData}
-            selectedCommodity={commodity}
-            selectedRegime={activeRegime}
-          />
+          <Suspense fallback={<div>Loading Error Correction Model...</div>}>
+            <ECMResults
+              data={regimeData}
+              selectedCommodity={commodity}
+              selectedRegime={activeRegime}
+            />
+          </Suspense>
         );
       case 'Spatial Analysis':
-        console.log('Rendering Spatial Analysis for regime:', activeRegime);
-        return <SpatialResults data={regimeData} />;
-      case 'Granger Causality':
-        console.log('Rendering Granger Causality for regime:', activeRegime);
         return (
-          <GrangerCausalityChart
-            data={regimeData}
-            commodity={commodity}
-            regime={activeRegime}
-          />
+          <Suspense fallback={<div>Loading Spatial Analysis...</div>}>
+            <SpatialResults data={regimeData} />
+          </Suspense>
+        );
+      case 'Granger Causality':
+        return (
+          <Suspense fallback={<div>Loading Granger Causality...</div>}>
+            <GrangerCausalityChart
+              data={regimeData}
+              commodity={commodity}
+              regime={activeRegime}
+            />
+          </Suspense>
         );
       case 'Stationarity':
-        console.log('Rendering Stationarity for regime:', activeRegime);
-        return <StationarityTable data={regimeData} />;
-      case 'Cointegration Analysis':
-        console.log('Rendering Cointegration Analysis for regime:', activeRegime);
         return (
-          <CointegrationResults
-            data={regimeData}
-            selectedCommodity={commodity}
-            selectedRegime={activeRegime}
-          />
+          <Suspense fallback={<div>Loading Stationarity...</div>}>
+            <StationarityTable data={regimeData} />
+          </Suspense>
+        );
+      case 'Cointegration Analysis':
+        return (
+          <Suspense fallback={<div>Loading Cointegration Analysis...</div>}>
+            <CointegrationResults
+              data={regimeData}
+              selectedCommodity={commodity}
+              selectedRegime={activeRegime}
+            />
+          </Suspense>
         );
       default:
         console.warn(`Unsupported analysis type: ${analysisType}`);

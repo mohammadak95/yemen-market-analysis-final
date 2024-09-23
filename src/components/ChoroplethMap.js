@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-// Dynamically import LeafletMap with no SSR
 const LeafletMap = dynamic(() => import('./LeafletMap'), {
   ssr: false,
 });
@@ -13,14 +12,15 @@ const ChoroplethMap = ({ data, onRegionSelect, title, description }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch the GeoJSON from the public directory
+    console.log('ChoroplethMap component mounted. Fetching GeoJSON data...');
     const fetchGeoJSON = async () => {
       try {
-        const response = await fetch('/data/Admin1.json');
+        const response = await fetch('/Data/simplified_yemen_regions.geojson');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const geoJSON = await response.json();
+        console.log('GeoJSON data fetched successfully.');
         setYemenGeoJSON(geoJSON);
       } catch (err) {
         console.error('Error loading GeoJSON:', err);
@@ -31,9 +31,16 @@ const ChoroplethMap = ({ data, onRegionSelect, title, description }) => {
     fetchGeoJSON();
   }, []);
 
+  useEffect(() => {
+    console.log('ChoroplethMap data prop updated:', data);
+  }, [data]);
+
   if (error) {
+    console.log('Rendering error state:', error);
     return <div className="error-message">{error}</div>;
   }
+
+  console.log('Rendering ChoroplethMap component');
 
   return (
     <div className="choropleth-map">
@@ -53,4 +60,4 @@ const ChoroplethMap = ({ data, onRegionSelect, title, description }) => {
   );
 };
 
-export default ChoroplethMap;
+export default React.memo(ChoroplethMap);

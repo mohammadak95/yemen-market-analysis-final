@@ -2,7 +2,7 @@
 
 'use client';
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import {
   loadAllData,
@@ -15,11 +15,6 @@ import {
   applySeasonalAdjustment,
   applySmoothing,
 } from '../lib/dataProcessing';
-
-const LoadingSpinner = dynamic(() => import('./ui/LoadingSpinner'), { ssr: false });
-const ErrorBoundary = dynamic(() => import('./ui/ErrorBoundary'), { ssr: false });
-const QuickGuide = dynamic(() => import('./QuickGuide'), { ssr: false });
-const GuidedTour = dynamic(() => import('./GuidedTour'), { ssr: false });
 
 import {
   AppBar,
@@ -45,6 +40,10 @@ import {
 
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 
+const LoadingSpinner = dynamic(() => import('./ui/LoadingSpinner'), { ssr: false });
+const ErrorBoundary = dynamic(() => import('./ui/ErrorBoundary'), { ssr: false });
+const QuickGuide = dynamic(() => import('./QuickGuide'), { ssr: false });
+const GuidedTour = dynamic(() => import('./GuidedTour'), { ssr: false });
 const DynamicMethodology = dynamic(() => import('./Methodology'), { ssr: false });
 const DynamicLiteratureReview = dynamic(() => import('./LiteratureReview'), { ssr: false });
 const DynamicResultsVisualization = dynamic(() => import('./ResultsVisualization'), { ssr: false });
@@ -139,26 +138,38 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchInitialData = async () => {
       setIsLoading(true);
+      console.log('Fetching initial data...');
       try {
         const loadedData = await loadAllData();
+        console.log('All data loaded:', loadedData);
         setAllData(loadedData);
+
         const availableCommodities = getAvailableCommodities(loadedData.combinedMarketData);
+        console.log('Available commodities:', availableCommodities);
+
         const availableRegimes = getAvailableRegimes();
+        console.log('Available regimes:', availableRegimes);
+
         if (availableCommodities?.length > 0) {
           setCommodities(availableCommodities);
           setSelectedCommodity(availableCommodities[0]);
+          console.log('Selected commodity:', availableCommodities[0]);
         } else {
           throw new Error('No commodity data available.');
         }
+
         if (availableRegimes?.length > 0) {
           setRegimes(availableRegimes);
           setSelectedRegimes([availableRegimes[0]]);
+          console.log('Selected regimes:', [availableRegimes[0]]);
         } else {
           throw new Error('No regime data available.');
         }
+
         console.log('Loaded Analysis Results:', loadedData.ecmAnalysisResults);
       } catch (err) {
         setError(`Failed to load data: ${err.message}`);
+        console.error('Error fetching initial data:', err);
       } finally {
         setIsLoading(false);
       }
@@ -170,15 +181,18 @@ export default function Dashboard() {
   // Fetch analysis data based on selections
   const fetchAnalysisData = useCallback(async () => {
     if (!allData || !selectedCommodity || selectedRegimes.length === 0) {
+      console.warn('Insufficient data or selections to fetch analysis data.');
       return;
     }
     setIsLoading(true);
     setError(null);
+    console.log('Fetching analysis data...');
     try {
       // Fetch market data for all selected regimes
       const allRegimeData = await Promise.all(
         selectedRegimes.map(async (regime) => {
           const data = await getCombinedMarketData(allData, selectedCommodity, regime);
+          console.log(`Market data for regime "${regime}":`, data);
           return data;
         })
       );
@@ -205,34 +219,51 @@ export default function Dashboard() {
 
       // Apply seasonal adjustment if enabled
       if (seasonalAdjustment) {
+        console.log('Applying seasonal adjustment...');
         processedData = applySeasonalAdjustment(processedData, selectedRegimes, 12, !showUSDPrice);
       }
 
       // Apply data smoothing if enabled
       if (dataSmoothing) {
+        console.log('Applying data smoothing...');
         processedData = applySmoothing(processedData, selectedRegimes, 6, !showUSDPrice);
       }
 
       setMarketData(processedData);
       setCombinedMarketDates(Array.from(dates).sort());
+      console.log('Processed market data:', processedData);
 
       // Fetch analysis results for each selected regime
       const results = {};
       for (const regime of selectedRegimes) {
-        // Use getAnalysisResults for all analysis types
-        const analysisData = getAnalysisResults(allData, selectedCommodity, regime, selectedAnalysis);
+        let analysisData;
+        if (selectedAnalysis === 'Spatial Analysis') {
+          // Load spatial data if not already loaded
+          if (!allData.spatialData) {
+            console.log('Loading spatial data for Spatial Analysis...');
+            const spatialData = await getSpatialData();
+            setAllData((prevData) => ({ ...prevData, spatialData }));
+            analysisData = getAnalysisResults({ ...allData, spatialData }, selectedCommodity, regime, selectedAnalysis);
+          } else {
+            analysisData = getAnalysisResults(allData, selectedCommodity, regime, selectedAnalysis);
+          }
+        } else {
+          analysisData = getAnalysisResults(allData, selectedCommodity, regime, selectedAnalysis);
+        }
+
         if (analysisData) {
+          console.log(`Analysis results for regime "${regime}":`, analysisData);
           results[regime] = analysisData;
         } else {
           console.warn(`No data available for ${selectedCommodity} in ${regime} regime for ${selectedAnalysis}`);
           results[regime] = null;
         }
       }
+      console.log('Fetched Analysis Results:', results);
       setAnalysisResults(results);
-
     } catch (err) {
       setError(`An error occurred while fetching analysis data: ${err.message}`);
-      console.error("Fetch Analysis Data Error:", err);
+      console.error('Fetch Analysis Data Error:', err);
     } finally {
       setIsLoading(false);
     }
@@ -255,6 +286,7 @@ export default function Dashboard() {
       target: { value },
     } = event;
     const newSelectedRegimes = typeof value === 'string' ? value.split(',') : value;
+    console.log('Updated selected regimes:', newSelectedRegimes);
     setSelectedRegimes(newSelectedRegimes);
   };
 
@@ -275,37 +307,37 @@ export default function Dashboard() {
     return marketData;
   }, [marketData]);
 
-  const customizedTheme = createTheme({
-    palette: {
-      mode: darkMode ? 'dark' : 'light',
-      primary: {
-        main: '#3b82f6',
-      },
-      secondary: {
-        main: '#10b981',
-      },
-    },
-  });
+  const customizedTheme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: darkMode ? 'dark' : 'light',
+          primary: {
+            main: '#3b82f6',
+          },
+          secondary: {
+            main: '#10b981',
+          },
+        },
+      }),
+    [darkMode]
+  );
 
   const analysisOptions = [
     {
+      category: 'General',
       analyses: ['Literature Review', 'Methodology'],
     },
     {
-      analyses: ['Cointegration Analysis'],
+      category: 'Econometric Analyses',
+      analyses: [
+        'Cointegration Analysis',
+        'Granger Causality',
+        'Error Correction Model',
+        'Spatial Analysis',
+        'Price Differentials',
+      ],
     },
-    {
-      analyses: ['Granger Causality'],
-    },
-    {
-      analyses: ['Error Correction Model'],
-    },
-    {
-      analyses: ['Spatial Analysis'],
-    },
-    {
-      analyses: ['Price Differentials'],
-    }
   ];
 
   const drawerContent = (
@@ -336,6 +368,7 @@ export default function Dashboard() {
               labelId="commodity-label"
               value={selectedCommodity}
               onChange={(e) => {
+                console.log('Selected commodity changed to:', e.target.value);
                 setSelectedCommodity(e.target.value);
               }}
             >
@@ -378,7 +411,10 @@ export default function Dashboard() {
                   key={analysis}
                   disablePadding
                   selected={selectedAnalysis === analysis}
-                  onClick={() => setSelectedAnalysis(analysis)}
+                  onClick={() => {
+                    console.log('Selected analysis changed to:', analysis);
+                    setSelectedAnalysis(analysis);
+                  }}
                 >
                   <ListItemButton>
                     <ListItemText primary={analysis} />
@@ -453,40 +489,98 @@ export default function Dashboard() {
           {isClient && memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
             <>
               <div style={{ marginBottom: '24px' }} className="tour-main-chart">
-                {/* You can add additional chart controls here if needed */}
+                {/* Chart Controls */}
+                <FormControlLabel
+                  control={
+                    <MuiSwitch
+                      checked={showUSDPrice}
+                      onChange={() => {
+                        console.log('Toggled showUSDPrice to:', !showUSDPrice);
+                        setShowUSDPrice(!showUSDPrice);
+                      }}
+                      name="usdPriceSwitch"
+                      color="secondary"
+                    />
+                  }
+                  label="Show USD Price"
+                />
+                <FormControlLabel
+                  control={
+                    <MuiSwitch
+                      checked={seasonalAdjustment}
+                      onChange={() => {
+                        console.log('Toggled seasonalAdjustment to:', !seasonalAdjustment);
+                        setSeasonalAdjustment(!seasonalAdjustment);
+                      }}
+                      name="seasonalAdjustmentSwitch"
+                      color="secondary"
+                    />
+                  }
+                  label="Seasonal Adjustment"
+                />
+                <FormControlLabel
+                  control={
+                    <MuiSwitch
+                      checked={dataSmoothing}
+                      onChange={() => {
+                        console.log('Toggled dataSmoothing to:', !dataSmoothing);
+                        setDataSmoothing(!dataSmoothing);
+                      }}
+                      name="dataSmoothingSwitch"
+                      color="secondary"
+                    />
+                  }
+                  label="Data Smoothing"
+                />
               </div>
               {/* Render Charts */}
-              <DynamicCharts
-                data={memoizedMarketData}
-                selectedRegimes={selectedRegimes}
-                showUSDPrice={showUSDPrice}
-                colorPalette={colorPalette}
-                theme={customizedTheme}
-              />
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner />}>
+                  <DynamicCharts
+                    data={memoizedMarketData}
+                    selectedRegimes={selectedRegimes}
+                    showUSDPrice={showUSDPrice}
+                    colorPalette={colorPalette}
+                    theme={customizedTheme}
+                  />
+                </Suspense>
+              </ErrorBoundary>
             </>
           )}
           {/* Analysis Results */}
-          {isClient && !isLoading && Object.keys(analysisResults).length > 0 && selectedAnalysis !== 'Methodology' && selectedAnalysis !== 'Literature Review' && (
-            <ErrorBoundary>
-              <React.Suspense fallback={<LoadingSpinner />}>
-                <Box sx={{ width: '100%' }} className="tour-analysis-section">
-                  <DynamicResultsVisualization
-                    results={analysisResults}
-                    analysisType={selectedAnalysis}
-                    commodity={selectedCommodity}
-                    selectedRegimes={selectedRegimes}
-                    combinedMarketDates={combinedMarketDates}
-                  />
-                </Box>
-              </React.Suspense>
-            </ErrorBoundary>
-          )}
+          {isClient &&
+            !isLoading &&
+            Object.keys(analysisResults).length > 0 &&
+            selectedAnalysis !== 'Methodology' &&
+            selectedAnalysis !== 'Literature Review' && (
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Box sx={{ width: '100%' }} className="tour-analysis-section">
+                    <DynamicResultsVisualization
+                      results={analysisResults}
+                      analysisType={selectedAnalysis}
+                      commodity={selectedCommodity}
+                      selectedRegimes={selectedRegimes}
+                      combinedMarketDates={combinedMarketDates}
+                    />
+                  </Box>
+                </Suspense>
+              </ErrorBoundary>
+            )}
           {/* Render Methodology or Literature Review */}
           {isClient && selectedAnalysis === 'Methodology' && (
-            <DynamicMethodology />
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingSpinner />}>
+                <DynamicMethodology />
+              </Suspense>
+            </ErrorBoundary>
           )}
           {isClient && selectedAnalysis === 'Literature Review' && (
-            <DynamicLiteratureReview />
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingSpinner />}>
+                <DynamicLiteratureReview />
+              </Suspense>
+            </ErrorBoundary>
           )}
         </Content>
       </Root>
