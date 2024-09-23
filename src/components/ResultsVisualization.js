@@ -23,47 +23,35 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
     console.log('Active regime:', activeRegime);
     console.log('Full results object:', results);
 
-    const regimeData = results[activeRegime];
+    // Ensure regimeData is always an object, unwrap if it's an array with a single element
+    const regimeData = Array.isArray(results[activeRegime]) && results[activeRegime].length > 0 
+      ? results[activeRegime][0] 
+      : results[activeRegime];
 
     console.log('Regime data:', regimeData);
 
-    if (!regimeData || (Array.isArray(regimeData) && regimeData.length === 0) || Object.keys(regimeData).length === 0) {
+    if (!regimeData || Object.keys(regimeData).length === 0) {
       console.warn(`No data available for the ${activeRegime} regime.`);
       return <Typography>No data available for the {activeRegime} regime.</Typography>;
     }
 
     switch (analysisType) {
       case 'Price Differentials':
-        if (Array.isArray(regimeData)) {
-          if (regimeData.length === 0) {
-            console.warn(`No Price Differential data available for the ${activeRegime} regime.`);
-            return <Typography>No Price Differential data available for the {activeRegime} regime.</Typography>;
-          }
-          return (
-            <PriceDifferentialsChart
-              data={regimeData[0]} // Pass the first element of the array
-              commodity={commodity}
-              regime={activeRegime}
-              combinedMarketDates={combinedMarketDates}
-            />
-          );
-        } else {
-          return (
-            <PriceDifferentialsChart
-              data={regimeData}
-              commodity={commodity}
-              regime={activeRegime}
-              combinedMarketDates={combinedMarketDates}
-            />
-          );
-        }
+        console.log('Rendering Price Differentials for regime:', activeRegime);
+        return (
+          <PriceDifferentialsChart
+            data={regimeData}
+            commodity={commodity}
+            regime={activeRegime}
+            combinedMarketDates={combinedMarketDates}
+          />
+        );
       case 'Error Correction Model':
-        console.log('ECM regime data:', regimeData);
+        console.log('Rendering ECM for regime:', activeRegime);
         if (!regimeData) {
           console.warn('ECM results not found in regime data');
           return <Typography>No ECM results available for this regime.</Typography>;
         }
-        
         return (
           <ECMResults
             data={regimeData}
@@ -72,12 +60,10 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
           />
         );
       case 'Spatial Analysis':
+        console.log('Rendering Spatial Analysis for regime:', activeRegime);
         return <SpatialResults data={regimeData} />;
       case 'Granger Causality':
-        if (!regimeData) {
-          console.warn('No Granger Causality data for this regime');
-          return <Typography>No Granger Causality data available for this regime.</Typography>;
-        }
+        console.log('Rendering Granger Causality for regime:', activeRegime);
         return (
           <GrangerCausalityChart
             data={regimeData}
@@ -86,16 +72,10 @@ const ResultsVisualization = React.memo(({ results, analysisType, commodity, sel
           />
         );
       case 'Stationarity':
-        if (!regimeData) {
-          console.warn('No Stationarity data for this regime');
-          return <Typography>No Stationarity data available for this regime.</Typography>;
-        }
+        console.log('Rendering Stationarity for regime:', activeRegime);
         return <StationarityTable data={regimeData} />;
       case 'Cointegration Analysis':
-        if (!regimeData) {
-          console.warn('No Cointegration Analysis data for this regime');
-          return <Typography>No Cointegration Analysis data available for this regime.</Typography>;
-        }
+        console.log('Rendering Cointegration Analysis for regime:', activeRegime);
         return (
           <CointegrationResults
             data={regimeData}

@@ -1,122 +1,104 @@
 import json
-import csv
-import logging
 import os
-import random
+import sys
+import logging
+import traceback
+from pathlib import Path
 
-# Set up logging to write to a file
+# Setup logging
 logging.basicConfig(
-    filename='data_analysis.log',
-    level=logging.INFO,
-    format='%(message)s',
-    filemode='w'  # Overwrite the log file each time the script is run
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
 )
+logger = logging.getLogger(__name__)
 
-def analyze_json(file_path, max_depth=3, sample_size=5):
-    logging.info(f"\nAnalyzing JSON file: {file_path}")
-    if not os.path.exists(file_path):
-        logging.error(f"File not found: {file_path}")
-        return
+# Specify the relative path to the JSON file
+json_file_relative_path = Path('Public/Data/choropleth_data/ecm_analysis_results.json')
+
+def test_output_json(json_file_path):
     try:
-        # Open the file and read a portion of it
-        with open(file_path, 'r', encoding='utf-8') as f:
-            # Read the first few characters to check if it's an array or object
-            start = f.read(1)
-            f.seek(0)
-            if start == '{':
-                # JSON object, we can parse keys without loading entire file
-                data = json.load(f)
-                print_json_structure_sample(data, max_depth, sample_size)
-            elif start == '[':
-                # JSON array, sample elements
-                data = json.load(f)
-                print_json_array_sample(data, max_depth, sample_size)
-            else:
-                logging.error(f"Unsupported JSON format in file: {file_path}")
+        with open(json_file_path, 'r') as f:
+            data = json.load(f)
+        logger.info(f"Loaded data from {json_file_path}")
+        
+        # Check that data is a list
+        if not isinstance(data, list):
+            logger.error("Data is not a list.")
+            return
+        
+        # Define expected top-level keys
+        expected_keys = {'commodity', 'regime', 'ecm_results', 'stationarity', 'cointegration'}
+        ecm_expected_keys = {'regression', 'diagnostics', 'irfs', 'granger_causality', 'fit_metrics', 'residuals', 'fitted_values'}
+        regression_expected_keys = {'coefficients', 'std_errors', 't_statistics', 'p_values', 'coint_rank', 'k_ar_diff', 'sigma_u', 'llf'}
+        
+        # Iterate over each result
+        for idx, result in enumerate(data):
+            logger.info(f"Testing result {idx + 1}/{len(data)}: {result.get('commodity')} in {result.get('regime')}")
+            
+            # Check for expected keys
+            missing_keys = expected_keys - result.keys()
+            if missing_keys:
+                logger.warning(f"Missing keys in result {idx + 1}: {missing_keys}")
+                continue
+            
+            # Test 'ecm_results'
+            ecm_results = result['ecm_results']
+            ecm_missing_keys = ecm_expected_keys - ecm_results.keys()
+            if ecm_missing_keys:
+                logger.warning(f"Missing ECM result keys in result {idx + 1}: {ecm_missing_keys}")
+                continue
+            
+            # Test 'regression' results
+            regression_results = ecm_results['regression']
+            regression_missing_keys = regression_expected_keys - regression_results.keys()
+            if regression_missing_keys:
+                logger.warning(f"Missing regression keys in result {idx + 1}: {regression_missing_keys}")
+                continue
+            
+            # Validate numerical values
+            coefficients = regression_results['coefficients']
+            std_errors = regression_results['std_errors']
+            t_statistics = regression_results['t_statistics']
+            p_values = regression_results['p_values']
+            
+            # Check lengths
+            if not (len(coefficients) == len(std_errors) == len(t_statistics) == len(p_values)):
+                logger.error(f"Length mismatch in regression results for result {idx + 1}")
+                continue
+            
+            # Check p-values are between 0 and 1
+            for p_val in p_values:
+                if not (0 <= p_val <= 1):
+                    logger.error(f"Invalid p-value {p_val} in result {idx + 1}")
+            
+            # Check t-statistics and standard errors are not None
+            for t_stat, std_err in zip(t_statistics, std_errors):
+                if t_stat is None or std_err is None:
+                    logger.error(f"Missing t-statistic or standard error in result {idx + 1}")
+                
+            # Validate 'diagnostics'
+            diagnostics = ecm_results['diagnostics']
+            if diagnostics:
+                diag_p_values = ['breusch_godfrey_pvalue', 'arch_test_pvalue', 'jarque_bera_pvalue']
+                for key in diag_p_values:
+                    p_val = diagnostics.get(key)
+                    if p_val is not None and not (0 <= p_val <= 1):
+                        logger.error(f"Invalid diagnostic p-value {p_val} for {key} in result {idx + 1}")
+            
+            logger.info(f"Result {idx + 1} passed all tests.")
+    
     except Exception as e:
-        logging.error(f"Error reading JSON file {file_path}: {e}")
-
-def print_json_structure_sample(data, max_depth, sample_size, indent=0):
-    spacer = '    ' * indent
-    if isinstance(data, dict):
-        keys = list(data.keys())
-        sample_keys = random.sample(keys, min(len(keys), sample_size))
-        for key in sample_keys:
-            value = data[key]
-            logging.info(f"{spacer}- Key: {key}")
-            if indent < max_depth:
-                print_json_structure_sample(value, max_depth, sample_size, indent + 1)
-            else:
-                logging.info(f"{spacer}    - (Data truncated at max depth)")
-        if len(keys) > sample_size:
-            logging.info(f"{spacer}- ... {len(keys) - sample_size} more keys")
-    elif isinstance(data, list):
-        logging.info(f"{spacer}- List with {len(data)} elements")
-        sample_elements = random.sample(data, min(len(data), sample_size))
-        for i, item in enumerate(sample_elements):
-            logging.info(f"{spacer}  - Item {i+1}")
-            if indent < max_depth:
-                print_json_structure_sample(item, max_depth, sample_size, indent + 1)
-            else:
-                logging.info(f"{spacer}    - (Data truncated at max depth)")
-        if len(data) > sample_size:
-            logging.info(f"{spacer}- ... {len(data) - sample_size} more items")
-    else:
-        logging.info(f"{spacer}- Value: {data}")
-
-def print_json_array_sample(data, max_depth, sample_size, indent=0):
-    # This function is similar to print_json_structure_sample
-    # but tailored for arrays at the root level
-    print_json_structure_sample(data, max_depth, sample_size, indent)
-
-def analyze_csv(file_path):
-    logging.info(f"\nAnalyzing CSV file: {file_path}")
-    if not os.path.exists(file_path):
-        logging.error(f"File not found: {file_path}")
-        return
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            reader = csv.reader(f)
-            headers = next(reader, None)
-            if headers:
-                logging.info("Columns:")
-                for header in headers:
-                    logging.info(f" - {header}")
-            else:
-                logging.info("No headers found in CSV.")
-    except Exception as e:
-        logging.error(f"Error reading CSV file {file_path}: {e}")
+        logger.error(f"An error occurred while testing the output JSON file: {e}")
+        logger.debug(f"Detailed error information: {traceback.format_exc()}")
 
 def main():
-    # List of hard-coded file paths
-    data_files = [
-        'public/data/combined_market_data.json',
-        'public/data/cointegration_results.json',
-        'public/data/granger_causality_results.json',
-        'public/data/stationarity_results.json',
-        'public/data/ecm_analysis_results.json',
-        'public/data/price_differential_results.json',
-        'public/data/spatial_analysis_results.json',
-        'public/data/choropleth_data/average_prices.csv',
-        'public/data/choropleth_data/conflict_intensity.csv',
-        'public/data/choropleth_data/price_changes.csv',
-        'public/data/network_data/flow_maps.csv',
-        'public/data/time_series_data/prices_time_series.csv',
-        'public/data/time_series_data/conflict_intensity_time_series.csv',
-        'public/data/residuals_data/residuals.csv',
-        'public/data/spatial_weights/spatial_weights.json',
-    ]
-
-    max_depth = 3      # Maximum depth for JSON traversal
-    sample_size = 5    # Number of items to sample at each level
-
-    for file_path in data_files:
-        if file_path.endswith('.json'):
-            analyze_json(file_path, max_depth, sample_size)
-        elif file_path.endswith('.csv'):
-            analyze_csv(file_path)
-        else:
-            logging.info(f"Unsupported file type for file: {file_path}")
-
-if __name__ == "__main__":
+    logger.info("Starting testing of the ECM analysis output JSON file")
+    json_file_path = json_file_relative_path.resolve()
+    if json_file_path.exists():
+        test_output_json(json_file_path)
+    else:
+        logger.error(f"JSON file not found at {json_file_path}")
+        logger.debug(f"Ensure the path is correct and the file exists.")
+    
+if __name__ == '__main__':
     main()

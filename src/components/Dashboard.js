@@ -1,5 +1,7 @@
 // src/components/Dashboard.js
 
+'use client';
+
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import {
@@ -14,8 +16,12 @@ import {
   applySmoothing,
 } from '../lib/dataProcessing';
 
-const LoadingSpinner = dynamic(() => import('./ui/LoadingSpinner'), { ssr: false });
-const ErrorBoundary = dynamic(() => import('./ui/ErrorBoundary'), { ssr: false });
+const LoadingSpinner = dynamic(() => import('./ui/LoadingSpinner'), {
+  ssr: false,
+});
+const ErrorBoundary = dynamic(() => import('./ui/ErrorBoundary'), {
+  ssr: false,
+});
 const QuickGuide = dynamic(() => import('./QuickGuide'), { ssr: false });
 const GuidedTour = dynamic(() => import('./GuidedTour'), { ssr: false });
 
@@ -35,20 +41,27 @@ import {
   Select,
   InputLabel,
   FormControl,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Checkbox,
   ListItemButton,
   Box,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 
-const DynamicMethodology = dynamic(() => import('./Methodology'), { ssr: false });
-const DynamicLiteratureReview = dynamic(() => import('./LiteratureReview'), { ssr: false });
-const DynamicResultsVisualization = dynamic(() => import('./ResultsVisualization'), { ssr: false });
-const DynamicCharts = dynamic(() => import('./DynamicCharts'), { ssr: false });
+const DynamicMethodology = dynamic(() => import('./Methodology'), {
+  ssr: false,
+});
+const DynamicLiteratureReview = dynamic(
+  () => import('./LiteratureReview'),
+  { ssr: false }
+);
+const DynamicResultsVisualization = dynamic(
+  () => import('./ResultsVisualization'),
+  { ssr: false }
+);
+const DynamicCharts = dynamic(() => import('./DynamicCharts'), {
+  ssr: false,
+});
 
 const drawerWidth = 240;
 
@@ -74,16 +87,19 @@ const Content = styled('main')(({ theme }) => ({
 const tourSteps = [
   {
     target: '.tour-sidebar',
-    content: 'This sidebar allows you to select commodities, regimes, and analysis types.',
+    content:
+      'This sidebar allows you to select different types of analyses.',
     disableBeacon: true,
   },
   {
     target: '.tour-main-chart',
-    content: 'This chart shows price and conflict intensity over time for the selected commodities and regimes.',
+    content:
+      'This chart shows price and conflict intensity over time for the selected commodities and regimes.',
   },
   {
     target: '.tour-analysis-section',
-    content: 'This section displays the results of various econometric analyses based on your selections.',
+    content:
+      'This section displays the results of various econometric analyses based on your selections.',
   },
 ];
 
@@ -93,7 +109,9 @@ export default function Dashboard() {
   const [regimes, setRegimes] = useState([]);
   const [selectedCommodity, setSelectedCommodity] = useState('');
   const [selectedRegimes, setSelectedRegimes] = useState([]);
-  const [selectedAnalysis, setSelectedAnalysis] = useState('Price Differentials');
+  const [selectedAnalysis, setSelectedAnalysis] = useState(
+    'Price Differentials'
+  );
   const [marketData, setMarketData] = useState([]);
   const [analysisResults, setAnalysisResults] = useState({});
   const [error, setError] = useState(null);
@@ -142,7 +160,9 @@ export default function Dashboard() {
       try {
         const loadedData = await loadAllData();
         setAllData(loadedData);
-        const availableCommodities = getAvailableCommodities(loadedData.combinedMarketData);
+        const availableCommodities = getAvailableCommodities(
+          loadedData.combinedMarketData
+        );
         const availableRegimes = getAvailableRegimes();
         if (availableCommodities?.length > 0) {
           setCommodities(availableCommodities);
@@ -178,7 +198,11 @@ export default function Dashboard() {
       // Fetch market data for all selected regimes
       const allRegimeData = await Promise.all(
         selectedRegimes.map(async (regime) => {
-          const data = await getCombinedMarketData(allData, selectedCommodity, regime);
+          const data = await getCombinedMarketData(
+            allData,
+            selectedCommodity,
+            regime
+          );
           return data;
         })
       );
@@ -205,12 +229,22 @@ export default function Dashboard() {
 
       // Apply seasonal adjustment if enabled
       if (seasonalAdjustment) {
-        processedData = applySeasonalAdjustment(processedData, selectedRegimes, 12, !showUSDPrice);
+        processedData = applySeasonalAdjustment(
+          processedData,
+          selectedRegimes,
+          12,
+          !showUSDPrice
+        );
       }
 
       // Apply data smoothing if enabled
       if (dataSmoothing) {
-        processedData = applySmoothing(processedData, selectedRegimes, 6, !showUSDPrice);
+        processedData = applySmoothing(
+          processedData,
+          selectedRegimes,
+          6,
+          !showUSDPrice
+        );
       }
 
       setMarketData(processedData);
@@ -219,20 +253,27 @@ export default function Dashboard() {
       // Fetch analysis results for each selected regime
       const results = {};
       for (const regime of selectedRegimes) {
-        // Use getAnalysisResults for all analysis types
-        const analysisData = getAnalysisResults(allData, selectedCommodity, regime, selectedAnalysis);
+        const analysisData = getAnalysisResults(
+          allData,
+          selectedCommodity,
+          regime,
+          selectedAnalysis
+        );
         if (analysisData) {
           results[regime] = analysisData;
         } else {
-          console.warn(`No data available for ${selectedCommodity} in ${regime} regime for ${selectedAnalysis}`);
+          console.warn(
+            `No data available for ${selectedCommodity} in ${regime} regime for ${selectedAnalysis}`
+          );
           results[regime] = null;
         }
       }
       setAnalysisResults(results);
-
     } catch (err) {
-      setError(`An error occurred while fetching analysis data: ${err.message}`);
-      console.error("Fetch Analysis Data Error:", err);
+      setError(
+        `An error occurred while fetching analysis data: ${err.message}`
+      );
+      console.error('Fetch Analysis Data Error:', err);
     } finally {
       setIsLoading(false);
     }
@@ -254,7 +295,8 @@ export default function Dashboard() {
     const {
       target: { value },
     } = event;
-    const newSelectedRegimes = typeof value === 'string' ? value.split(',') : value;
+    const newSelectedRegimes =
+      typeof value === 'string' ? value.split(',') : value;
     setSelectedRegimes(newSelectedRegimes);
   };
 
@@ -287,6 +329,7 @@ export default function Dashboard() {
     },
   });
 
+  // Analysis options
   const analysisOptions = [
     {
       category: 'Background',
@@ -318,6 +361,12 @@ export default function Dashboard() {
     },
   ];
 
+  // Flatten the analysis options
+  const flatAnalyses = analysisOptions.flatMap(
+    (category) => category.analyses
+  );
+
+  // Drawer content
   const drawerContent = (
     <div className="tour-sidebar">
       <ToolbarStyled />
@@ -338,69 +387,18 @@ export default function Dashboard() {
           />
         </ListItem>
         <Divider />
-        {/* Commodity Selection */}
-        <ListItem>
-          <FormControl fullWidth>
-            <InputLabel id="commodity-label">Commodity</InputLabel>
-            <Select
-              labelId="commodity-label"
-              value={selectedCommodity}
-              onChange={(e) => {
-                setSelectedCommodity(e.target.value);
-              }}
-            >
-              {commodities.map((commodity) => (
-                <MenuItem key={commodity} value={commodity}>
-                  {commodity}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </ListItem>
-        {/* Regime Selection */}
-        <ListItem>
-          <FormControl fullWidth>
-            <InputLabel id="regime-label">Regimes</InputLabel>
-            <Select
-              labelId="regime-label"
-              multiple
-              value={selectedRegimes}
-              onChange={handleRegimeChange}
-              renderValue={(selected) => selected.join(', ')}
-            >
-              {regimes.map((regime) => (
-                <MenuItem key={regime} value={regime}>
-                  <Checkbox checked={selectedRegimes.indexOf(regime) > -1} />
-                  <ListItemText primary={regime} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </ListItem>
-        <Divider />
-        {/* Analysis Options */}
-        {analysisOptions.map((category) => (
-          <Accordion key={category.category}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="subtitle1">{category.category}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <List>
-                {category.analyses.map((analysis) => (
-                  <ListItem
-                    key={analysis}
-                    disablePadding
-                    selected={selectedAnalysis === analysis}
-                    onClick={() => setSelectedAnalysis(analysis)}
-                  >
-                    <ListItemButton>
-                      <ListItemText primary={analysis} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </List>
-            </AccordionDetails>
-          </Accordion>
+        {/* Direct List of Analyses */}
+        {flatAnalyses.map((analysis) => (
+          <ListItem
+            key={analysis}
+            disablePadding
+            selected={selectedAnalysis === analysis}
+            onClick={() => setSelectedAnalysis(analysis)}
+          >
+            <ListItemButton>
+              <ListItemText primary={analysis} />
+            </ListItemButton>
+          </ListItem>
         ))}
       </List>
     </div>
@@ -425,7 +423,10 @@ export default function Dashboard() {
           sx={{
             width: drawerWidth,
             flexShrink: 0,
-            [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
           }}
         >
           {drawerContent}
@@ -464,37 +465,50 @@ export default function Dashboard() {
             </div>
           )}
           {/* Market Data Charts */}
-          {isClient && memoizedMarketData && memoizedMarketData.length > 0 && !isLoading && (
-            <>
-              <div style={{ marginBottom: '24px' }} className="tour-main-chart">
-                {/* You can add additional chart controls here if needed */}
-              </div>
-              {/* Render Charts */}
-              <DynamicCharts
-                data={memoizedMarketData}
-                selectedRegimes={selectedRegimes}
-                showUSDPrice={showUSDPrice}
-                colorPalette={colorPalette}
-                theme={customizedTheme}
-              />
-            </>
-          )}
+          {isClient &&
+            memoizedMarketData &&
+            memoizedMarketData.length > 0 &&
+            !isLoading && (
+              <>
+                <div
+                  style={{ marginBottom: '24px' }}
+                  className="tour-main-chart"
+                >
+                  {/* Additional chart controls can be added here if needed */}
+                </div>
+                {/* Render Charts */}
+                <DynamicCharts
+                  data={memoizedMarketData}
+                  selectedRegimes={selectedRegimes}
+                  showUSDPrice={showUSDPrice}
+                  colorPalette={colorPalette}
+                  theme={customizedTheme}
+                />
+              </>
+            )}
           {/* Analysis Results */}
-          {isClient && !isLoading && Object.keys(analysisResults).length > 0 && selectedAnalysis !== 'Methodology' && selectedAnalysis !== 'Literature Review' && (
-            <ErrorBoundary>
-              <React.Suspense fallback={<LoadingSpinner />}>
-                <Box sx={{ width: '100%' }} className="tour-analysis-section">
-                  <DynamicResultsVisualization
-                    results={analysisResults}
-                    analysisType={selectedAnalysis}
-                    commodity={selectedCommodity}
-                    selectedRegimes={selectedRegimes}
-                    combinedMarketDates={combinedMarketDates}
-                  />
-                </Box>
-              </React.Suspense>
-            </ErrorBoundary>
-          )}
+          {isClient &&
+            !isLoading &&
+            Object.keys(analysisResults).length > 0 &&
+            selectedAnalysis !== 'Methodology' &&
+            selectedAnalysis !== 'Literature Review' && (
+              <ErrorBoundary>
+                <React.Suspense fallback={<LoadingSpinner />}>
+                  <Box
+                    sx={{ width: '100%' }}
+                    className="tour-analysis-section"
+                  >
+                    <DynamicResultsVisualization
+                      results={analysisResults}
+                      analysisType={selectedAnalysis}
+                      commodity={selectedCommodity}
+                      selectedRegimes={selectedRegimes}
+                      combinedMarketDates={combinedMarketDates}
+                    />
+                  </Box>
+                </React.Suspense>
+              </ErrorBoundary>
+            )}
           {/* Render Methodology or Literature Review */}
           {isClient && selectedAnalysis === 'Methodology' && (
             <DynamicMethodology />
