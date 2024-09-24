@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "build:gh-pages": "GITHUB_PAGES=true npm run build",
-    "postbuild": "mkdir -p out && touch out/.nojekyll && echo 'mohammadak95.github.io' > out/CNAME"
+    "dev": "node setup-env.js dev && next dev",
+    "build": "node setup-env.js prod && next build",
+    "build:gh-pages": "node setup-env.js prod && GITHUB_PAGES=true next build",
+    "start": "node setup-env.js prod && next start",
+    "serve": "node setup-env.js prod && serve out",
+    "simulate": "./simulate-production.sh"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
@@ -26,6 +26,7 @@
     "chart.js": "^4.4.4",
     "chroma-js": "^3.1.1",
     "d3": "^7.9.0",
+    "dotenv": "^16.4.5",
     "framer-motion": "^11.5.6",
     "geojson": "^0.5.0",
     "glob": "^9.3.4",

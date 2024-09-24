@@ -1,26 +1,35 @@
 // next.config.js
-
 const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // **Environment-Specific Settings**
+  
+  // Conditionally set basePath and assetPrefix using environment variables
+  ...(process.env.NODE_ENV === 'production' && {
+    basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+    assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX || '',
+  }),
+  
+  // **General Configurations**
+  
   reactStrictMode: true,
   output: 'export',
+  
   images: {
     unoptimized: true,
   },
-  basePath: '/yemen-market-analysis-final',
-  assetPrefix: '/yemen-market-analysis-final/',
-  trailingSlash: true, // Ensures URLs end with a slash, aiding static hosting
+  
+  trailingSlash: true,
 
+  // **Webpack Configuration**
   webpack: (config) => {
-    // Alias for easier imports
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, './src'),
     };
 
-    // Handle CSV files
+    // Add CSV loader
     config.module.rules.push({
       test: /\.csv$/,
       use: [
@@ -35,8 +44,7 @@ const nextConfig = {
       ],
     });
 
-    // Handle GeoJSON files (Next.js can natively handle JSON, so json-loader is unnecessary)
-    // If you still need to process GeoJSON differently, consider using 'json-loader' or similar
+    // Add GeoJSON loader
     config.module.rules.push({
       test: /\.geojson$/,
       type: 'json',

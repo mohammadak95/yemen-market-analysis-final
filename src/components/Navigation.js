@@ -2,7 +2,7 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import Link from 'next/link';
 import {
   AppBar,
@@ -21,12 +21,32 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { styled } from '@mui/material/styles';
+import ListItemButton from '@mui/material/ListItemButton';
 
+// Define the drawer width
 const drawerWidth = 240;
 
+// Styled component for the Drawer header to align with AppBar
 const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
+
+/**
+ * Custom ListItemLink component using ListItemButton to avoid passing `button` prop to <a>
+ */
+const ListItemLink = forwardRef(function ListItemLink(props, ref) {
+  const { href, primary, onClick } = props;
+
+  return (
+    <Link href={href} passHref legacyBehavior>
+      <ListItem component="a" onClick={onClick} ref={ref} disablePadding>
+        <ListItemButton>
+          <ListItemText primary={primary} />
+        </ListItemButton>
+      </ListItem>
+    </Link>
+  );
+});
 
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -38,20 +58,34 @@ const Navigation = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  // Drawer content with corrected Link and ListItem integration
   const drawerContent = (
     <div>
       <DrawerHeader />
       <Divider />
       <List>
-        <ListItem button component={Link} href="/">
-          <ListItemText primary="Home" />
-        </ListItem>
-        <ListItem button component={Link} href="/methodology">
-          <ListItemText primary="Methodology" />
-        </ListItem>
-        <ListItem button component={Link} href="/literature-review">
-          <ListItemText primary="Literature Review" />
-        </ListItem>
+        {/* Use ListItemLink for consistent Link integration */}
+        <ListItemLink
+          href="/"
+          primary="Home"
+          onClick={() => isMobile && handleDrawerToggle()}
+        />
+        <ListItemLink
+          href="/methodology"
+          primary="Methodology"
+          onClick={() => isMobile && handleDrawerToggle()}
+        />
+        <ListItemLink
+          href="/literature-review"
+          primary="Literature Review"
+          onClick={() => isMobile && handleDrawerToggle()}
+        />
+        <ListItemLink
+          href="/dashboard"
+          primary="Dashboard"
+          onClick={() => isMobile && handleDrawerToggle()}
+        />
+        {/* Add more navigation items as needed */}
       </List>
     </div>
   );
@@ -117,19 +151,6 @@ const Navigation = () => {
         >
           {drawerContent}
         </Drawer>
-      </Box>
-
-      {/* Main Content Placeholder */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-        }}
-      >
-        <DrawerHeader />
-        {/* Your main content goes here */}
       </Box>
     </Box>
   );
