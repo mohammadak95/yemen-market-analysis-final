@@ -58,6 +58,7 @@
     "eslint-plugin-react": "^7.36.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-unused-imports": "^4.1.4",
+    "jscodeshift": "^17.0.0",
     "json-loader": "^0.5.7",
     "postcss": "^8.4.24",
     "prettier": "^3.3.3",
