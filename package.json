@@ -33,7 +33,7 @@
     "leaflet": "^1.9.4",
     "leaflet-polylinedecorator": "^1.6.0",
     "lucide-react": "^0.441.0",
-    "next": "^14.2.13",
+    "next": "^14.2.15",
     "papaparse": "^5.4.1",
     "plotly.js": "^2.35.2",
     "prop-types": "^15.8.1",
